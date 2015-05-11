@@ -1,0 +1,107 @@
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\bin\Debug\Cocarsa1.exe
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\bin\Debug\Cocarsa1.pdb
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.exe
+C:\Users\Wicho\Documents\Visual Studio 2012\Projects\Cocarsa1\Cocarsa1\obj\Debug\Cocarsa1.pdb
+E:\Archivos\Eduardo\Downloads\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+E:\Archivos\Eduardo\Downloads\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\obj\Debug\Cocarsa1.exe
+E:\Archivos\Eduardo\Downloads\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\obj\Debug\Cocarsa1.pdb
+E:\Desktop\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+E:\Desktop\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\obj\Debug\Cocarsa1.exe
+E:\Desktop\Cocarsa-2adc872e90b6b207ff70a8da1a7abdb4f88a9b2c\Cocarsa1\obj\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\bin\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\bin\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Inventario.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.PagoAbonos.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Producto.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Ventas.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Proveedor.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources
+C:\Users\WichoLap\Desktop\Cocarsa-master\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Reportes.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Inventario.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.PagoAbonos.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Producto.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Proveedor.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Reportes.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Ventas.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.pdb
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Inventario.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.PagoAbonos.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Producto.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Proveedor.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Reportes.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Ventas.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.exe
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\bin\Debug\Cocarsa1.exe
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\bin\Debug\Cocarsa1.pdb
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Inventario.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.PagoAbonos.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Producto.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Proveedor.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Reportes.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Ventas.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+C:\Users\WichoLap\Downloads\Cocarsa-PruebaDise-o1\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+C:\Users\Wicho\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.pdb
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Inventario.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.PagoAbonos.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Producto.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Proveedor.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Reportes.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Ventas.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.exe
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.pdb
+E:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
+E:\Archivos\Eduardo\Documents\ProyectoCocarsa\ProyectoActual\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe.config
+E:\Archivos\Eduardo\Documents\ProyectoCocarsa\ProyectoActual\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.exe
+E:\Archivos\Eduardo\Documents\ProyectoCocarsa\ProyectoActual\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.pdb
