@@ -14,5 +14,11 @@ namespace Cocarsa1.Entidades
             get { return idLarguillo; }
             set { idLarguillo = value; }
         }
+
+        public VentaLarguillo() { }
+
+        public VentaLarguillo(int idLarguillo) {
+            this.idLarguillo = idLarguillo;
+        }
     }
 }

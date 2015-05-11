@@ -35,6 +35,7 @@
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
+            this.textBox14 = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.label38 = new System.Windows.Forms.Label();
@@ -45,7 +46,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
-            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.folio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechaNota = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.deuda = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,11 +56,11 @@
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label29 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,10 +69,9 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -81,6 +81,7 @@
             this.groupBox10.Controls.Add(this.label41);
             this.groupBox10.Controls.Add(this.textBox9);
             this.groupBox10.Controls.Add(this.label34);
+            this.groupBox10.Enabled = false;
             this.groupBox10.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
             this.groupBox10.Location = new System.Drawing.Point(565, 91);
@@ -136,6 +137,16 @@
             this.label40.Size = new System.Drawing.Size(150, 27);
             this.label40.TabIndex = 43;
             this.label40.Text = "Fecha de Abono";
+            // 
+            // textBox14
+            // 
+            this.textBox14.Enabled = false;
+            this.textBox14.Location = new System.Drawing.Point(1002, 34);
+            this.textBox14.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.Size = new System.Drawing.Size(303, 29);
+            this.textBox14.TabIndex = 42;
+            this.textBox14.Text = "14 de Septiembre del 2014";
             // 
             // label39
             // 
@@ -257,10 +268,10 @@
             this.label33.TabIndex = 37;
             this.label33.Text = "LARGUILLOS";
             // 
-            // dataGridView6
+            // dataGridView2
             // 
-            this.dataGridView6.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -268,20 +279,20 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView6.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView6.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.folio,
             this.fechaNota,
             this.deuda,
             this.montoNota,
             this.liberado});
-            this.dataGridView6.EnableHeadersVisualStyles = false;
-            this.dataGridView6.Location = new System.Drawing.Point(20, 339);
-            this.dataGridView6.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.dataGridView6.Name = "dataGridView6";
-            this.dataGridView6.Size = new System.Drawing.Size(614, 266);
-            this.dataGridView6.TabIndex = 36;
+            this.dataGridView2.EnableHeadersVisualStyles = false;
+            this.dataGridView2.Location = new System.Drawing.Point(20, 339);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(614, 266);
+            this.dataGridView2.TabIndex = 36;
             // 
             // folio
             // 
@@ -336,33 +347,35 @@
             this.textBox6.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.textBox6.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox6.Enabled = false;
-            this.textBox6.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(254, 179);
+            this.textBox6.Font = new System.Drawing.Font("Open Sans", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox6.Location = new System.Drawing.Point(254, 183);
             this.textBox6.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
-            this.textBox6.Size = new System.Drawing.Size(213, 29);
+            this.textBox6.Size = new System.Drawing.Size(213, 36);
             this.textBox6.TabIndex = 32;
+            this.textBox6.Text = "0.0";
+            this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label29
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(158)))), ((int)(((byte)(0)))), ((int)(((byte)(25)))));
-            this.label29.Location = new System.Drawing.Point(99, 181);
+            this.label29.Location = new System.Drawing.Point(93, 186);
             this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(128, 27);
+            this.label29.Size = new System.Drawing.Size(153, 27);
             this.label29.TabIndex = 29;
-            this.label29.Text = "Adeudo Total";
+            this.label29.Text = "Adeudo Total   $";
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.textBox8);
             this.groupBox1.Controls.Add(this.textBox7);
             this.groupBox1.Controls.Add(this.label31);
             this.groupBox1.Controls.Add(this.label30);
-            this.groupBox1.Controls.Add(this.textBox5);
             this.groupBox1.Controls.Add(this.label28);
             this.groupBox1.Controls.Add(this.label29);
             this.groupBox1.Controls.Add(this.textBox6);
@@ -375,6 +388,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ADEUDO CLIENTE";
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(104, 45);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(363, 29);
+            this.textBox1.TabIndex = 41;
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            // 
             // textBox8
             // 
             this.textBox8.AutoCompleteCustomSource.AddRange(new string[] {
@@ -384,13 +408,15 @@
             this.textBox8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.textBox8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox8.Enabled = false;
-            this.textBox8.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(254, 135);
+            this.textBox8.Font = new System.Drawing.Font("Open Sans", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox8.Location = new System.Drawing.Point(254, 137);
             this.textBox8.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.textBox8.Name = "textBox8";
             this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(213, 29);
+            this.textBox8.Size = new System.Drawing.Size(213, 36);
             this.textBox8.TabIndex = 40;
+            this.textBox8.Text = "0.0";
+            this.textBox8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox7
             // 
@@ -401,53 +427,39 @@
             this.textBox7.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.textBox7.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.textBox7.Enabled = false;
-            this.textBox7.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(254, 94);
+            this.textBox7.Font = new System.Drawing.Font("Open Sans", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox7.Location = new System.Drawing.Point(254, 91);
             this.textBox7.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
-            this.textBox7.Size = new System.Drawing.Size(213, 29);
+            this.textBox7.Size = new System.Drawing.Size(213, 36);
             this.textBox7.TabIndex = 39;
+            this.textBox7.Text = "0.0";
+            this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label31
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label31.Location = new System.Drawing.Point(100, 138);
+            this.label31.Location = new System.Drawing.Point(79, 144);
             this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(146, 22);
+            this.label31.Size = new System.Drawing.Size(167, 22);
             this.label31.TabIndex = 38;
-            this.label31.Text = "Adeudo Larguillos";
+            this.label31.Text = "Adeudo Larguillos   $";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label30.Location = new System.Drawing.Point(100, 97);
+            this.label30.Location = new System.Drawing.Point(84, 99);
             this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(141, 22);
+            this.label30.Size = new System.Drawing.Size(162, 22);
             this.label30.TabIndex = 37;
-            this.label30.Text = "Adeudo de Notas";
-            // 
-            // textBox5
-            // 
-            this.textBox5.AutoCompleteCustomSource.AddRange(new string[] {
-            "LALO RUIZ PALOMINO",
-            "LAURA TACUBEÑO PADRON",
-            "GUILLERMO BERES TA IN"});
-            this.textBox5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox5.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(91, 50);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(376, 29);
-            this.textBox5.TabIndex = 36;
+            this.label30.Text = "Adeudo de Notas   $";
             // 
             // label28
             // 
@@ -533,29 +545,21 @@
             this.comboBox1.TabIndex = 47;
             this.comboBox1.Text = "Diana";
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Enabled = false;
-            this.dateTimePicker1.Location = new System.Drawing.Point(1001, 32);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(304, 29);
-            this.dateTimePicker1.TabIndex = 48;
-            // 
             // PagoAbonos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.label40);
+            this.Controls.Add(this.textBox14);
             this.Controls.Add(this.label39);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.label33);
-            this.Controls.Add(this.dataGridView6);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label32);
             this.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -565,7 +569,7 @@
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -581,6 +585,7 @@
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Label label38;
@@ -591,7 +596,7 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label29;
@@ -600,7 +605,6 @@
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.DataGridViewTextBoxColumn folio;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaNota;
@@ -614,7 +618,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }

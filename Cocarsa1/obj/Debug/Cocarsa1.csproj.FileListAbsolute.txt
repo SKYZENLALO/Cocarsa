@@ -36,7 +36,6 @@ C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.exe
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.pdb
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.exe
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\Cocarsa1.pdb
-C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csprojResolveAssemblyReference.cache
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Cliente.resources
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Fajillas.resources
 C:\Users\WichoLap\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.ControlUsuario.Gastos.resources

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cocarsa1.Entidades
 {
-    class Cliente
+    public class Cliente
     {
         private int idCliente;
         private String nombre;
