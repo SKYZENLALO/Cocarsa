@@ -14,5 +14,13 @@ namespace Cocarsa1.Entidades
             get { return idNota; }
             set { idNota = value; }
         }
+
+        public VentaNota() { 
+        
+        }
+
+        public VentaNota(int idNota) {
+            this.idNota = idNota;
+        }
     }
 }
