@@ -144,11 +144,26 @@ namespace Cocarsa1.ControlUsuario
                 case 0:
                     //MessageBox.Show("Columna Clave valor: "+valor);
                     ProductoE productoNuevo = null;
-                    productoNuevo = ventasDao.cargarProducto(Convert.ToInt32(dataGridView1.CurrentCell.Value));
-                    dataGridView1.CurrentRow.Cells[1].Value = productoNuevo.Nombre;
-                    dataGridView1.CurrentRow.Cells[3].Value = productoNuevo.PrecioVenta;
-                    columna = 2;
-                    flag = true;
+                    int clave;
+                    try { 
+                        clave = Convert.ToInt32(dataGridView1.CurrentCell.Value);
+                    }catch(Exception error ){
+                        clave = 0;
+                    }
+                    if (clave != 0)
+                    {
+                        productoNuevo = ventasDao.cargarProducto(clave);
+                        dataGridView1.CurrentRow.Cells[1].Value = productoNuevo.Nombre;
+                        dataGridView1.CurrentRow.Cells[3].Value = productoNuevo.PrecioVenta;
+                        columna = 2;
+                        flag = true;
+                    } else {
+                        int filaActual = dataGridView1.CurrentCell.RowIndex;
+                        dataGridView1.Rows.RemoveAt(filaActual);
+                        calculaTotal();
+                        columna = 0;
+                        flag = true;
+                    }
                     break;
                 case 2:
                     Double cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
