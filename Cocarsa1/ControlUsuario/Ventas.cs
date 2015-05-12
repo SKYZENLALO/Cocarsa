@@ -99,6 +99,8 @@ namespace Cocarsa1.ControlUsuario
                             case 2:
                                 textBox8.Text = "Nota Pendiente";
                                 dataGridView1.Enabled = true;
+                                dataGridView1.Focus();
+                                dataGridView1.Rows[0].Cells[0].Selected = true;
                                 break;
                             case 3:
                                 textBox8.Text = "Nota Facturada";
@@ -201,30 +203,59 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
             if (e.KeyCode == Keys.F10) {
-                int filas = dataGridView1.Rows.Count-1;
+                int filas = dataGridView1.Rows.Count - 1;
+                OrdenNota[] ordenNota = new OrdenNota[11];
                 VentasDAO ventasDAO = new VentasDAO();
                 VentaNota ventaNota = new VentaNota();
-                ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
-                ventaNota.Iva = Convert.ToDouble(textBox5.Text);
-                ventaNota.Total = Convert.ToDouble(textBox1.Text);
-                ventaNota.Subtotal = Convert.ToDouble(textBox6.Text);
-                ventaNota.Estado = 2;
-                ventaNota.Adeudo = 0;
-                ventaNota.IdCliente = 1;
-                ventaNota.Liquidada = false;
-                int nuevoId = ventasDAO.insertarVenta(ventaNota);
-                MessageBox.Show("IdNota: " + nuevoId);
-                OrdenNota[] ordenNota = new OrdenNota[11];
-                for (int i = 0; i < filas; i++){
-                    ordenNota[i] = new OrdenNota();
-                    ordenNota[i].IdNota = nuevoId;
-                    ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
-                    ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
-                    ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
-                    ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
+                VentaNota buscarNota = new VentaNota();
+
+                buscarNota = ventasDAO.buscarFolio(Convert.ToInt32(textBox2.Text));
+
+                if (buscarNota == null)
+                {
+                    ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
+                    ventaNota.Iva = Convert.ToDouble(textBox5.Text);
+                    ventaNota.Total = Convert.ToDouble(textBox1.Text);
+                    ventaNota.Subtotal = Convert.ToDouble(textBox6.Text);
+                    ventaNota.Estado = 2;
+                    ventaNota.Adeudo = 0;
+                    ventaNota.IdCliente = 1;
+                    ventaNota.Liquidada = false;
+                    int nuevoId = ventasDAO.insertarVenta(ventaNota);
+                    for (int i = 0; i < filas; i++)
+                    {
+                        ordenNota[i] = new OrdenNota();
+                        ordenNota[i].IdNota = nuevoId;
+                        ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
+                        ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
+                        ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
+                        ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
+                    }
+
+                }
+                else
+                {
+                    buscarNota.Iva = Convert.ToDouble(textBox5.Text);
+                    buscarNota.Total = Convert.ToDouble(textBox1.Text);
+                    buscarNota.Subtotal = Convert.ToDouble(textBox6.Text);
+                    buscarNota.Estado = 2;
+                    buscarNota.Adeudo = 0;
+                    buscarNota.IdCliente = 1;
+                    buscarNota.Liquidada = false;
+                    Boolean actulizarNota = ventasDAO.updateVenta(buscarNota);
+                    for (int i = 0; i < filas; i++)
+                    {
+                        ordenNota[i] = new OrdenNota();
+                        ordenNota[i].IdNota = buscarNota.IdNota; ;
+                        ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
+                        ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
+                        ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
+                        ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
+                    }
+                    Boolean borraOrden = ventasDAO.borrarOrden(buscarNota.IdNota);
                 }
                 Boolean insOrden = ventasDAO.insertarOrden(ordenNota);
-                
+                dataGridView1.Rows.Clear();
                 textBox2.Focus();
             }
         }
