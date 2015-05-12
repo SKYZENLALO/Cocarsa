@@ -94,6 +94,57 @@ namespace Cocarsa1.ConexionBD
             
             return notaDesc;
         }
+        public Boolean updateVenta(VentaNota ventaNota)
+        {
+            Boolean ans = false;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+
+            String query = "UPDATE nota SET idCliente = ?idCliente ,subtotal=?subtotal ,IVA=?IVA , total=?total ,liquidada=?liquidada ,adeudo=?adeudo ,estado=?estado WHERE idNota = ?idNota;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idCliente", ventaNota.IdCliente);
+                cmd.Parameters.AddWithValue("?subtotal", ventaNota.Subtotal);
+                cmd.Parameters.AddWithValue("?IVA", ventaNota.Iva);
+                cmd.Parameters.AddWithValue("?total", ventaNota.Total);
+                cmd.Parameters.AddWithValue("?liquidada", ventaNota.Liquidada);
+                cmd.Parameters.AddWithValue("?adeudo", ventaNota.Adeudo);
+                cmd.Parameters.AddWithValue("?estado", ventaNota.Estado);
+                cmd.Parameters.AddWithValue("?idNota", ventaNota.IdNota);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                ans = true;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return ans;
+        }
+        public Boolean borrarOrden(int idNota)
+        {
+            Boolean ans = false;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+
+            String query = "DELETE FROM ordenVenta WHERE idNota=?idNota;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idNota", idNota);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                ans = true;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return ans;
+        }
 
         public int nuevoFolio() {
             int folio = 0;
