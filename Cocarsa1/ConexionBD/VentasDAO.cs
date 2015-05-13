@@ -189,11 +189,14 @@ namespace Cocarsa1.ConexionBD
                 consulta = cmd.ExecuteReader();
                 cmd.Dispose();
 
-                while (consulta.Read())
+                if (consulta.Read())
                 {
                     producto.IdProducto = consulta.GetInt32(0);
                     producto.Nombre = consulta.GetString(1);
                     producto.PrecioVenta = consulta.GetDouble(2);
+                }
+                else {
+                    producto = null;
                 }
             }
             finally
