@@ -21,6 +21,7 @@ namespace Cocarsa1.ControlUsuario
         public Ventas()
         {
             InitializeComponent();
+            dataGridView1.Enabled = false;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -40,9 +41,9 @@ namespace Cocarsa1.ControlUsuario
         private void limpiarPantalla() {
             dataGridView1.Rows.Clear();
             textBox7.Clear();
-            textBox1.Clear();
-            textBox5.Clear();
-            textBox6.Clear();
+            textBox1.Text = "0";
+            textBox5.Text = "0";
+            textBox6.Text = "0";
             textBox3.Clear();
             textBox4.Clear();
             textBox8.Clear();
@@ -64,16 +65,25 @@ namespace Cocarsa1.ControlUsuario
                     dataGridView1.Enabled = true;
                     dataGridView1.Focus();
                     dataGridView1.Rows[0].Cells[0].Selected = true;
+                    textBox2.Enabled = false;
                 }
                 else
                 {
                     //buscar folio
                     VentaNota notaCargar = null;
                     //Validar numeros
-                    notaCargar=ventasDao.buscarFolio(Convert.ToInt32(textBox2.Text));
+                    try
+                    {
+                        notaCargar = ventasDao.buscarFolio(Convert.ToInt32(textBox2.Text));
+                    }catch(Exception error){
+                        textBox2.Clear();
+                        MessageBox.Show("SoloNumeros");
+                        return;
+                    }
 
                     if (notaCargar == null)                    {
                         MessageBox.Show("No existe la Nota");
+                        textBox2.Clear();
                     }
                     else { 
                         //Mostrar Descripcion Nota
@@ -101,6 +111,7 @@ namespace Cocarsa1.ControlUsuario
                                 dataGridView1.Enabled = true;
                                 dataGridView1.Focus();
                                 dataGridView1.Rows[0].Cells[0].Selected = true;
+                                textBox2.Enabled = false;
                                 break;
                             case 3:
                                 textBox8.Text = "Nota Facturada";
@@ -136,6 +147,9 @@ namespace Cocarsa1.ControlUsuario
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             VentasDAO ventasDao = new VentasDAO();
+            Double cantidadTemp;
+            Double precioTemp;
+            Double importeTemp;
 
             columna = dataGridView1.CurrentCell.ColumnIndex;
             fila = dataGridView1.CurrentCell.RowIndex;
@@ -153,33 +167,90 @@ namespace Cocarsa1.ControlUsuario
                     if (clave != 0)
                     {
                         productoNuevo = ventasDao.cargarProducto(clave);
-                        dataGridView1.CurrentRow.Cells[1].Value = productoNuevo.Nombre;
-                        dataGridView1.CurrentRow.Cells[3].Value = productoNuevo.PrecioVenta;
-                        columna = 2;
-                        flag = true;
+                        if (productoNuevo == null) {
+                            int filaActual = dataGridView1.CurrentCell.RowIndex;
+                            MessageBox.Show("No Existe el Producto");
+                            dataGridView1.Rows.RemoveAt(filaActual);
+                            calculaTotal();
+                            columna = 0;
+                            flag = true;
+                        }
+                        else
+                        {
+                            dataGridView1.CurrentRow.Cells[1].Value = productoNuevo.Nombre;
+                            dataGridView1.CurrentRow.Cells[3].Value = productoNuevo.PrecioVenta;
+                            columna = 2;
+                            flag = true;
+                        }
                     } else {
                         int filaActual = dataGridView1.CurrentCell.RowIndex;
                         dataGridView1.Rows.RemoveAt(filaActual);
+                        MessageBox.Show("No Existe el Producto");
                         calculaTotal();
                         columna = 0;
                         flag = true;
                     }
                     break;
                 case 2:
-                    Double cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
-                    Double precioTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[3].Value.ToString());
-                    Double importeTemp = precioTemp*cantidadTemp;
-                    dataGridView1.CurrentRow.Cells[4].Value = importeTemp;
-                    columna = 3;
-                    calculaTotal();
-                    flag = true;
+                    if (dataGridView1.CurrentRow.Cells[0].Value==null) {
+                        MessageBox.Show("Inserta Clave de Producto");
+                        int filaActual = dataGridView1.CurrentCell.RowIndex;
+                        columna = 0;
+                        flag = true;
+                        dataGridView1.Rows.RemoveAt(filaActual);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Ingresar Solo numeros");
+                            dataGridView1.CurrentRow.Cells[2].Value = 0;
+                            dataGridView1.CurrentRow.Cells[4].Value = 0;
+                            calculaTotal();
+                            flag = true;
+                            return;
+                        }
+                        precioTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[3].Value.ToString());
+                        importeTemp = precioTemp * cantidadTemp;
+                        dataGridView1.CurrentRow.Cells[4].Value = importeTemp;
+                        columna = 3;
+                        calculaTotal();
+                        flag = true;
+                    }
                     break;
                 case 3:
-                    dataGridView1.CurrentRow.Cells[4].Value = (Convert.ToDecimal(dataGridView1.CurrentRow.Cells[2].Value)) * (Convert.ToDecimal(dataGridView1.CurrentRow.Cells[3].Value));
-                    columna = 0;
-                    calculaTotal();
-                    fila++;
-                    flag = true;
+                    if (dataGridView1.CurrentRow.Cells[0].Value == null){
+                        MessageBox.Show("Inserta Clave de Producto");
+                        columna = 0;
+                        flag = true;
+                        int filaActual = dataGridView1.CurrentCell.RowIndex;
+                        dataGridView1.Rows.RemoveAt(filaActual);
+                    }else{
+                        cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
+                        try
+                        {
+                            precioTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[3].Value.ToString());
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("Ingresar Solo numeros");
+                            dataGridView1.CurrentRow.Cells[3].Value = 0;
+                            dataGridView1.CurrentRow.Cells[4].Value = 0;
+                            calculaTotal();
+                            flag = true;
+                            return;
+                        }
+                        importeTemp = precioTemp * cantidadTemp;
+                        dataGridView1.CurrentRow.Cells[4].Value = importeTemp;
+                        columna = 0;
+                        calculaTotal();
+                        fila++;
+                        flag = true;
+                    }
                     break;
             }
 
@@ -226,8 +297,7 @@ namespace Cocarsa1.ControlUsuario
 
                 buscarNota = ventasDAO.buscarFolio(Convert.ToInt32(textBox2.Text));
 
-                if (buscarNota == null)
-                {
+                if (buscarNota == null){
                     ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
                     ventaNota.Iva = Convert.ToDouble(textBox5.Text);
                     ventaNota.Total = Convert.ToDouble(textBox1.Text);
@@ -247,9 +317,7 @@ namespace Cocarsa1.ControlUsuario
                         ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
                     }
 
-                }
-                else
-                {
+                }else{
                     buscarNota.Iva = Convert.ToDouble(textBox5.Text);
                     buscarNota.Total = Convert.ToDouble(textBox1.Text);
                     buscarNota.Subtotal = Convert.ToDouble(textBox6.Text);
@@ -271,8 +339,13 @@ namespace Cocarsa1.ControlUsuario
                 }
                 Boolean insOrden = ventasDAO.insertarOrden(ordenNota);
                 dataGridView1.Rows.Clear();
+                textBox2.Enabled = true;
+                textBox2.Clear();
                 textBox2.Focus();
+                dataGridView1.Enabled = false;
+                MessageBox.Show("Nota "+textBox2.Text+" Guardada");
             }
         }
+
     }
 }
