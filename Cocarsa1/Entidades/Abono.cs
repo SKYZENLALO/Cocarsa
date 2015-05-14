@@ -8,27 +8,35 @@ namespace Cocarsa1.Entidades
 {
     class Abono
     {
-        private int idNota;
-        public int idCliente;
+        private int idFolio;
+        private int idCliente;
         private int idCajera;
         private Double montoAbono;
         private DateTime fechaAbono;
 
-        public int IdNota
+        public int IdFolio
         {
-            get { return idNota; }
-            set { idNota = value; }
+            get { return idFolio; }
+            set { idFolio = value; }
         }
+
+        public int IdCliente {
+            get { return idCliente; }
+            set { idCliente = value; }
+        }
+
         public int IdCajera
         {
             get { return idCajera; }
             set { idCajera = value; }
         }
+
         public Double MontoAbono
         {
             get { return montoAbono; }
             set { montoAbono = value; }
         }
+
         public DateTime FechaAbono
         {
             get { return fechaAbono; }

@@ -59,7 +59,7 @@ namespace Cocarsa1.ConexionBD
             Conexion conexion = new Conexion();
             MySqlConnection conn = conexion.abrirConexion();
 
-            String query = "SELECT * FROM nota WHERE idCliente = ?idCliente and liquidada = false";
+            String query = "SELECT * FROM nota WHERE idCliente = ?idCliente and liquidada = false order by fechaVenta asc";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("?idCliente", idCliente);
@@ -81,7 +81,7 @@ namespace Cocarsa1.ConexionBD
             }
             reader.Close();
             
-            query = "SELECT * FROM larguillo WHERE idCliente = ?idCliente and liquidada = false";
+            query = "SELECT * FROM larguillo WHERE idCliente = ?idCliente and liquidada = false order by fechaVenta desc";
             cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("?idCliente", idCliente);
 

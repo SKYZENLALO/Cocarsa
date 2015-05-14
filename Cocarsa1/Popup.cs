@@ -25,7 +25,9 @@ namespace Cocarsa1
 
         public Popup()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            textBox6.Focus();
+            textBox6.Select(0,0);
         }
 
         private void busca_cliente(object sender, KeyPressEventArgs e)
@@ -43,13 +45,18 @@ namespace Cocarsa1
                     ClienteDao dao = new ClienteDao();
                     listaClientes = dao.busquedaClientes(textBox6.Text);
 
+                    if (listaClientes.Count == 0) {
+                        MessageBox.Show("No se encontró cliente : " + textBox6.Text);
+                        textBox6.Text = "";
+                        textBox6.Focus();
+                        textBox6.Select(0,0);
+                        return;
+                    }
+
                     foreach (Cliente cliente in listaClientes)
                     {
-                        DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
-                        row.Cells[0].Value = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
-                        row.Cells[1].Value = cliente.Calle + " " + cliente.Colonia;
-                        row.Height = 50;
-                        dataGridView1.Rows.Add(row);
+                       dataGridView1.Rows.Add(cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno, 
+                                              cliente.Calle + " " + cliente.Colonia);
                     }
                     dataGridView1.Focus();
                 }
@@ -58,7 +65,7 @@ namespace Cocarsa1
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && dataGridView1.Rows.Count > 0)
             {
                 e.Handled = true;
 
