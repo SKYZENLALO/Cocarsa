@@ -14,6 +14,7 @@ namespace Cocarsa1.ControlUsuario
 {
     public partial class Fajillas : UserControl
     {
+        MySqlDataReader consulta;
         public Fajillas()
         {
             InitializeComponent();
@@ -74,7 +75,6 @@ namespace Cocarsa1.ControlUsuario
         void cargaFajillaPorDia()
         {
             string fechaRegistro = dateTimePicker1.Value.ToString("yyyy-MM-dd");
-            Console.WriteLine(fechaRegistro);
 
             MySqlConnection conn;
             Conexion conexion = new Conexion();
@@ -82,8 +82,14 @@ namespace Cocarsa1.ControlUsuario
 
             try
             {
-               string total1 = "SELECT SUM(monto) as 'TOTAL FROM `cocarsa`.`fajilla` WHERE fecha = '" + fechaRegistro + "';";
-               Console.WriteLine(total1);
+               MySqlCommand cmdDataBase2 = new MySqlCommand("SELECT SUM(monto) as 'TOTAL' FROM `cocarsa`.`fajilla` WHERE fecha = '" + fechaRegistro + "';",conn);
+                consulta=cmdDataBase2.ExecuteReader();
+                if (consulta.Read()) {
+                    textBox4.Text = consulta.GetDouble(0).ToString();                               
+                }
+                cmdDataBase2.Dispose();
+                consulta.Close();
+
                 MySqlCommand cmdDataBase = new MySqlCommand("SELECT idCajera as 'Cajera',monto as 'Monto',fecha as 'Fecha' FROM `cocarsa`.`fajilla` WHERE fecha = '" + fechaRegistro + "';", conn);
                 MySqlDataAdapter sda = new MySqlDataAdapter();
                 sda.SelectCommand = cmdDataBase;
@@ -105,7 +111,6 @@ namespace Cocarsa1.ControlUsuario
         void cargaFajillaPorCorte()
         {
             string fechaRegistro = dateTimePicker2.Value.ToString("yyyy-MM-dd");
-            Console.WriteLine(fechaRegistro);
 
             MySqlConnection conn;
             Conexion conexion = new Conexion();

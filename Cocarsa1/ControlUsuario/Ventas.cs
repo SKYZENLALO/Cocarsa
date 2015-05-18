@@ -150,6 +150,9 @@ namespace Cocarsa1.ControlUsuario
             Double cantidadTemp;
             Double precioTemp;
             Double importeTemp;
+            if (dataGridView1.CurrentCell.Value == null) {
+                return;
+            }
 
             columna = dataGridView1.CurrentCell.ColumnIndex;
             fila = dataGridView1.CurrentCell.RowIndex;
@@ -289,6 +292,11 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
             if (e.KeyCode == Keys.F10) {
+                if(Convert.ToDouble(textBox6.Text)==0){
+                    MessageBox.Show("No se puede Guardar Nota Vacia");
+                    return;
+                }
+
                 int filas = dataGridView1.Rows.Count - 1;
                 OrdenNota[] ordenNota = new OrdenNota[11];
                 VentasDAO ventasDAO = new VentasDAO();
@@ -307,8 +315,7 @@ namespace Cocarsa1.ControlUsuario
                     ventaNota.IdCliente = 1;
                     ventaNota.Liquidada = false;
                     int nuevoId = ventasDAO.insertarVenta(ventaNota);
-                    for (int i = 0; i < filas; i++)
-                    {
+                    for (int i = 0; i < filas; i++){
                         ordenNota[i] = new OrdenNota();
                         ordenNota[i].IdNota = nuevoId;
                         ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
@@ -316,7 +323,6 @@ namespace Cocarsa1.ControlUsuario
                         ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
                         ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
                     }
-
                 }else{
                     buscarNota.Iva = Convert.ToDouble(textBox5.Text);
                     buscarNota.Total = Convert.ToDouble(textBox1.Text);
@@ -326,8 +332,7 @@ namespace Cocarsa1.ControlUsuario
                     buscarNota.IdCliente = 1;
                     buscarNota.Liquidada = false;
                     Boolean actulizarNota = ventasDAO.updateVenta(buscarNota);
-                    for (int i = 0; i < filas; i++)
-                    {
+                    for (int i = 0; i < filas; i++){
                         ordenNota[i] = new OrdenNota();
                         ordenNota[i].IdNota = buscarNota.IdNota; ;
                         ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
