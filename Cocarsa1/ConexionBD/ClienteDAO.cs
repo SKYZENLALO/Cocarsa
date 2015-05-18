@@ -81,7 +81,7 @@ namespace Cocarsa1.ConexionBD
             }
             reader.Close();
             
-            query = "SELECT * FROM larguillo WHERE idCliente = ?idCliente and liquidada = false order by fechaVenta desc";
+            query = "SELECT * FROM larguillo WHERE idCliente = ?idCliente and liquidada = false order by fechaVenta asc";
             cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("?idCliente", idCliente);
 
