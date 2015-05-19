@@ -66,7 +66,8 @@ namespace Cocarsa1.ConexionBD
 
             MySqlDataReader reader = cmd.ExecuteReader();
             while(reader.Read()) {
-                Venta nota = new VentaNota( reader.GetInt32("idNota") );
+                Venta nota = new VentaNota();
+                nota.IdGeneral = reader.GetInt32("idNota");
                 nota.IdCliente = reader.GetInt32("idCliente");
                 nota.FolioNota = reader.GetInt32("folioNota");
                 nota.Adeudo = reader.GetDouble("adeudo");
@@ -88,7 +89,8 @@ namespace Cocarsa1.ConexionBD
             reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Venta nota = new VentaLarguillo(reader.GetInt32("idLarguillo"));
+                Venta nota = new VentaLarguillo();
+                nota.IdGeneral = reader.GetInt32("idLarguillo");
                 nota.IdCliente = reader.GetInt32("idCliente");
                 nota.FolioNota = reader.GetInt32("folioLarguillo");
                 nota.Adeudo = reader.GetDouble("adeudo");

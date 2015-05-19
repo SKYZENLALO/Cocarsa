@@ -34,11 +34,12 @@ namespace Cocarsa1.ConexionBD
                 actualizarDeuda(conn);
 
                 tx.Commit();
+                ans = true;
             } 
             catch(Exception e) 
             {
-                e.ToString();
-                tx.Rollback();                
+                Console.WriteLine(e.ToString());
+                tx.Rollback();
             }
 
             conexion.cerrarConexion();
@@ -50,16 +51,16 @@ namespace Cocarsa1.ConexionBD
             String query = "";
             
             if (tipoPago.Equals("nota"))
-                query = "INSERT INTO pagoAbonoNota VALUES(?idNota,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
+                query = "INSERT INTO pagoAbonoNota(idNota,idCliente,idCajera,montoAbono,fechaAbono) VALUES(?idNota,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
             else if(tipoPago.Equals("larguillo"))
-                query = "INSERT INTO pagoAbonoLarguillo VALUES(?idLarguillo,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
+                query = "INSERT INTO pagoAbonoLarguillo(idLarguillo,idCliente,idCajera,montoAbono,fechaAbono) VALUES(?idLarguillo,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
 
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             
             if(tipoPago.Equals("nota"))
-                cmd.Parameters.AddWithValue("?idNota",pagoAbono.IdFolio);
+                cmd.Parameters.AddWithValue("?idNota",pagoAbono.IdGeneral);
             else if (tipoPago.Equals("larguillo"))
-                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdFolio);
+                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdGeneral);
 
             cmd.Parameters.AddWithValue("?idCliente", pagoAbono.IdCliente);
             cmd.Parameters.AddWithValue("?idCajera", pagoAbono.IdCajera);
@@ -75,11 +76,21 @@ namespace Cocarsa1.ConexionBD
             String query = "";
 
             if (tipoPago.Equals("nota"))
-                query = "UPDATE nota VALUES(?idNota,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
+                query = "UPDATE nota SET adeudo = ?adeudo, liquidada = ?liquidada WHERE idNota=?idNota";
             else if (tipoPago.Equals("larguillo"))
-                query = "INSERT INTO pagoAbonoLarguillo VALUES(?idLarguillo,?idCliente,?idCajera,?montoAbono,?fechaAbono)";
+                query = "UPDATE larguillo SET adeudo = ?adeudo, liquidada = ?liquidada WHERE idLarguillo=?idLarguillo";
+
+            Boolean liquidada = deuda == 0 ? true : false; 
 
             MySqlCommand cmd = new MySqlCommand(query, conexion);
+            if (tipoPago == "nota")
+                cmd.Parameters.AddWithValue("?idNota", pagoAbono.IdGeneral);
+            else
+                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdGeneral);
+            cmd.Parameters.AddWithValue("?adeudo", deuda);
+            cmd.Parameters.AddWithValue("?liquidada", liquidada);
+
+            cmd.ExecuteNonQuery();
         }
     }
 }

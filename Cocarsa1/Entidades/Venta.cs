@@ -8,6 +8,7 @@ namespace Cocarsa1.Entidades
 {
     class Venta
     {
+        private int idGeneral;
         private int idCliente;
         private int folioNota;
         private DateTime fechaVenta;
@@ -17,6 +18,11 @@ namespace Cocarsa1.Entidades
         private Boolean liquidada;
         private Double adeudo;
         private int estado;
+
+        public int IdGeneral {
+            get { return idGeneral; }
+            set { idGeneral = value; }
+        }
 
         public int IdCliente {
             get { return idCliente; }
@@ -60,5 +66,6 @@ namespace Cocarsa1.Entidades
             get { return estado; }
             set { estado = value; }
         }
+
     }
 }

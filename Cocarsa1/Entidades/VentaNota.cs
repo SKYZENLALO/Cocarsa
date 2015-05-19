@@ -17,10 +17,7 @@ namespace Cocarsa1.Entidades
 
         public VentaNota() { 
         
-        }
-
-        public VentaNota(int idNota) {
-            this.idNota = idNota;
-        }
+        }       
+        
     }
 }
