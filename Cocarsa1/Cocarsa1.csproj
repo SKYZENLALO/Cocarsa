@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConexionBD\AbonoDao.cs" />
     <Compile Include="ConexionBD\ClienteDAO.cs" />
     <Compile Include="ConexionBD\Conexion.cs" />
+    <Compile Include="ConexionBD\LarguilloDao.cs" />
     <Compile Include="ConexionBD\VentasDAO.cs" />
     <Compile Include="ControlUsuario\Cliente.cs">
       <SubType>UserControl</SubType>
