@@ -22,6 +22,7 @@ namespace Cocarsa1.ControlUsuario
         private Boolean seleccionNota = false;
         private Boolean seleccionLarguillo = false;
 
+        private List<Venta> deudaCliente = null;
         private Cocarsa1.Entidades.Cliente cliente = null;
         
         public PagoAbonos()
@@ -130,7 +131,7 @@ namespace Cocarsa1.ControlUsuario
             textBox1.Text = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
             ClienteDao dao = new ClienteDao();
 
-            List<Venta> deudaCliente = dao.adeudoCliente(cliente.IdCliente);
+            deudaCliente = dao.adeudoCliente(cliente.IdCliente);
 
             if (deudaCliente.Count == 0)
             {
@@ -157,7 +158,7 @@ namespace Cocarsa1.ControlUsuario
                                            deuda.FechaVenta.ToString("dd-MMMM-yyyy"),
                                            deuda.Adeudo,
                                            deuda.Total,
-                                           liquidada); 
+                                           liquidada);
                   
                 }
                 else if (deuda is VentaLarguillo)
@@ -221,7 +222,7 @@ namespace Cocarsa1.ControlUsuario
                     textBox9.Select(0, textBox9.Text.Length);
                     return;
                 }
-                if (monto == 0)
+                if (monto <= 0)
                 {
                     MessageBox.Show("El monto debe ser mayor a 0.");
                     textBox9.Select(0, textBox9.Text.Length);
@@ -249,34 +250,51 @@ namespace Cocarsa1.ControlUsuario
                     }
                 }
 
+                DialogResult result = MessageBox.Show("¿Confirmas el pago de abono por $" + String.Format("{0:0.00}",monto) +"?", "Confirmación", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }                
+
                 Abono abono = new Abono();
                 abono.IdCajera = 1;
                 abono.IdCliente = cliente.IdCliente;
-                abono.MontoAbono = monto;
+                abono.MontoAbono = Math.Round(monto,2);
                 abono.FechaAbono = DateTime.Now;
-
+                
                 AbonoDao dao = new AbonoDao();
                 if (seleccionNota || seleccionLarguillo)
                 {
-                    abono.IdFolio = Convert.ToInt32(textBox5.Text);
                     Double deudaFila = Convert.ToDouble(textBox7.Text);
-                    deudaFila = Math.Round(deudaFila, 2);
+                    deudaFila = Math.Round(deudaFila, 2) - Math.Round(monto,2);
 
                     if (seleccionNota)
                     {
-                        //dao.registrarAbono(abono, "nota");
-                        dataGridView2.Rows[filaSeleccionada].Cells[2].Value = Math.Round(deudaFila, 2) - monto;
-                        if (deudaFila - monto == 0)
-                            dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                        abono.IdGeneral = deudaCliente[filaSeleccionada].IdGeneral;
                         
+                        if (dao.registrarPago(abono, Math.Round(deudaFila,2), "nota"))
+                        {
+                            dataGridView2.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
+                            if (deudaFila == 0)
+                                dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                        }
+                        else {
+                            MessageBox.Show("No se pudo registrar abono a nota.");   
+                        }                        
                     }
                     else if (seleccionLarguillo)
                     {
-                        //dao.registrarAbono(abono, "larguillo");
-                        dataGridView1.Rows[filaSeleccionada].Cells[2].Value = Math.Round(deudaFila, 2) - monto;
-                        if (deudaFila - monto == 0)
-                            dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
-                        
+                        abono.IdGeneral = deudaCliente[filaSeleccionada+dataGridView2.Rows.Count].IdGeneral;
+
+                        if (dao.registrarPago(abono, Math.Round(deudaFila, 2), "larguillo"))
+                        {
+                            dataGridView1.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
+                            if (deudaFila == 0)
+                                dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                        }
+                        else {
+                            MessageBox.Show("No se pudo registrar abono a larguillo.");
+                        }                        
                     }                    
                 }
                 else
@@ -291,16 +309,32 @@ namespace Cocarsa1.ControlUsuario
                             Double deudaFila = Convert.ToDouble(dataGridView1.Rows[filaLarguillo].Cells[2].Value);
                             if (deudaFila > 0)
                             {
-                                if (monto < deudaFila)
+                                abono.IdGeneral = deudaCliente[filaLarguillo + dataGridView2.Rows.Count].IdGeneral;
+                                if (Math.Round(monto, 2) < Math.Round(deudaFila, 2))
                                 {
-                                    dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila - monto;
-                                    monto = 0;                                    
+                                    abono.MontoAbono = Math.Round(monto, 2);
+                                    if (dao.registrarPago(abono, Math.Round(deudaFila - monto, 2), "larguillo"))
+                                    {
+                                        dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila - monto;
+                                        monto = 0;
+                                    }
+                                    else {
+                                        MessageBox.Show("No se pudo registrar abono a larguillo.");
+                                    }
                                 }
                                 else
                                 {
-                                    dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;
-                                    monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
-                                    dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
+                                    abono.MontoAbono = Math.Round(deudaFila, 2);
+                                    if (dao.registrarPago(abono, 0, "larguillo"))
+                                    {
+                                        monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
+                                        dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;                                        
+                                        dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("No se pudo registrar abono a larguillo.");
+                                    }
                                 }
                             }
                             filaLarguillo++;
@@ -313,16 +347,33 @@ namespace Cocarsa1.ControlUsuario
                             {
                                 if (deudaFila > 0)
                                 {
-                                    if (monto < deudaFila)
+                                    abono.IdGeneral = deudaCliente[filaNotas].IdGeneral;
+                                    if (Math.Round(monto,2) < Math.Round(deudaFila,2))
                                     {
-                                        dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila - monto;
-                                        monto = 0;
+                                        abono.MontoAbono = Math.Round(monto, 2);
+                                        if (dao.registrarPago(abono, Math.Round(deudaFila-monto,2), "nota"))
+                                        {
+                                            dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila - monto;
+                                            monto = 0;
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("No se pudo registrar abono a nota.");
+                                        } 
                                     }
                                     else
                                     {
-                                        dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
-                                        monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
-                                        dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
+                                        abono.MontoAbono = Math.Round(deudaFila,2);
+                                        if (dao.registrarPago(abono, 0, "nota"))
+                                        {
+                                            dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
+                                            monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
+                                            dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("No se pudo registrar abono a nota.");
+                                        }
                                     }
                                 }
                             }
@@ -337,7 +388,7 @@ namespace Cocarsa1.ControlUsuario
 
         private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Right && dataGridView2.Rows.Count > 0)
+            if (e.KeyCode == Keys.Right && dataGridView1.Rows.Count > 0)
             {
                 dataGridView1.Focus();
                 dataGridView1.Rows[0].Selected = true;
@@ -375,7 +426,7 @@ namespace Cocarsa1.ControlUsuario
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left && dataGridView1.Rows.Count > 0)
+            if (e.KeyCode == Keys.Left && dataGridView2.Rows.Count > 0)
             {
                 dataGridView2.Focus();
                 dataGridView2.Rows[0].Selected = true;
