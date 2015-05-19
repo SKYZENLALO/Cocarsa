@@ -9,7 +9,7 @@ namespace Cocarsa1.ConexionBD
 {
     class Conexion
     {
-        static String conn = "SERVER=localhost; DATABASE=cocarsa; UID=root; PASSWORD=root";
+        static String conn = "SERVER=localhost; DATABASE=cocarsa; UID=root; PASSWORD=pass";
 
         public MySqlConnection conexion = null;
 

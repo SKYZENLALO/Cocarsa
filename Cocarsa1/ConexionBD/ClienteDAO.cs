@@ -59,7 +59,7 @@ namespace Cocarsa1.ConexionBD
             Conexion conexion = new Conexion();
             MySqlConnection conn = conexion.abrirConexion();
 
-            String query = "SELECT * FROM nota WHERE idCliente = ?idCliente and liquidada = false order by fechaVenta asc";
+            String query = "SELECT * FROM nota WHERE idCliente = ?idCliente and liquidada = false and estado = 1 order by fechaVenta asc";
 
             MySqlCommand cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("?idCliente", idCliente);
