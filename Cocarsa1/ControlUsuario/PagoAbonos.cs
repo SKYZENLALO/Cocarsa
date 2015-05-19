@@ -46,33 +46,86 @@ namespace Cocarsa1.ControlUsuario
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape) {
+                textBox1.Text = "";            
                 limpiarPantalla();
             }
         }
-        
+
+        public void reiniciaPago() 
+        {
+            textBox8.Text = "GENERAL";            
+            textBox7.Text = "0.0";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            filaSeleccionada = 0;
+            seleccionNota = false;
+            seleccionLarguillo = false;
+
+            dataGridView1.ClearSelection();
+            dataGridView2.ClearSelection();
+            textBox9.Text = "0.0";
+            textBox9.Focus();
+            textBox9.Select(0, textBox9.Text.Length);            
+        }
+
         public void limpiarPantalla()
         {
-            textBox1.Text = "";
-            textBox6.Text = "0.0";
+            textBox2.Text = "0.0";
+            textBox3.Text = "0.0";
+            textBox4.Text = "0.0";
             textBox7.Text = "0.0";
-            textBox8.Text = "0.0";
-
+            textBox9.Text = "0.0";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox8.Text = "GENERAL";
+            
             deudaNota = 0;
             deudaLarguillo = 0;
             deudaTotal = 0;
-            
+
+            groupBox2.Enabled = false;
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
             filaSeleccionada = 0;
             seleccionNota = false;
             seleccionLarguillo = false;
+        }
 
+        private void calcularTotales() {
+
+            deudaNota = 0;
+            deudaLarguillo = 0;
+            deudaTotal = 0;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows) 
+            {
+                deudaLarguillo += Convert.ToDouble(row.Cells[2].Value);
+            }
+
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                deudaNota += Convert.ToDouble(row.Cells[2].Value);
+            }
+
+            deudaNota = Math.Round((deudaNota), 2);
+            deudaLarguillo = Math.Round((deudaLarguillo),2);
+            deudaTotal = Math.Round((deudaNota + deudaLarguillo),2);
+
+            if (deudaTotal == 0)
+                groupBox2.Enabled = false;
+
+            textBox4.Text = deudaTotal + "";
+            textBox2.Text = deudaNota + "";
+            textBox3.Text = deudaLarguillo + "";
         }
 
         public void cargaDeudaCliente()
         {
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
+            deudaNota = 0;
+            deudaLarguillo = 0;
+            deudaTotal = 0;
             
             textBox1.Text = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
             ClienteDao dao = new ClienteDao();
@@ -81,20 +134,16 @@ namespace Cocarsa1.ControlUsuario
 
             if (deudaCliente.Count == 0)
             {
-                groupBox2.Enabled = false;
-                textBox5.Text = "Pago General";
-                textBox6.Text = "0.0";
-                textBox7.Text = "0.0";
-                textBox8.Text = "0.0"; 
-                MessageBox.Show("El cliente no tiene adeudos.");                
+                limpiarPantalla();
+                MessageBox.Show("El cliente no tiene adeudos.");
 
                 return;
             }
             else
             {
                 groupBox2.Enabled = true;
-                textBox2.Focus();
-                textBox2.Select(0, textBox2.Text.Length);
+                textBox9.Focus();
+                textBox9.Select(0, textBox9.Text.Length);
             }
 
             foreach(Venta deuda in deudaCliente) 
@@ -124,13 +173,13 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
 
-            textBox7.Text = String.Format("{0:0.00}",deudaNota);
-            textBox8.Text = String.Format("{0:0.00}",deudaLarguillo);
+            textBox2.Text = String.Format("{0:0.00}",deudaNota);
+            textBox3.Text = String.Format("{0:0.00}",deudaLarguillo);
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
 
             deudaTotal = deudaNota + deudaLarguillo;
-            textBox6.Text = String.Format("{0:0.00}",deudaTotal);
+            textBox4.Text = String.Format("{0:0.00}",deudaTotal);
         }
 
         private void registrar_abono(object sender, KeyEventArgs e)
@@ -144,9 +193,10 @@ namespace Cocarsa1.ControlUsuario
             
             if (e.KeyCode == Keys.Escape) 
             {
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "Pago General";
+                textBox5.Text = "";
+                textBox6.Text = "";
+                textBox7.Text = "0.0";
+                textBox8.Text = "GENERAL";
                 filaSeleccionada = 0;
                 seleccionNota = false;
                 seleccionLarguillo = false;
@@ -154,28 +204,49 @@ namespace Cocarsa1.ControlUsuario
             }
             
             if (e.KeyCode == Keys.F10) 
-            {                
+            {
+                e.SuppressKeyPress = true;
                 Double monto = 0;
                 try 
                 {
-                    monto = Convert.ToDouble(textBox2.Text);
-                } catch(Exception exception) {
+                    monto = Convert.ToDouble(textBox9.Text);
+                    monto = Math.Round(monto,2);
+                } 
+                catch(Exception exception) 
+                {                    
+                    exception.ToString();
                     MessageBox.Show("Debes ingresar un monto válido");
-                    textBox2.Text = "0.0";
-                    textBox2.Focus();
-                    textBox2.Select(0, textBox2.Text.Length);
+                    textBox9.Text = "0.0";
+                    textBox9.Focus();
+                    textBox9.Select(0, textBox9.Text.Length);
                     return;
                 }
                 if (monto == 0)
                 {
                     MessageBox.Show("El monto debe ser mayor a 0.");
-                    textBox2.Select(0, textBox2.Text.Length);
+                    textBox9.Select(0, textBox9.Text.Length);
                     return;
                 }
-                if (monto > Convert.ToInt32(textBox6.Text)) {
-                    MessageBox.Show("El monto es mayor a la deuda total del cliente.");
-                    textBox2.Select(0, textBox2.Text.Length);
-                    return;
+
+                if (seleccionNota || seleccionLarguillo)
+                {
+                    if (monto > Convert.ToDouble(textBox7.Text))
+                    {
+                        String texto = seleccionLarguillo ? "del larguillo." : "de la nota.";
+
+                        MessageBox.Show("El monto es mayor a la deuda " + texto);
+                        textBox9.Select(0, textBox9.Text.Length);
+                        return;
+                    }
+                }
+                else 
+                {
+                    if (monto > Convert.ToDouble(textBox4.Text))
+                    {
+                        MessageBox.Show("El monto es mayor a la deuda total del cliente.");
+                        textBox9.Select(0, textBox9.Text.Length);
+                        return;
+                    }
                 }
 
                 Abono abono = new Abono();
@@ -186,19 +257,81 @@ namespace Cocarsa1.ControlUsuario
 
                 AbonoDao dao = new AbonoDao();
                 if (seleccionNota || seleccionLarguillo)
-                {                    
-                    abono.IdFolio = Convert.ToInt32(textBox3.Text);
+                {
+                    abono.IdFolio = Convert.ToInt32(textBox5.Text);
+                    Double deudaFila = Convert.ToDouble(textBox7.Text);
+                    deudaFila = Math.Round(deudaFila, 2);
 
                     if (seleccionNota)
-                        dao.registrarAbono(abono, "nota");
+                    {
+                        //dao.registrarAbono(abono, "nota");
+                        dataGridView2.Rows[filaSeleccionada].Cells[2].Value = Math.Round(deudaFila, 2) - monto;
+                        if (deudaFila - monto == 0)
+                            dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                        
+                    }
                     else if (seleccionLarguillo)
-                        dao.registrarAbono(abono, "larguillo");
+                    {
+                        //dao.registrarAbono(abono, "larguillo");
+                        dataGridView1.Rows[filaSeleccionada].Cells[2].Value = Math.Round(deudaFila, 2) - monto;
+                        if (deudaFila - monto == 0)
+                            dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                        
+                    }                    
                 }
-                else 
-                { 
-                
-                }
+                else
+                {
+                    int filaLarguillo = 0;
+                    int filaNotas = 0;
 
+                    while (monto > 0)
+                    {
+                        if (filaLarguillo < dataGridView1.Rows.Count)
+                        {
+                            Double deudaFila = Convert.ToDouble(dataGridView1.Rows[filaLarguillo].Cells[2].Value);
+                            if (deudaFila > 0)
+                            {
+                                if (monto < deudaFila)
+                                {
+                                    dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila - monto;
+                                    monto = 0;                                    
+                                }
+                                else
+                                {
+                                    dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;
+                                    monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
+                                    dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
+                                }
+                            }
+                            filaLarguillo++;
+                        }
+                        else if (filaNotas < dataGridView2.Rows.Count)
+                        {
+                            Double deudaFila = Convert.ToDouble(dataGridView2.Rows[filaNotas].Cells[2].Value);
+
+                            if (filaNotas < dataGridView2.Rows.Count)
+                            {
+                                if (deudaFila > 0)
+                                {
+                                    if (monto < deudaFila)
+                                    {
+                                        dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila - monto;
+                                        monto = 0;
+                                    }
+                                    else
+                                    {
+                                        dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
+                                        monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
+                                        dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
+                                    }
+                                }
+                            }
+                            filaNotas++;
+                        }
+                    }                    
+                }
+                calcularTotales();
+                reiniciaPago();
             }
         }
 
@@ -216,28 +349,27 @@ namespace Cocarsa1.ControlUsuario
             {
                 e.Handled = true;
                 filaSeleccionada = dataGridView2.CurrentCell.RowIndex;
-                textBox3.Text = dataGridView2.Rows[filaSeleccionada].Cells[0].Value.ToString();
-                textBox4.Text = dataGridView2.Rows[filaSeleccionada].Cells[1].Value.ToString();
-                textBox5.Text = "Pago de Nota";
+                
+                if (dataGridView2.Rows[filaSeleccionada].Cells[2].Value.ToString() == "0")
+                {
+                    MessageBox.Show("La nota ya está liquidada.");
+                    return;
+                }
+
+                textBox5.Text = dataGridView2.Rows[filaSeleccionada].Cells[0].Value.ToString();
+                textBox6.Text = dataGridView2.Rows[filaSeleccionada].Cells[1].Value.ToString();
+                textBox7.Text = dataGridView2.Rows[filaSeleccionada].Cells[2].Value.ToString();
+                textBox8.Text = "NOTA";                
                 seleccionLarguillo = false;
                 seleccionNota = true;
-                textBox2.Focus();
-                textBox2.Select(0, textBox2.Text.Length);
+                textBox9.Focus();
+                textBox9.Select(0, textBox9.Text.Length);
                 dataGridView2.ClearSelection();
             }
 
             if (e.KeyCode == Keys.Escape)
             {
-                textBox5.Text = "Pago General";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                filaSeleccionada = 0;
-                seleccionNota = false;
-                seleccionLarguillo = false;
-
-                dataGridView2.ClearSelection();
-                textBox2.Focus();
-                textBox2.Select(0, textBox2.Text.Length);
+                reiniciaPago();
             }        
         }
 
@@ -255,28 +387,26 @@ namespace Cocarsa1.ControlUsuario
             {
                 e.Handled = true;
                 filaSeleccionada = dataGridView1.CurrentCell.RowIndex;
-                textBox3.Text = dataGridView1.Rows[filaSeleccionada].Cells[0].Value.ToString();
-                textBox4.Text = dataGridView1.Rows[filaSeleccionada].Cells[1].Value.ToString();
-                textBox5.Text = "Pago de Larguillo";
+
+                if (dataGridView1.Rows[filaSeleccionada].Cells[2].Value.ToString() == "0") {
+                    MessageBox.Show("El larguillo ya está liquidado.");
+                    return;
+                }
+
+                textBox5.Text = dataGridView1.Rows[filaSeleccionada].Cells[0].Value.ToString();
+                textBox6.Text = dataGridView1.Rows[filaSeleccionada].Cells[1].Value.ToString();
+                textBox7.Text = dataGridView1.Rows[filaSeleccionada].Cells[2].Value.ToString();
+                textBox8.Text = "LARGUILLO";
                 seleccionLarguillo = true;
                 seleccionNota = false;
-                textBox2.Focus();
-                textBox2.Select(0, textBox2.Text.Length);
+                textBox9.Focus();
+                textBox9.Select(0, textBox9.Text.Length);
                 dataGridView1.ClearSelection();
             }
 
             if (e.KeyCode == Keys.Escape)
             {
-                textBox5.Text = "Pago General";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                filaSeleccionada = 0;
-                seleccionNota = false;
-                seleccionLarguillo = false;
-
-                dataGridView1.ClearSelection();
-                textBox2.Focus();
-                textBox2.Select(0, textBox2.Text.Length);
+                reiniciaPago();
             } 
         }
 
