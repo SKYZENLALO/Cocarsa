@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Cocarsa1.ConexionBD;
 
 namespace Cocarsa1.ControlUsuario
 {
@@ -17,24 +18,35 @@ namespace Cocarsa1.ControlUsuario
             InitializeComponent();
         }
 
-        private void groupBox11_Enter(object sender, EventArgs e)
+        private void carga_idProducto(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter)) 
+            {
+                if (textBox1.Text.Trim().Equals(""))
+                {
+                    // obtener nuevo id para guardar nuevo producto
+                }
+                else {
+                    int idProducto = 0;
+                    
+                    try {
+                        idProducto = Convert.ToInt32(textBox1.Text);
+                    } catch(Exception ex) {
+                        ex.ToString();
+                        textBox1.Text = "";
+                        MessageBox.Show("Ingresa un valor númerico.");
+                        return;
+                    }
 
-        }
+                    // busca si el id existe, si existe puede modificar el producto cargado
+                    ProductoDao dao = new ProductoDao();
+                    dao.obtenerProducto(idProducto);
 
-        private void dataGridView8_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+                    // si el id no existe guarda un nuevo producto
+                    
 
-        }
-
-        private void dataGridView6_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dataGridView6_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-
+                }
+            }
         }
     }
 }

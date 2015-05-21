@@ -51,6 +51,7 @@
     <Compile Include="ConexionBD\ClienteDAO.cs" />
     <Compile Include="ConexionBD\Conexion.cs" />
     <Compile Include="ConexionBD\LarguilloDao.cs" />
+    <Compile Include="ConexionBD\ProductoDao.cs" />
     <Compile Include="ConexionBD\VentasDAO.cs" />
     <Compile Include="ControlUsuario\Cliente.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup.resx">
+      <DependentUpon>Popup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
