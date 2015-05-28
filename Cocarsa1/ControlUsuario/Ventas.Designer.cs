@@ -120,6 +120,7 @@
             this.checkBox1.Text = "LIQUIDAR  NOTA";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.checkBox1_MouseDown);
             // 
             // textBox3
             // 
@@ -183,6 +184,7 @@
             this.textBox4.TabIndex = 35;
             this.textBox4.Text = "100.00";
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox4_KeyDown);
             // 
             // label26
             // 
