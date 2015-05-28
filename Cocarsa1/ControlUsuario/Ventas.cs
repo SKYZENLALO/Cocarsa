@@ -17,35 +17,29 @@ namespace Cocarsa1.ControlUsuario
         private Boolean flag = false;
         private int columna=0;
         private int fila=0;
+        private int idCliente = 1;
 
         public Ventas()
         {
             InitializeComponent();
             dataGridView1.Enabled = false;
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
-            {
-                checkBox2.Visible = true;
-                textBox4.Enabled = false;                
-            }
-            else {
-                checkBox2.Visible = false;
-                textBox4.Enabled = true;
-                textBox4.Focus();                
-            }
+            
         }
 
         private void limpiarPantalla() {
             dataGridView1.Rows.Clear();
-            textBox7.Clear();
+            textBox7.Text = "0";
             textBox1.Text = "0";
             textBox5.Text = "0";
             textBox6.Text = "0";
             textBox3.Clear();
-            textBox4.Clear();
+            textBox4.Text = "0";
             textBox8.Clear();
         }
 
@@ -66,6 +60,8 @@ namespace Cocarsa1.ControlUsuario
                     dataGridView1.Focus();
                     dataGridView1.Rows[0].Cells[0].Selected = true;
                     textBox2.Enabled = false;
+                    checkBox1.Enabled = true;
+                    checkBox2.Enabled = true;
                 }
                 else
                 {
@@ -92,6 +88,7 @@ namespace Cocarsa1.ControlUsuario
                         textBox1.Text = notaCargar.Subtotal.ToString();
                         textBox5.Text = notaCargar.Iva.ToString();
                         textBox6.Text = notaCargar.Total.ToString();
+                        checkBox1.Checked = notaCargar.Liquidada;
 
                         if (notaCargar.IdCliente == 1)
                         {
@@ -112,6 +109,8 @@ namespace Cocarsa1.ControlUsuario
                                 dataGridView1.Focus();
                                 dataGridView1.Rows[0].Cells[0].Selected = true;
                                 textBox2.Enabled = false;
+                                checkBox1.Enabled = true;
+                                checkBox2.Enabled = true;
                                 break;
                             case 3:
                                 textBox8.Text = "Nota Facturada";
@@ -292,65 +291,115 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
             if (e.KeyCode == Keys.F10) {
-                if(Convert.ToDouble(textBox6.Text)==0){
-                    MessageBox.Show("No se puede Guardar Nota Vacia");
-                    return;
-                }
-
-                int filas = dataGridView1.Rows.Count - 1;
-                OrdenNota[] ordenNota = new OrdenNota[11];
-                VentasDAO ventasDAO = new VentasDAO();
-                VentaNota ventaNota = new VentaNota();
-                VentaNota buscarNota = new VentaNota();
-
-                buscarNota = ventasDAO.buscarFolio(Convert.ToInt32(textBox2.Text));
-
-                if (buscarNota == null){
-                    ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
-                    ventaNota.Iva = Convert.ToDouble(textBox5.Text);
-                    ventaNota.Total = Convert.ToDouble(textBox1.Text);
-                    ventaNota.Subtotal = Convert.ToDouble(textBox6.Text);
-                    ventaNota.Estado = 2;
-                    ventaNota.Adeudo = 0;
-                    ventaNota.IdCliente = 1;
-                    ventaNota.Liquidada = false;
-                    int nuevoId = ventasDAO.insertarVenta(ventaNota);
-                    for (int i = 0; i < filas; i++){
-                        ordenNota[i] = new OrdenNota();
-                        ordenNota[i].IdNota = nuevoId;
-                        ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
-                        ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
-                        ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
-                        ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
-                    }
-                }else{
-                    buscarNota.Iva = Convert.ToDouble(textBox5.Text);
-                    buscarNota.Total = Convert.ToDouble(textBox1.Text);
-                    buscarNota.Subtotal = Convert.ToDouble(textBox6.Text);
-                    buscarNota.Estado = 2;
-                    buscarNota.Adeudo = 0;
-                    buscarNota.IdCliente = 1;
-                    buscarNota.Liquidada = false;
-                    Boolean actulizarNota = ventasDAO.updateVenta(buscarNota);
-                    for (int i = 0; i < filas; i++){
-                        ordenNota[i] = new OrdenNota();
-                        ordenNota[i].IdNota = buscarNota.IdNota; ;
-                        ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
-                        ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
-                        ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
-                        ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
-                    }
-                    Boolean borraOrden = ventasDAO.borrarOrden(buscarNota.IdNota);
-                }
-                Boolean insOrden = ventasDAO.insertarOrden(ordenNota);
-                dataGridView1.Rows.Clear();
-                textBox2.Enabled = true;
-                textBox2.Clear();
-                textBox2.Focus();
-                dataGridView1.Enabled = false;
-                MessageBox.Show("Nota "+textBox2.Text+" Guardada");
+                terminarNota(2);
             }
         }
 
+        private void terminarNota(int opcion) {
+            if (Convert.ToDouble(textBox6.Text) == 0)
+            {
+                MessageBox.Show("No se puede Guardar Nota Vacia");
+                return;
+            }
+
+            int filas = dataGridView1.Rows.Count - 1;
+            OrdenNota[] ordenNota = new OrdenNota[11];
+            VentasDAO ventasDAO = new VentasDAO();
+            VentaNota ventaNota = new VentaNota();
+            VentaNota buscarNota = new VentaNota();
+
+            buscarNota = ventasDAO.buscarFolio(Convert.ToInt32(textBox2.Text));
+
+            if (buscarNota == null)
+            {
+                ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
+                ventaNota.Iva = Convert.ToDouble(textBox5.Text);
+                ventaNota.Total = Convert.ToDouble(textBox1.Text);
+                ventaNota.Subtotal = Convert.ToDouble(textBox6.Text);
+                ventaNota.Estado = opcion;
+                ventaNota.Adeudo = Convert.ToDouble(textBox7.Text);
+                ventaNota.IdCliente = idCliente;
+                ventaNota.Liquidada = checkBox1.Checked;
+                int nuevoId = ventasDAO.insertarVenta(ventaNota);
+                for (int i = 0; i < filas; i++)
+                {
+                    ordenNota[i] = new OrdenNota();
+                    ordenNota[i].IdNota = nuevoId;
+                    ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
+                    ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
+                    ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
+                    ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
+                }
+            }
+            else
+            {
+                buscarNota.Iva = Convert.ToDouble(textBox5.Text);
+                buscarNota.Total = Convert.ToDouble(textBox1.Text);
+                buscarNota.Subtotal = Convert.ToDouble(textBox6.Text);
+                buscarNota.Estado = opcion;
+                buscarNota.Adeudo = Convert.ToDouble(textBox7.Text);
+                buscarNota.IdCliente = buscarNota.IdCliente;
+                buscarNota.Liquidada = checkBox1.Checked;
+                Boolean actulizarNota = ventasDAO.updateVenta(buscarNota);
+                for (int i = 0; i < filas; i++)
+                {
+                    ordenNota[i] = new OrdenNota();
+                    ordenNota[i].IdNota = buscarNota.IdNota; ;
+                    ordenNota[i].IdProducto = Convert.ToInt32(dataGridView1[0, i].Value);
+                    ordenNota[i].Cantidad = Convert.ToDouble(dataGridView1[2, i].Value);
+                    ordenNota[i].PrecioVenta = Convert.ToDouble(dataGridView1[3, i].Value);
+                    ordenNota[i].Importe = Convert.ToDouble(dataGridView1[4, i].Value);
+                }
+                Boolean borraOrden = ventasDAO.borrarOrden(buscarNota.IdNota);
+            }
+            Boolean insOrden = ventasDAO.insertarOrden(ordenNota);
+            dataGridView1.Rows.Clear();
+            textBox2.Enabled = true;
+            textBox2.Clear();
+            textBox2.Focus();
+            dataGridView1.Enabled = false;
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
+            MessageBox.Show("Nota " + textBox2.Text + " Guardada");
+        }
+
+        private void textBox4_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                
+                textBox7.Text = ((Convert.ToDouble(textBox6.Text)) - (Convert.ToDouble(textBox4.Text))).ToString();
+                //Darle la opcion de acabarla nota IMPRIMIR o seguir editando
+                
+            }
+        }
+
+        private void checkBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            Entidades.Cliente cliente = null;
+            if (Convert.ToDouble(textBox6.Text) == 0)
+            {
+                MessageBox.Show("Necesitas llenar la nota");
+                checkBox1.Checked = true;
+                return;
+            }
+            checkBox1.Checked = !checkBox1.Checked;
+            if (checkBox1.Checked == true){
+                checkBox2.Visible = true;
+                textBox4.Enabled = false;
+            }else{
+                Popup popup = new Popup();
+                checkBox1.Enabled = false;
+                if (popup.ShowDialog() == DialogResult.OK){
+                    cliente = popup.ClienteSeleccionado;
+                    idCliente = cliente.IdCliente;
+                    textBox3.Text = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
+                }
+                checkBox2.Visible = false;
+                textBox4.Enabled = true;
+                textBox4.Focus();
+            }
+        }
     }
 }
