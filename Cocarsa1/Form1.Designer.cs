@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.TabControl = new System.Windows.Forms.TabControl();
-            this.ventas1 = new Cocarsa1.ControlUsuario.Ventas();
-            this.pagoAbonos1 = new Cocarsa1.ControlUsuario.PagoAbonos();
-            this.fajillas1 = new Cocarsa1.ControlUsuario.Fajillas();
-            this.producto1 = new Cocarsa1.ControlUsuario.Producto();
-            this.cliente1 = new Cocarsa1.ControlUsuario.Cliente();
-            this.inventario1 = new Cocarsa1.ControlUsuario.Inventario();
-            this.gastos1 = new Cocarsa1.ControlUsuario.Gastos();
             this.reportes1 = new Cocarsa1.ControlUsuario.Reportes();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.gastos1 = new Cocarsa1.ControlUsuario.Gastos();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.inventario1 = new Cocarsa1.ControlUsuario.Inventario();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.cliente1 = new Cocarsa1.ControlUsuario.Cliente();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.producto1 = new Cocarsa1.ControlUsuario.Producto();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.fajillas1 = new Cocarsa1.ControlUsuario.Fajillas();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pagoAbonos1 = new Cocarsa1.ControlUsuario.PagoAbonos();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ventas1 = new Cocarsa1.ControlUsuario.Ventas();
+            this.TabControl = new System.Windows.Forms.TabControl();
             this.tabPage7.SuspendLayout();
             this.tabPage9.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -68,6 +68,17 @@
             this.tabPage7.Text = " Reportes ";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // reportes1
+            // 
+            this.reportes1.BackColor = System.Drawing.Color.White;
+            this.reportes1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.reportes1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reportes1.Location = new System.Drawing.Point(0, 0);
+            this.reportes1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.reportes1.Name = "reportes1";
+            this.reportes1.Size = new System.Drawing.Size(1340, 662);
+            this.reportes1.TabIndex = 0;
+            // 
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.gastos1);
@@ -80,6 +91,16 @@
             this.tabPage9.Text = " Gastos ";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
+            // gastos1
+            // 
+            this.gastos1.BackColor = System.Drawing.Color.White;
+            this.gastos1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gastos1.Location = new System.Drawing.Point(0, 0);
+            this.gastos1.Margin = new System.Windows.Forms.Padding(5);
+            this.gastos1.Name = "gastos1";
+            this.gastos1.Size = new System.Drawing.Size(2010, 1120);
+            this.gastos1.TabIndex = 0;
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.inventario1);
@@ -90,6 +111,15 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = " Inventario ";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // inventario1
+            // 
+            this.inventario1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inventario1.Location = new System.Drawing.Point(0, 0);
+            this.inventario1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.inventario1.Name = "inventario1";
+            this.inventario1.Size = new System.Drawing.Size(1340, 662);
+            this.inventario1.TabIndex = 0;
             // 
             // tabPage5
             // 
@@ -102,6 +132,15 @@
             this.tabPage5.Text = " Cliente ";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // cliente1
+            // 
+            this.cliente1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cliente1.Location = new System.Drawing.Point(0, 0);
+            this.cliente1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cliente1.Name = "cliente1";
+            this.cliente1.Size = new System.Drawing.Size(1340, 662);
+            this.cliente1.TabIndex = 0;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.producto1);
@@ -112,6 +151,16 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = " Producto ";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // producto1
+            // 
+            this.producto1.BackColor = System.Drawing.Color.White;
+            this.producto1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.producto1.Location = new System.Drawing.Point(0, 0);
+            this.producto1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.producto1.Name = "producto1";
+            this.producto1.Size = new System.Drawing.Size(1340, 662);
+            this.producto1.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -124,6 +173,17 @@
             this.tabPage3.Text = " Fajillas ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // fajillas1
+            // 
+            this.fajillas1.AutoSize = true;
+            this.fajillas1.BackColor = System.Drawing.Color.White;
+            this.fajillas1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fajillas1.Location = new System.Drawing.Point(0, 0);
+            this.fajillas1.Margin = new System.Windows.Forms.Padding(5);
+            this.fajillas1.Name = "fajillas1";
+            this.fajillas1.Size = new System.Drawing.Size(1629, 677);
+            this.fajillas1.TabIndex = 0;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.pagoAbonos1);
@@ -134,6 +194,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = " Pago Abonos ";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pagoAbonos1
+            // 
+            this.pagoAbonos1.BackColor = System.Drawing.Color.White;
+            this.pagoAbonos1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pagoAbonos1.Location = new System.Drawing.Point(0, 0);
+            this.pagoAbonos1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.pagoAbonos1.Name = "pagoAbonos1";
+            this.pagoAbonos1.Size = new System.Drawing.Size(1340, 662);
+            this.pagoAbonos1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -146,6 +216,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = " Ventas ";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ventas1
+            // 
+            this.ventas1.BackColor = System.Drawing.Color.White;
+            this.ventas1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ventas1.Location = new System.Drawing.Point(0, 0);
+            this.ventas1.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
+            this.ventas1.Name = "ventas1";
+            this.ventas1.Size = new System.Drawing.Size(1340, 662);
+            this.ventas1.TabIndex = 0;
+            this.ventas1.Load += new System.EventHandler(this.ventas1_Load);
             // 
             // TabControl
             // 
@@ -165,85 +246,6 @@
             this.TabControl.Size = new System.Drawing.Size(1348, 729);
             this.TabControl.TabIndex = 0;
             // 
-            // ventas1
-            // 
-            this.ventas1.BackColor = System.Drawing.Color.White;
-            this.ventas1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ventas1.Location = new System.Drawing.Point(0, 0);
-            this.ventas1.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
-            this.ventas1.Name = "ventas1";
-            this.ventas1.Size = new System.Drawing.Size(1340, 662);
-            this.ventas1.TabIndex = 0;
-            this.ventas1.Load += new System.EventHandler(this.ventas1_Load);
-            // 
-            // pagoAbonos1
-            // 
-            this.pagoAbonos1.BackColor = System.Drawing.Color.White;
-            this.pagoAbonos1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pagoAbonos1.Location = new System.Drawing.Point(0, 0);
-            this.pagoAbonos1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.pagoAbonos1.Name = "pagoAbonos1";
-            this.pagoAbonos1.Size = new System.Drawing.Size(1340, 662);
-            this.pagoAbonos1.TabIndex = 0;
-            // 
-            // fajillas1
-            // 
-            this.fajillas1.BackColor = System.Drawing.Color.White;
-            this.fajillas1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fajillas1.Location = new System.Drawing.Point(0, 0);
-            this.fajillas1.Margin = new System.Windows.Forms.Padding(5);
-            this.fajillas1.Name = "fajillas1";
-            this.fajillas1.Size = new System.Drawing.Size(1629, 662);
-            this.fajillas1.TabIndex = 0;
-            // 
-            // producto1
-            // 
-            this.producto1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.producto1.Location = new System.Drawing.Point(0, 0);
-            this.producto1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.producto1.Name = "producto1";
-            this.producto1.Size = new System.Drawing.Size(1340, 662);
-            this.producto1.TabIndex = 0;
-            // 
-            // cliente1
-            // 
-            this.cliente1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cliente1.Location = new System.Drawing.Point(0, 0);
-            this.cliente1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cliente1.Name = "cliente1";
-            this.cliente1.Size = new System.Drawing.Size(1340, 662);
-            this.cliente1.TabIndex = 0;
-            // 
-            // inventario1
-            // 
-            this.inventario1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inventario1.Location = new System.Drawing.Point(0, 0);
-            this.inventario1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.inventario1.Name = "inventario1";
-            this.inventario1.Size = new System.Drawing.Size(1340, 662);
-            this.inventario1.TabIndex = 0;
-            // 
-            // gastos1
-            // 
-            this.gastos1.BackColor = System.Drawing.Color.White;
-            this.gastos1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gastos1.Location = new System.Drawing.Point(0, 0);
-            this.gastos1.Margin = new System.Windows.Forms.Padding(5);
-            this.gastos1.Name = "gastos1";
-            this.gastos1.Size = new System.Drawing.Size(2010, 1120);
-            this.gastos1.TabIndex = 0;
-            // 
-            // reportes1
-            // 
-            this.reportes1.BackColor = System.Drawing.Color.White;
-            this.reportes1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.reportes1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reportes1.Location = new System.Drawing.Point(0, 0);
-            this.reportes1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.reportes1.Name = "reportes1";
-            this.reportes1.Size = new System.Drawing.Size(1340, 662);
-            this.reportes1.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -255,6 +257,7 @@
             this.MaximumSize = new System.Drawing.Size(1591, 880);
             this.MinimumSize = new System.Drawing.Size(1364, 726);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cocarsa";
             this.tabPage7.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
@@ -262,6 +265,7 @@
             this.tabPage5.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.TabControl.ResumeLayout(false);

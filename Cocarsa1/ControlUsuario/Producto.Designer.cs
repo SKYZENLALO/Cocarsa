@@ -28,14 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.dataGridView6 = new System.Windows.Forms.DataGridView();
-            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fechaCambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.label45 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
@@ -43,25 +39,144 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
+            this.dataGridView6 = new System.Windows.Forms.DataGridView();
+            this.Product = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fechaCambio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox12
+            // groupBox11
             // 
-            this.groupBox12.Controls.Add(this.dataGridView6);
-            this.groupBox12.Controls.Add(this.dateTimePicker5);
-            this.groupBox12.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
-            this.groupBox12.Location = new System.Drawing.Point(80, 187);
-            this.groupBox12.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox12.Size = new System.Drawing.Size(1173, 463);
-            this.groupBox12.TabIndex = 3;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Historial Precios";
+            this.groupBox11.Controls.Add(this.label2);
+            this.groupBox11.Controls.Add(this.textBox4);
+            this.groupBox11.Controls.Add(this.label45);
+            this.groupBox11.Controls.Add(this.label44);
+            this.groupBox11.Controls.Add(this.label43);
+            this.groupBox11.Controls.Add(this.label42);
+            this.groupBox11.Controls.Add(this.textBox2);
+            this.groupBox11.Controls.Add(this.textBox3);
+            this.groupBox11.Controls.Add(this.textBox1);
+            this.groupBox11.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
+            this.groupBox11.Location = new System.Drawing.Point(119, 15);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox11.Size = new System.Drawing.Size(1094, 164);
+            this.groupBox11.TabIndex = 2;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Productos";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label2.Location = new System.Drawing.Point(75, 96);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(62, 22);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Estado";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Enabled = false;
+            this.textBox4.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox4.Location = new System.Drawing.Point(145, 93);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(209, 29);
+            this.textBox4.TabIndex = 7;
+            this.textBox4.Text = "NUEVO";
+            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(925, 96);
+            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(119, 27);
+            this.label45.TabIndex = 6;
+            this.label45.Text = "F10 Guardar";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label44.Location = new System.Drawing.Point(440, 93);
+            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(129, 22);
+            this.label44.TabIndex = 5;
+            this.label44.Text = "Precio de Venta";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label43.Location = new System.Drawing.Point(469, 51);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(100, 22);
+            this.label43.TabIndex = 4;
+            this.label43.Text = "Descripcion";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label42.Location = new System.Drawing.Point(87, 51);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(50, 22);
+            this.label42.TabIndex = 3;
+            this.label42.Text = "Clave";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Open Sans", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox2.Location = new System.Drawing.Point(577, 90);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(209, 33);
+            this.textBox2.TabIndex = 2;
+            this.textBox2.Text = "0.0";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cancelar);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox3.Location = new System.Drawing.Point(577, 48);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(467, 29);
+            this.textBox3.TabIndex = 1;
+            this.textBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.guardar_cambios);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cancelar);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.textBox1.Location = new System.Drawing.Point(145, 48);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(209, 29);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.carga_idProducto);
             // 
             // dataGridView6
             // 
@@ -69,40 +184,40 @@
             this.dataGridView6.AllowUserToDeleteRows = false;
             this.dataGridView6.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView6.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView6.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView6.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Product,
             this.fechaCambio,
             this.precio});
             this.dataGridView6.EnableHeadersVisualStyles = false;
-            this.dataGridView6.Location = new System.Drawing.Point(63, 94);
+            this.dataGridView6.Location = new System.Drawing.Point(119, 266);
             this.dataGridView6.Margin = new System.Windows.Forms.Padding(6, 10, 6, 10);
             this.dataGridView6.Name = "dataGridView6";
             this.dataGridView6.RowTemplate.Height = 32;
-            this.dataGridView6.Size = new System.Drawing.Size(1044, 351);
-            this.dataGridView6.TabIndex = 38;
+            this.dataGridView6.Size = new System.Drawing.Size(1094, 337);
+            this.dataGridView6.TabIndex = 40;
             // 
             // Product
             // 
             this.Product.HeaderText = "PRODUCTO";
             this.Product.Name = "Product";
             this.Product.ReadOnly = true;
-            this.Product.Width = 400;
+            this.Product.Width = 440;
             // 
             // fechaCambio
             // 
             this.fechaCambio.HeaderText = "FECHA DE CAMBIO";
             this.fechaCambio.Name = "fechaCambio";
             this.fechaCambio.ReadOnly = true;
-            this.fechaCambio.Width = 300;
+            this.fechaCambio.Width = 310;
             // 
             // precio
             // 
@@ -115,133 +230,47 @@
             // 
             this.dateTimePicker5.CustomFormat = "MM/yyyy";
             this.dateTimePicker5.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dateTimePicker5.Location = new System.Drawing.Point(394, 50);
+            this.dateTimePicker5.Location = new System.Drawing.Point(499, 215);
             this.dateTimePicker5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dateTimePicker5.Name = "dateTimePicker5";
             this.dateTimePicker5.Size = new System.Drawing.Size(346, 29);
-            this.dateTimePicker5.TabIndex = 0;
+            this.dateTimePicker5.TabIndex = 39;
             // 
-            // groupBox11
+            // label1
             // 
-            this.groupBox11.Controls.Add(this.label45);
-            this.groupBox11.Controls.Add(this.label44);
-            this.groupBox11.Controls.Add(this.label43);
-            this.groupBox11.Controls.Add(this.label42);
-            this.groupBox11.Controls.Add(this.textBox2);
-            this.groupBox11.Controls.Add(this.textBox3);
-            this.groupBox11.Controls.Add(this.textBox1);
-            this.groupBox11.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
-            this.groupBox11.Location = new System.Drawing.Point(80, 7);
-            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox11.Size = new System.Drawing.Size(1173, 164);
-            this.groupBox11.TabIndex = 2;
-            this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "Productos";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(988, 124);
-            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(119, 27);
-            this.label45.TabIndex = 6;
-            this.label45.Text = "F10 Guardar";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label44.Location = new System.Drawing.Point(31, 88);
-            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(129, 22);
-            this.label44.TabIndex = 5;
-            this.label44.Text = "Precio de Venta";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label43.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label43.Location = new System.Drawing.Point(488, 56);
-            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(100, 22);
-            this.label43.TabIndex = 4;
-            this.label43.Text = "Descripcion";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label42.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label42.Location = new System.Drawing.Point(110, 51);
-            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(50, 22);
-            this.label42.TabIndex = 3;
-            this.label42.Text = "Clave";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox2.Location = new System.Drawing.Point(168, 88);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(209, 29);
-            this.textBox2.TabIndex = 2;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox3.Location = new System.Drawing.Point(596, 48);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(511, 66);
-            this.textBox3.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox1.Location = new System.Drawing.Point(168, 48);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(209, 29);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.carga_idProducto);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Ubuntu Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
+            this.label1.Location = new System.Drawing.Point(115, 217);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(183, 27);
+            this.label1.TabIndex = 41;
+            this.label1.Text = "Historial de Precios";
             // 
             // Producto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.groupBox12);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dataGridView6);
+            this.Controls.Add(this.dateTimePicker5);
             this.Controls.Add(this.groupBox11);
             this.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Producto";
             this.Size = new System.Drawing.Size(1340, 662);
-            this.groupBox12.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.DateTimePicker dateTimePicker5;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label44;
@@ -250,7 +279,11 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.DateTimePicker dateTimePicker5;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Product;
         private System.Windows.Forms.DataGridViewTextBoxColumn fechaCambio;
         private System.Windows.Forms.DataGridViewTextBoxColumn precio;
