@@ -287,6 +287,10 @@ namespace Cocarsa1.ControlUsuario
             if (e.KeyCode == Keys.F10) {
                 terminarNota(2);
             }
+            if (e.KeyCode == Keys.F5)
+            {
+                terminarNota(1);
+            }
         }
 
         private void terminarNota(int opcion) {
@@ -302,8 +306,9 @@ namespace Cocarsa1.ControlUsuario
             VentaNota ventaNota = new VentaNota();
             VentaNota buscarNota = new VentaNota();
 
+            //Busca si la nota existe
             buscarNota = ventasDAO.buscarFolio(Convert.ToInt32(textBox2.Text));
-
+            //Si no existe aun la nota
             if (buscarNota == null)
             {
                 ventaNota.FolioNota = Convert.ToInt32(textBox2.Text);
@@ -327,6 +332,7 @@ namespace Cocarsa1.ControlUsuario
             }
             else
             {
+                //Si existe y hay que actualizarla 
                 buscarNota.Iva = Convert.ToDouble(textBox5.Text);
                 buscarNota.Total = Convert.ToDouble(textBox1.Text);
                 buscarNota.Subtotal = Convert.ToDouble(textBox6.Text);
@@ -347,6 +353,12 @@ namespace Cocarsa1.ControlUsuario
                 Boolean borraOrden = ventasDAO.borrarOrden(buscarNota.IdNota);
             }
             Boolean insOrden = ventasDAO.insertarOrden(ordenNota);
+            if (opcion == 1) {
+                printDocument1.PrinterSettings.PrinterName = "Citizen GSX-190";
+                printDocument1.Print();
+            }
+            
+            //Se limpia todo y se regresa al inicio
             dataGridView1.Rows.Clear();
             textBox2.Enabled = true;
             textBox2.Clear();
@@ -366,11 +378,13 @@ namespace Cocarsa1.ControlUsuario
                     MessageBox.Show("El abono exede la deuda");
                     return;
                 }
-                textBox7.Text = ((Convert.ToDouble(textBox6.Text)) - (Convert.ToDouble(textBox4.Text))).ToString();
+                Double deuda = (Convert.ToDouble(textBox6.Text)) - (Convert.ToDouble(textBox4.Text));
+                textBox7.Text = String.Format("{0:0.00}", deuda);
                 //Darle la opcion de acabarla nota IMPRIMIR o seguir editando
                 var result = MessageBox.Show("Continuar","Desea Terminar la Nota",MessageBoxButtons.OKCancel,MessageBoxIcon.Question);
                 if (result == DialogResult.OK) { 
                     //Imprimir
+                    terminarNota(1);
                 } else {
                     textBox4.Text = "0";
                     textBox7.Text = "0";
@@ -402,20 +416,66 @@ namespace Cocarsa1.ControlUsuario
             }else{
                 Popup popup = new Popup();
                 checkBox1.Enabled = false;
-                if (popup.ShowDialog() == DialogResult.OK){
+                if (popup.ShowDialog() == DialogResult.OK)
+                {
                     cliente = popup.ClienteSeleccionado;
                     idCliente = cliente.IdCliente;
                     textBox3.Text = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
+                    checkBox2.Visible = false;
+                    textBox4.Enabled = true;
+                    textBox4.Focus();
                 }
-                checkBox2.Visible = false;
-                textBox4.Enabled = true;
-                textBox4.Focus();
+                else {
+                    MessageBox.Show("Selecciona Cliente");
+                    textBox4.Text = "0";
+                    textBox7.Text = "0";
+                    textBox3.Text = "Contado";
+                    textBox4.Enabled = false;
+                    checkBox1.Enabled = true;
+                    checkBox1.Checked = true;
+                    checkBox2.Visible = true;
+                    dataGridView1.Focus();
+                    dataGridView1.CurrentCell.Selected = true;
+                }
             }
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            //e.Graphics.DrawString()
+            Font NewFont = new Font("Arial", 14, FontStyle.Regular);
+            int filas = dataGridView1.Rows.Count - 1;
+            if (checkBox1.Checked == false)
+            {
+                String cliente = textBox3.Text;
+                e.Graphics.DrawString("Cliente: " + cliente, NewFont, Brushes.Black, 500, 50);
+                String adeudo = textBox7.Text;
+                e.Graphics.DrawString("Adeudo: " + adeudo, NewFont, Brushes.Black, 500, 70);
+                String abono = textBox4.Text;
+                e.Graphics.DrawString("Abono: " + abono, NewFont, Brushes.Black, 500, 90);
+            }
+            String fecha = dateTimePicker4.Text;
+            e.Graphics.DrawString("Fecha: "+fecha, NewFont, Brushes.Black, 150, 200);
+            String folio = textBox2.Text;
+            e.Graphics.DrawString("Folio: " + folio, NewFont, Brushes.Black, 150, 220);
+            String total = textBox6.Text;
+            e.Graphics.DrawString("Total: " + total, NewFont, Brushes.Black, 250, 230);
+            
+            //Recorrer todo el grid
+            
+            for (int i = 0; i < filas; i++)
+            {
+                String IdProducto = dataGridView1[0, i].Value.ToString();
+                String Nombre = dataGridView1[1, i].Value.ToString();
+                String Cantidad = dataGridView1[2, i].Value.ToString();
+                String PrecioVenta = dataGridView1[3, i].Value.ToString();
+                String Importe = dataGridView1[4, i].Value.ToString();
+                e.Graphics.DrawString(IdProducto, NewFont, Brushes.Black, 50, 300+(i*18));
+                e.Graphics.DrawString(Nombre, NewFont, Brushes.Black, 100, 300 + (i * 18));
+                e.Graphics.DrawString(Cantidad, NewFont, Brushes.Black, 400, 300 + (i * 18));
+                e.Graphics.DrawString(PrecioVenta, NewFont, Brushes.Black, 530, 300 + (i * 18));
+                e.Graphics.DrawString(Importe, NewFont, Brushes.Black, 600, 300 + (i * 18));
+            }
+            limpiarPantalla();
         }
     }
 }

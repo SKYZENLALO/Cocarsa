@@ -162,3 +162,4 @@ D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Control
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Form1.resources
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
+D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Popup.resources
