@@ -17,9 +17,13 @@ namespace Cocarsa1.ConexionBD
             String query = "SELECT idProducto FROM producto ORDER BY idProducto desc limit 1";
 
             MySqlCommand cmd = new MySqlCommand(query, bd.abrirConexion());
-            ans = cmd.ExecuteNonQuery();
-            bd.cerrarConexion();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read()) {
+                ans = reader.GetInt32("idProducto");
+                ans++;
+            }
 
+            bd.cerrarConexion();
             return ans;
         }
         
@@ -57,6 +61,17 @@ namespace Cocarsa1.ConexionBD
 
             ans = cmd.ExecuteNonQuery();
 
+            return ans;
+        }
+
+        public int guardarCambios(ProductoE producto)
+        {
+            int ans = -1;
+
+            Conexion bd = new Conexion();
+            String query = "UPDATE produ";
+
+            MySqlCommand cmd = new MySqlCommand(query, bd.abrirConexion());
             return ans;
         }
     }

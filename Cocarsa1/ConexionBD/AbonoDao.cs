@@ -29,9 +29,9 @@ namespace Cocarsa1.ConexionBD
             try 
             {
                 tx = conn.BeginTransaction();
-                
-                registrarAbono(conn);
+
                 actualizarDeuda(conn);
+                registrarAbono(conn);                
 
                 tx.Commit();
                 ans = true;

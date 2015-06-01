@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Cocarsa1.ConexionBD;
+using Cocarsa1.Entidades;
 
 namespace Cocarsa1.ControlUsuario
 {
@@ -22,12 +23,25 @@ namespace Cocarsa1.ControlUsuario
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter)) 
             {
+                ProductoDao dao = new ProductoDao();
+                int idProducto = 0;
+
                 if (textBox1.Text.Trim().Equals(""))
                 {
                     // obtener nuevo id para guardar nuevo producto
+                    if ((idProducto = dao.obtenerIdProducto()) != -1)
+                    {
+                        textBox1.Text = idProducto.ToString();
+                        textBox4.Text = "NUEVO";
+                        textBox1.Enabled = false;
+                    }
+                    else {
+                        MessageBox.Show("Error de conexion con la base de datos.");
+                        textBox1.Text = "";
+                        textBox1.Enabled = true;
+                    }
                 }
-                else {
-                    int idProducto = 0;
+                else {                    
                     
                     try {
                         idProducto = Convert.ToInt32(textBox1.Text);
@@ -39,14 +53,47 @@ namespace Cocarsa1.ControlUsuario
                     }
 
                     // busca si el id existe, si existe puede modificar el producto cargado
-                    ProductoDao dao = new ProductoDao();
-                    dao.obtenerProducto(idProducto);
-
-                    // si el id no existe guarda un nuevo producto
-                    
-
+                    ProductoE producto = null;
+                    if ((producto = dao.obtenerProducto(idProducto)) != null)
+                    {
+                        textBox1.Enabled = false;
+                        textBox2.Text = producto.PrecioVenta.ToString();
+                        textBox3.Text = producto.Nombre.ToString();
+                        textBox4.Text = "EDITABLE";
+                    }
+                    else {
+                        textBox1.Enabled = false;
+                        textBox4.Text = "NUEVO";
+                    }
                 }
             }
         }
+
+        private void cancelar(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Escape))
+            {
+                textBox1.Text = "";
+                textBox2.Text = "0.0";
+                textBox3.Text = "";
+                textBox4.Text = "NUEVO";
+                textBox1.Enabled = true;
+                textBox1.Focus();
+                textBox1.Select(0,0);
+            }
+        }
+
+        private void guardar_cambios(object sender, KeyEventArgs e)
+        {
+            if (textBox4.Text.Equals("NUEVO"))
+            {
+
+            }
+            else { 
+                
+            }
+        }
+
+        
     }
 }
