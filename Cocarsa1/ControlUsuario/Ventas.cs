@@ -384,6 +384,9 @@ namespace Cocarsa1.ControlUsuario
                 var result = MessageBox.Show("Continuar","Desea Terminar la Nota",MessageBoxButtons.OKCancel,MessageBoxIcon.Question);
                 if (result == DialogResult.OK) { 
                     //Imprimir
+                    checkBox2.Visible = true;
+                    checkBox1.Checked = true;
+                    textBox4.Enabled = false;
                     terminarNota(1);
                 } else {
                     textBox4.Text = "0";
