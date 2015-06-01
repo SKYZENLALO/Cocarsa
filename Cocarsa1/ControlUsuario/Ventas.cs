@@ -27,11 +27,6 @@ namespace Cocarsa1.ControlUsuario
             checkBox2.Enabled = false;
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void limpiarPantalla() {
             dataGridView1.Rows.Clear();
             textBox7.Text = "0";
@@ -277,7 +272,6 @@ namespace Cocarsa1.ControlUsuario
             }
         }
 
-
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -368,9 +362,26 @@ namespace Cocarsa1.ControlUsuario
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                
+                if (Convert.ToDouble(textBox6.Text) < Convert.ToDouble(textBox4.Text)) {
+                    MessageBox.Show("El abono exede la deuda");
+                    return;
+                }
                 textBox7.Text = ((Convert.ToDouble(textBox6.Text)) - (Convert.ToDouble(textBox4.Text))).ToString();
                 //Darle la opcion de acabarla nota IMPRIMIR o seguir editando
+                var result = MessageBox.Show("Continuar","Desea Terminar la Nota",MessageBoxButtons.OKCancel,MessageBoxIcon.Question);
+                if (result == DialogResult.OK) { 
+                    //Imprimir
+                } else {
+                    textBox4.Text = "0";
+                    textBox7.Text = "0";
+                    textBox3.Text = "Contado";
+                    textBox4.Enabled = false;
+                    checkBox1.Enabled = true;
+                    checkBox1.Checked = true;
+                    checkBox2.Visible = true;
+                    dataGridView1.Focus();
+                    dataGridView1.CurrentCell.Selected = true;
+                }
                 
             }
         }
@@ -400,6 +411,11 @@ namespace Cocarsa1.ControlUsuario
                 textBox4.Enabled = true;
                 textBox4.Focus();
             }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            //e.Graphics.DrawString()
         }
     }
 }
