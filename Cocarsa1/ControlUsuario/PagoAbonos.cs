@@ -14,6 +14,18 @@ namespace Cocarsa1.ControlUsuario
 {
     public partial class PagoAbonos : UserControl
     {
+        Font fuente1 = new Font("Arial Narrow", 18, FontStyle.Regular);
+        Font fuente2 = new Font("Arial Narrow", 11, FontStyle.Bold);
+        Font fuente3 = new Font("Arial Narrow", 11, FontStyle.Regular);
+        Font fuente4 = new Font("Arial Narrow", 10, FontStyle.Regular);
+        Font fuente5 = new Font("Arial Narrow", 8, FontStyle.Regular);
+        Font fuente6 = new Font("Arial Narrow", 12, FontStyle.Regular);
+        Font fuente7 = new Font("Arial Narrow", 12, FontStyle.Bold);
+        Font fuente8 = new Font("Arial Narrow", 10, FontStyle.Bold);
+        Font fuente9 = new Font("Arial Narrow", 8, FontStyle.Regular);
+
+        private String folioCadena, idAbono, montoPago, cajera, concepto;
+
         private Double deudaNota = 0;
         private Double deudaLarguillo = 0;
         private Double deudaTotal = 0;
@@ -277,6 +289,9 @@ namespace Cocarsa1.ControlUsuario
                             dataGridView2.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
                             if (deudaFila == 0)
                                 dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";
+
+                            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                            printDocument1.Print();
                         }
                         else {
                             MessageBox.Show("No se pudo registrar abono a nota.");   
@@ -291,6 +306,9 @@ namespace Cocarsa1.ControlUsuario
                             dataGridView1.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
                             if (deudaFila == 0)
                                 dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
+
+                            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                            printDocument1.Print();
                         }
                         else {
                             MessageBox.Show("No se pudo registrar abono a larguillo.");
@@ -317,6 +335,9 @@ namespace Cocarsa1.ControlUsuario
                                     {
                                         dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila - monto;
                                         monto = 0;
+
+                                        printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                                        printDocument1.Print();
                                     }
                                     else {
                                         MessageBox.Show("No se pudo registrar abono a larguillo.");
@@ -330,6 +351,9 @@ namespace Cocarsa1.ControlUsuario
                                         monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
                                         dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;                                        
                                         dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
+
+                                        printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                                        printDocument1.Print();
                                     }
                                     else
                                     {
@@ -355,6 +379,9 @@ namespace Cocarsa1.ControlUsuario
                                         {
                                             dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila - monto;
                                             monto = 0;
+
+                                            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                                            printDocument1.Print();
                                         }
                                         else
                                         {
@@ -369,6 +396,9 @@ namespace Cocarsa1.ControlUsuario
                                             dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
                                             monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
                                             dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
+
+                                            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+                                            printDocument1.Print();
                                         }
                                         else
                                         {
@@ -487,6 +517,35 @@ namespace Cocarsa1.ControlUsuario
             {
                 textBox1.Focus();
             }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            StringFormat formato = new StringFormat();
+            formato.Alignment = StringAlignment.Center;
+
+            e.Graphics.DrawString("COCARSA", fuente1, Brushes.Black, 90, 0);
+            e.Graphics.DrawString("PORCINOS MEXICANOS S.A. DE C.V.", fuente7, Brushes.Black, 25, 30);
+            e.Graphics.DrawString("CARNES SELECTAS DE CERDO MAYOREO Y MENUDEO", fuente8, Brushes.Black, 10, 60);
+            e.Graphics.DrawString("CARRET. MEXICO PACHUCA KM. 38.5 ESQ. CALLE DE LA", fuente9, Brushes.Black, 11, 80);
+            e.Graphics.DrawString("LEGUA, TECAMAC DE FELIPE VILLANUEVA,  C.P. 55740", fuente9, Brushes.Black, 14, 95);
+            e.Graphics.DrawString("ESTADO DE  MEXICO TELS : 5934-7171  Y  5934-7172", fuente9, Brushes.Black, 17, 110);
+
+            e.Graphics.DrawString("Abono ID : ", fuente2, Brushes.Black, 10, 160);
+            e.Graphics.DrawString(idAbono, fuente3, Brushes.Black, 80, 160);
+            e.Graphics.DrawString("Folio : ", fuente2, Brushes.Black, 160, 160);
+            e.Graphics.DrawString(folioCadena, fuente3, Brushes.Black, 205, 160);
+            e.Graphics.DrawString("Concepto : ", fuente2, Brushes.Black, 10, 180);
+            e.Graphics.DrawString(concepto, fuente3, Brushes.Black, 80, 180);
+            e.Graphics.DrawString("Cajera : ", fuente2, Brushes.Black, 10, 200);
+            e.Graphics.DrawString("Pancha Pozoles de Barrio", fuente3, Brushes.Black, 70, 200);
+            e.Graphics.DrawString("Cliente : ", fuente2, Brushes.Black, 10, 240);
+            e.Graphics.DrawString(textBox1.Text, fuente3, Brushes.Black, 70, 240);
+            e.Graphics.DrawString("Monto de Pago : ", fuente2, Brushes.Black, 10, 260);
+            e.Graphics.DrawString(montoPago, fuente6, Brushes.Black, 180, 260);
+            e.Graphics.DrawString(String.Format("{0:dd - MMMM - yyyy HH:mm tt}", DateTime.Now), fuente4, Brushes.Black, 60, 350);
+            e.Graphics.DrawString(".", fuente4, Brushes.Black, 10, 380);
+                        
         }
     }
 }
