@@ -58,13 +58,11 @@ namespace Cocarsa1.ConexionBD
         }
 
         public OrdenNota[] cargarNota(int idNota) {
-            OrdenNota[] notaDesc = new OrdenNota[11];
+            OrdenNota[] notaDesc = new OrdenNota[12];
             int i=0;
             MySqlConnection conn;
             Conexion conexion = new Conexion();
             conn = conexion.abrirConexion();
-
-            //Borrar mensaje
 
             String query = "SELECT * FROM `cocarsa`.`ordenventa` WHERE idNota = ?idNota;";
             try
@@ -116,7 +114,7 @@ namespace Cocarsa1.ConexionBD
                 cmd.ExecuteNonQuery();
                 cmd.Dispose();
                 ans = true;
-            }
+            }         
             finally
             {
                 conexion.cerrarConexion();
