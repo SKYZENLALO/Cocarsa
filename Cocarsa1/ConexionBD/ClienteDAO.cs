@@ -15,14 +15,18 @@ namespace Cocarsa1.ConexionBD
         public List<Cliente> busquedaClientes(String parametro)
         {
             List<Cliente> listaClientes = new List<Cliente>();
-            
+
+            if (parametro.Trim().Equals("1")) {
+                return listaClientes;
+            }
+
             String query = "";
             try
             {
                 int idCliente = Convert.ToInt32(parametro);
                 query = "SELECT idCliente, nombre, aPaterno, aMaterno, calle, colonia FROM cliente WHERE idCliente = " + idCliente;
             } catch(Exception e){
-                query = "SELECT idCliente, nombre, aPaterno, aMaterno, calle, colonia FROM cliente WHERE nombre LIKE '%" + parametro + "%'";
+                query = "SELECT idCliente, nombre, aPaterno, aMaterno, calle, colonia FROM cliente WHERE nombre LIKE '%" + parametro + "%' AND idCliente NOT IN(1)";
             }
 
             try

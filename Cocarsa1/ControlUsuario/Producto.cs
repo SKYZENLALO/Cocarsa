@@ -114,9 +114,15 @@ namespace Cocarsa1.ControlUsuario
                     return;
                 }
 
-                if (Convert.ToDouble(textBox2.Text) == 0) {
-                    MessageBox.Show("Falta precio de venta");
-                    return;
+                try
+                {
+                    if (Convert.ToDouble(textBox2.Text) == 0)
+                    {
+                        MessageBox.Show("Falta precio de venta");
+                        return;
+                    }
+                } catch(Exception ex) {
+                    MessageBox.Show("El precio debe ser un valor numérico");
                 }
                 
                 ProductoE prod = new ProductoE();
