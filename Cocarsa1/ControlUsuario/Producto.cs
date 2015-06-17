@@ -17,6 +17,23 @@ namespace Cocarsa1.ControlUsuario
         public Producto()
         {
             InitializeComponent();
+            cargaHistorial();
+        }
+
+        public void cargaHistorial() {
+
+            dataGridView1.Rows.Clear();
+            ProductoDao dao = new ProductoDao();
+            List<HistorialPrecio> historial = dao.historialCambioPrecios("06", "2015");
+
+            foreach (HistorialPrecio registro in historial)
+            {
+                dataGridView1.Rows.Add(registro.IdProducto,
+                                        registro.Producto,
+                                        registro.Fecha.ToString("dd-MMMM-yyyy"),
+                                        Math.Round(registro.PrecioAnterior, 2),
+                                        Math.Round(registro.PrecioActual, 2));
+            }
         }
 
         private void carga_idProducto(object sender, KeyPressEventArgs e)
@@ -73,24 +90,71 @@ namespace Cocarsa1.ControlUsuario
         {
             if (e.KeyChar == Convert.ToChar(Keys.Escape))
             {
-                textBox1.Text = "";
-                textBox2.Text = "0.0";
-                textBox3.Text = "";
-                textBox4.Text = "NUEVO";
-                textBox1.Enabled = true;
-                textBox1.Focus();
-                textBox1.Select(0,0);
+                limpiarCampos();
             }
+        }
+
+        private void limpiarCampos()
+        {
+            textBox1.Text = "";
+            textBox2.Text = "0.0";
+            textBox3.Text = "";
+            textBox4.Text = "NUEVO";
+            textBox1.Enabled = true;
+            textBox1.Focus();
+            textBox1.Select(0, 0);
         }
 
         private void guardar_cambios(object sender, KeyEventArgs e)
         {
-            if (textBox4.Text.Equals("NUEVO"))
+            if (e.KeyCode == Keys.F10)
             {
+                if (textBox3.Text.Trim().Equals("")) {
+                    MessageBox.Show("Falta nombre de producto");
+                    return;
+                }
 
-            }
-            else { 
+                try
+                {
+                    if (Convert.ToDouble(textBox2.Text) == 0)
+                    {
+                        MessageBox.Show("Falta precio de venta");
+                        return;
+                    }
+                } catch(Exception ex) {
+                    MessageBox.Show("El precio debe ser un valor numérico");
+                }
                 
+                ProductoE prod = new ProductoE();
+                prod.IdProducto = Convert.ToInt32(textBox1.Text);
+                prod.Nombre = textBox3.Text;
+                prod.PrecioVenta = Convert.ToDouble(textBox2.Text);
+
+                ProductoDao dao = new ProductoDao();
+
+                if (textBox4.Text.Equals("NUEVO"))
+                {
+                    if (dao.registrarProducto(prod) != -1)
+                    {
+                        MessageBox.Show(prod.Nombre + " guardado correctamente.");
+                        limpiarCampos();
+                    }
+                    else {
+                        MessageBox.Show("Error al registrar el producto.");
+                    }
+                }
+                else
+                {
+                    if (dao.guardarCambios(prod) != -1)
+                    {
+                        MessageBox.Show(prod.Nombre + " guardado correctamente.");
+                        limpiarCampos();
+                        cargaHistorial();
+                    }
+                    else {
+                        MessageBox.Show("Error al guardar los cambios.");
+                    }
+                }
             }
         }
 

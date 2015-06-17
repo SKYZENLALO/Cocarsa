@@ -14,13 +14,13 @@ namespace Cocarsa1.ConexionBD
         private Abono pagoAbono;
         private Double deuda;
 
-        public Boolean registrarPago(Abono pagoAbono, Double deuda, String tipoPago) {
+        public long registrarPago(Abono pagoAbono, Double deuda, String tipoPago) {
             
             this.tipoPago = tipoPago;
             this.pagoAbono = pagoAbono;
             this.deuda = deuda;
 
-            Boolean ans = false;
+            long ans = -1;
 
             Conexion conexion = new Conexion();
             MySqlConnection conn = conexion.abrirConexion();            
@@ -31,22 +31,22 @@ namespace Cocarsa1.ConexionBD
                 tx = conn.BeginTransaction();
 
                 actualizarDeuda(conn);
-                registrarAbono(conn);                
+                ans = registrarAbono(conn);                
 
-                tx.Commit();
-                ans = true;
+                tx.Commit();                
             } 
             catch(Exception e) 
             {
                 Console.WriteLine(e.ToString());
                 tx.Rollback();
+                ans = -1;
             }
 
             conexion.cerrarConexion();
             return ans;
         }
         
-        public void registrarAbono(MySqlConnection conexion) 
+        public long registrarAbono(MySqlConnection conexion) 
         {
             String query = "";
             
@@ -68,7 +68,7 @@ namespace Cocarsa1.ConexionBD
             cmd.Parameters.AddWithValue("?fechaAbono", pagoAbono.FechaAbono);
 
             cmd.ExecuteNonQuery();
-            
+            return cmd.LastInsertedId;            
         }
 
         public void actualizarDeuda(MySqlConnection conexion) 
