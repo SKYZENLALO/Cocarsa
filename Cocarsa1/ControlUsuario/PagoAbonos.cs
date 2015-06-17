@@ -25,7 +25,8 @@ namespace Cocarsa1.ControlUsuario
         Font fuente9 = new Font("Arial Narrow", 8, FontStyle.Regular);
 
         private long idAbono = -1; 
-        private String folioCadena = "", montoPago = "", concepto = "";
+        private String folioCadena = "", concepto = "";
+        private Double montoImpresion = 0;
 
         private Double deudaNota = 0;
         private Double deudaLarguillo = 0;
@@ -129,9 +130,9 @@ namespace Cocarsa1.ControlUsuario
             if (deudaTotal == 0)
                 groupBox2.Enabled = false;
 
-            textBox4.Text = deudaTotal + "";
-            textBox2.Text = deudaNota + "";
-            textBox3.Text = deudaLarguillo + "";
+            textBox4.Text = deudaTotal.ToString("N2");
+            textBox2.Text = deudaNota.ToString("N2");
+            textBox3.Text = deudaLarguillo.ToString("N2");
         }
 
         public void cargaDeudaCliente()
@@ -150,7 +151,7 @@ namespace Cocarsa1.ControlUsuario
             if (deudaCliente.Count == 0)
             {
                 limpiarPantalla();
-                MessageBox.Show("El cliente no tiene adeudos.");
+                MessageBox.Show("El cliente no tiene adeudos.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                 return;
             }
@@ -188,13 +189,13 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
 
-            textBox2.Text = String.Format("{0:0.00}",deudaNota);
-            textBox3.Text = String.Format("{0:0.00}",deudaLarguillo);
+            textBox2.Text = deudaNota.ToString("N2");
+            textBox3.Text = deudaLarguillo.ToString("N2");
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
 
             deudaTotal = deudaNota + deudaLarguillo;
-            textBox4.Text = String.Format("{0:0.00}",deudaTotal);
+            textBox4.Text = deudaTotal.ToString("N2");
         }
 
         private void registrar_abono(object sender, KeyEventArgs e)
@@ -222,23 +223,22 @@ namespace Cocarsa1.ControlUsuario
             {
                 e.SuppressKeyPress = true;
                 Double monto = 0;
-                try 
+
+                try
                 {
                     monto = Convert.ToDouble(textBox9.Text);
-                    monto = Math.Round(monto,2);
-                } 
-                catch(Exception exception) 
-                {                    
-                    exception.ToString();
-                    MessageBox.Show("Debes ingresar un monto válido");
+                }
+                catch (Exception exception)
+                {
+                    monto = 0;
                     textBox9.Text = "0.0";
-                    textBox9.Focus();
-                    textBox9.Select(0, textBox9.Text.Length);
+                    MessageBox.Show("Ingresa una cantidad correcta.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
                 if (monto <= 0)
                 {
-                    MessageBox.Show("El monto debe ser mayor a 0.");
+                    MessageBox.Show("El monto debe ser mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     textBox9.Select(0, textBox9.Text.Length);
                     return;
                 }
@@ -249,7 +249,7 @@ namespace Cocarsa1.ControlUsuario
                     {
                         String texto = seleccionLarguillo ? "del larguillo." : "de la nota.";
 
-                        MessageBox.Show("El monto es mayor a la deuda " + texto);
+                        MessageBox.Show("El monto es mayor a la deuda " + texto, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         textBox9.Select(0, textBox9.Text.Length);
                         return;
                     }
@@ -258,13 +258,13 @@ namespace Cocarsa1.ControlUsuario
                 {
                     if (monto > Convert.ToDouble(textBox4.Text))
                     {
-                        MessageBox.Show("El monto es mayor a la deuda total del cliente.");
+                        MessageBox.Show("El monto es mayor a la deuda total del cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         textBox9.Select(0, textBox9.Text.Length);
                         return;
                     }
                 }
 
-                DialogResult result = MessageBox.Show("¿Confirmas el pago de abono por $" + String.Format("{0:0.00}",monto) +"?", "Confirmación", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("¿Confirmas el pago por $" + monto.ToString("N2") +"?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No)
                 {
                     return;
@@ -276,7 +276,7 @@ namespace Cocarsa1.ControlUsuario
                 abono.MontoAbono = Math.Round(monto,2);
                 abono.FechaAbono = DateTime.Now;
 
-                montoPago = abono.MontoAbono.ToString();
+                montoImpresion = abono.MontoAbono;
                 
                 AbonoDao dao = new AbonoDao();
                 if (seleccionNota || seleccionLarguillo)
@@ -299,7 +299,7 @@ namespace Cocarsa1.ControlUsuario
                             printDocument1.Print();
                         }
                         else {
-                            MessageBox.Show("No se pudo registrar abono a nota.");   
+                            MessageBox.Show("No se pudo registrar abono a nota.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);   
                         }                        
                     }
                     else if (seleccionLarguillo)
@@ -317,7 +317,7 @@ namespace Cocarsa1.ControlUsuario
                             printDocument1.Print();
                         }
                         else {
-                            MessageBox.Show("No se pudo registrar abono a larguillo.");
+                            MessageBox.Show("No se pudo registrar abono a larguillo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }                        
                     }                    
                 }
@@ -325,6 +325,7 @@ namespace Cocarsa1.ControlUsuario
                 {
                     int filaLarguillo = 0;
                     int filaNotas = 0;
+                    int contadorError = 0;
 
                     while (monto > 0)
                     {
@@ -341,7 +342,7 @@ namespace Cocarsa1.ControlUsuario
                                 if (Math.Round(monto, 2) < Math.Round(deudaFila, 2))
                                 {
                                     abono.MontoAbono = Math.Round(monto, 2);
-                                    montoPago = abono.MontoAbono.ToString();
+                                    montoImpresion = abono.MontoAbono;
                                     
                                     if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila - monto, 2), "larguillo")) != -1)
                                     {
@@ -351,13 +352,13 @@ namespace Cocarsa1.ControlUsuario
                                         printDocument1.Print();
                                     }
                                     else {
-                                        MessageBox.Show("No se pudo registrar abono a larguillo.");
+                                        contadorError++;
                                     }
                                 }
                                 else
                                 {
                                     abono.MontoAbono = Math.Round(deudaFila, 2);
-                                    montoPago = abono.MontoAbono.ToString();
+                                    montoImpresion = abono.MontoAbono;
 
                                     if ((idAbono = dao.registrarPago(abono, 0, "larguillo")) != -1)
                                     {
@@ -369,7 +370,7 @@ namespace Cocarsa1.ControlUsuario
                                     }
                                     else
                                     {
-                                        MessageBox.Show("No se pudo registrar abono a larguillo.");
+                                        contadorError++;
                                     }
                                 }
                             }
@@ -390,7 +391,7 @@ namespace Cocarsa1.ControlUsuario
                                     if (Math.Round(monto,2) < Math.Round(deudaFila,2))
                                     {
                                         abono.MontoAbono = Math.Round(monto, 2);
-                                        montoPago = abono.MontoAbono.ToString();
+                                        montoImpresion = abono.MontoAbono;
 
                                         if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila-monto,2), "nota")) != -1)
                                         {
@@ -401,13 +402,13 @@ namespace Cocarsa1.ControlUsuario
                                         }
                                         else
                                         {
-                                            MessageBox.Show("No se pudo registrar abono a nota.");
+                                            contadorError++;
                                         } 
                                     }
                                     else
                                     {
                                         abono.MontoAbono = Math.Round(deudaFila,2);
-                                        montoPago = abono.MontoAbono.ToString();
+                                        montoImpresion = abono.MontoAbono;
 
                                         if ((idAbono = dao.registrarPago(abono, 0, "nota")) != -1)
                                         {
@@ -419,14 +420,17 @@ namespace Cocarsa1.ControlUsuario
                                         }
                                         else
                                         {
-                                            MessageBox.Show("No se pudo registrar abono a nota.");
+                                            contadorError++;
                                         }
                                     }
                                 }
                             }
                             filaNotas++;
                         }
-                    }                    
+                    }
+                    if (contadorError > 0) {
+                        MessageBox.Show("No se pudo registrar abono general.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 calcularTotales();
                 reiniciaPago();
@@ -450,7 +454,7 @@ namespace Cocarsa1.ControlUsuario
                 
                 if (dataGridView2.Rows[filaSeleccionada].Cells[2].Value.ToString() == "0")
                 {
-                    MessageBox.Show("La nota ya está liquidada.");
+                    MessageBox.Show("La nota ya está liquidada.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
@@ -487,7 +491,7 @@ namespace Cocarsa1.ControlUsuario
                 filaSeleccionada = dataGridView1.CurrentCell.RowIndex;
 
                 if (dataGridView1.Rows[filaSeleccionada].Cells[2].Value.ToString() == "0") {
-                    MessageBox.Show("El larguillo ya está liquidado.");
+                    MessageBox.Show("El larguillo ya está liquidado.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
@@ -542,8 +546,6 @@ namespace Cocarsa1.ControlUsuario
             formato.Alignment = StringAlignment.Center;
             Image puerquito = Properties.Resources.porky;
             
-            montoPago = String.Format("{0:0.00}", Math.Round(Convert.ToDouble(montoPago)),2);
-
             e.Graphics.DrawImage(puerquito,0,0);
             e.Graphics.DrawString("COCARSA", fuente1, Brushes.Black, 90, 42);
             e.Graphics.DrawString("PORCINOS MEXICANOS S.A. DE C.V.", fuente7, Brushes.Black, 25, 72);
@@ -565,10 +567,12 @@ namespace Cocarsa1.ControlUsuario
             e.Graphics.DrawString("Cliente : ", fuente2, Brushes.Black, 10, 300);
             e.Graphics.DrawString(textBox1.Text, fuente3, Brushes.Black, 70, 300);
             e.Graphics.DrawString("Monto de Pago : ", fuente2, Brushes.Black, 10, 320);
-            e.Graphics.DrawString("$ " + montoPago, fuente6, Brushes.Black, 180, 320);
+            e.Graphics.DrawString("$ " + montoImpresion.ToString("N2"), fuente6, Brushes.Black, 180, 320);
             e.Graphics.DrawString(String.Format("{0:dd - MMMM - yyyy HH:mm tt}", DateTime.Now), fuente4, Brushes.Black, 60, 410);
             e.Graphics.DrawString(".", fuente4, Brushes.Black, 10, 440);
                         
         }
+
+        
     }
 }
