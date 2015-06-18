@@ -13,10 +13,92 @@ namespace Cocarsa1.ConexionBD
     class ReportesDAO
     {
         MySqlDataReader consulta;
+        public String nombreP;
 
-        public OrdenNota[] consultaOrden(int idInicio, int idFinal) {
-            OrdenNota[] ordenNota=new OrdenNota[60];
-            String query = "SELECT IdProducto,sum(cantidad),sum(importe) FROM cocarsa.ordenventa where idNota > 77&& idNota <92 group by IdProducto;";
+        public String nombreProducto(int idProducto)
+        {
+            nombreP = "";
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+
+            String query = "SELECT nombre from`cocarsa`.`producto`  WHERE idProducto = ?idProducto;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idProducto", idProducto);
+                consulta = cmd.ExecuteReader();
+                cmd.Dispose();
+
+                while (consulta.Read())
+                {
+                    nombreP = consulta.GetString(0);
+                }
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return nombreP;
+        }
+
+        public int numeroProductos(int idInicio, int idFinal)
+        {
+            int cantidadRegistros = 0;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+            String query = "SELECT count(distinct(IdProducto)) FROM ordenventa where idNota > ?idNotaI && idNota < ?idNotaF;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idNotaI", idInicio);
+                cmd.Parameters.AddWithValue("?idNotaF", idFinal);
+                consulta = cmd.ExecuteReader();
+                cmd.Dispose();
+                if (consulta.Read())
+                {
+                    cantidadRegistros = consulta.GetInt32(0);
+                }
+                else
+                {
+                    cantidadRegistros = 0;
+                }
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return cantidadRegistros;
+        }
+
+        public OrdenNota[] consultaOrden(int idInicio, int idFinal, int cantidadProductos) {
+            OrdenNota[] ordenNota = new OrdenNota[cantidadProductos];
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+            int i = 0;
+            String query = "SELECT IdProducto,sum(cantidad),sum(importe) FROM ordenventa where idNota > ?idNotaI && idNota < ?idNotaF group by IdProducto;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idNotaI", idInicio);
+                cmd.Parameters.AddWithValue("?idNotaF", idFinal);
+                consulta = cmd.ExecuteReader();
+                cmd.Dispose();
+                while (consulta.Read())
+                {
+                    ordenNota[i] = new OrdenNota();
+                    ordenNota[i].IdProducto = consulta.GetInt32(0);
+                    ordenNota[i].Cantidad = consulta.GetDouble(1);
+                    ordenNota[i].Importe = consulta.GetDouble(2);
+                    i++;
+                }
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
             return ordenNota;
         }
 
