@@ -163,3 +163,5 @@ D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Form1.r
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Properties.Resources.resources
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.csproj.GenerateResource.Cache
 D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\obj\Debug\Cocarsa1.Popup.resources
+D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\itextsharp.dll
+D:\Archivos\Eduardo\Documents\GitHub\Cocarsa\Cocarsa1\bin\Debug\itextsharp.xml

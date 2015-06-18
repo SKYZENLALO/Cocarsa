@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO; 
 using Cocarsa1.ConexionBD;
 using Cocarsa1.Entidades;
 
@@ -35,6 +38,9 @@ namespace Cocarsa1.ControlUsuario
                 dataGridView1.Rows.Clear();
                 consultar();
             }
+            if (e.KeyCode == Keys.F6) {
+                imprimirPDF();
+            }
         }
 
         private void consultar() {
@@ -47,6 +53,8 @@ namespace Cocarsa1.ControlUsuario
             int numCan = 0;
             Double totSub = 0;
             Double totImp = 0;
+            Double kilos = 0;
+            Double importe = 0;
             ReportesDAO reportesDAO = new ReportesDAO();
             String fechaHoy = DateTime.Today.ToShortDateString();
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
@@ -110,9 +118,85 @@ namespace Cocarsa1.ControlUsuario
 
             //Falta tabla de kilos
             //Usar SUM de MySql sobre Importes y kilos buscando sobre fecha
-            if (idIni != 0) { 
-            
+            dataGridView2.Rows.Clear();
+            if (idIni != 0) {
+                i = 0;
+                idIni--;
+                idFin++;
+                int numProductos = reportesDAO.numeroProductos(idIni,idFin);
+                OrdenNota[] ordenNota = null;
+                ordenNota = reportesDAO.consultaOrden(idIni,idFin,numProductos);
+                while (i  < numProductos)
+                {
+                    DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
+                    row.Cells[0].Value = ordenNota[i].IdProducto;
+                    Console.Write(ordenNota[i].IdProducto + "\n");
+                    row.Cells[1].Value = reportesDAO.nombreProducto(ordenNota[i].IdProducto);
+                    row.Cells[2].Value = ordenNota[i].Cantidad;
+                    kilos += ordenNota[i].Cantidad;
+                    row.Cells[3].Value = ordenNota[i].Importe;
+                    importe += ordenNota[i].Importe;
+                    dataGridView2.Rows.Add(row);
+                    i++;
+                }
             }
+            textBox8.Text = kilos.ToString();
+            textBox9.Text = importe.ToString();
+        }
+
+        private void imprimirPDF() {
+            Document document = new Document(PageSize.LETTER);
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(@"D:\Archivos\Eduardo\Desktop\prueba.pdf", FileMode.Create));
+            document.AddTitle("Mi primer PDF");
+            document.AddCreator("Eduardo Ruiz");
+            document.Open();
+            iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            // Escribimos el encabezamiento en el documento
+            document.Add(new Paragraph("Mi primer documento PDF"));
+            document.Add(Chunk.NEWLINE);
+
+            // Creamos una tabla que contendrá el nombre, apellido y país
+            // de nuestros visitante.
+            PdfPTable tblPrueba = new PdfPTable(3);
+            tblPrueba.WidthPercentage = 100;
+
+            // Configuramos el título de las columnas de la tabla
+            PdfPCell clNombre = new PdfPCell(new Phrase("Nombre", _standardFont));
+            clNombre.BorderWidth = 0;
+            clNombre.BorderWidthBottom = 0.75f;
+
+            PdfPCell clApellido = new PdfPCell(new Phrase("Apellido", _standardFont));
+            clApellido.BorderWidth = 0;
+            clApellido.BorderWidthBottom = 0.75f;
+
+            PdfPCell clPais = new PdfPCell(new Phrase("País", _standardFont));
+            clPais.BorderWidth = 0;
+            clPais.BorderWidthBottom = 0.75f;
+
+            // Añadimos las celdas a la tabla
+            tblPrueba.AddCell(clNombre);
+            tblPrueba.AddCell(clApellido);
+            tblPrueba.AddCell(clPais);
+
+            // Llenamos la tabla con información
+            clNombre = new PdfPCell(new Phrase("Eduardo", _standardFont));
+            clNombre.BorderWidth = 0;
+
+            clApellido = new PdfPCell(new Phrase("Ruiz", _standardFont));
+            clApellido.BorderWidth = 0;
+
+            clPais = new PdfPCell(new Phrase("México", _standardFont));
+            clPais.BorderWidth = 0;
+
+            // Añadimos las celdas a la tabla
+            tblPrueba.AddCell(clNombre);
+            tblPrueba.AddCell(clApellido);
+            tblPrueba.AddCell(clPais);
+            // Finalmente, añadimos la tabla al documento PDF y cerramos el documento
+            document.Add(tblPrueba);
+
+            document.Close();
+            writer.Close();
         }
     }
 }
