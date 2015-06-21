@@ -24,9 +24,11 @@ namespace Cocarsa1.ControlUsuario
         public Ventas()
         {
             InitializeComponent();
+            limpiarPantalla();
             dataGridView1.Enabled = false;
             checkBox1.Enabled = false;
             checkBox2.Enabled = false;
+            textBox2.Focus();
         }
 
         private void limpiarPantalla()
@@ -261,6 +263,14 @@ namespace Cocarsa1.ControlUsuario
                             try
                             {
                                 cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
+                                if (cantidadTemp < 0) {
+                                    MessageBox.Show("Solo cifras positivas");
+                                    dataGridView1.CurrentRow.Cells[2].Value = 0;
+                                    dataGridView1.CurrentRow.Cells[4].Value = 0;
+                                    calculaTotal();
+                                    flag = true;
+                                    return;
+                                }
                             }
                             catch (Exception error)
                             {
@@ -294,6 +304,14 @@ namespace Cocarsa1.ControlUsuario
                             try
                             {
                                 precioTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[3].Value.ToString());
+                                if (precioTemp < 0) {
+                                    MessageBox.Show("Solo cifras positivas");
+                                    dataGridView1.CurrentRow.Cells[3].Value = 0;
+                                    dataGridView1.CurrentRow.Cells[4].Value = 0;
+                                    calculaTotal();
+                                    flag = true;
+                                    return;
+                                }
                             }
                             catch (Exception error)
                             {
@@ -490,9 +508,23 @@ namespace Cocarsa1.ControlUsuario
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
+                try
+                {
+                    Double abono = Convert.ToDouble(textBox4.Text);
+                    if (abono < 0) {
+                        MessageBox.Show("Numeros positivos");
+                        textBox4.Clear();
+                        return;
+                    }
+                }catch(Exception error){
+                    MessageBox.Show("Solo numeros");
+                    textBox4.Clear();
+                    return;
+                }
                 if (Convert.ToDouble(textBox6.Text) < Convert.ToDouble(textBox4.Text))
                 {
                     MessageBox.Show("El abono exede la deuda");
+                    textBox4.Clear();
                     return;
                 }
                 Double deuda = (Convert.ToDouble(textBox6.Text)) - (Convert.ToDouble(textBox4.Text));
