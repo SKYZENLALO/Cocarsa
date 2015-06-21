@@ -42,18 +42,16 @@ namespace Cocarsa1.ConexionBD
             return nombreP;
         }
 
-        public int numeroProductos(int idInicio, int idFinal)
+        public int numeroProductos(String excepto)
         {
             int cantidadRegistros = 0;
             MySqlConnection conn;
             Conexion conexion = new Conexion();
             conn = conexion.abrirConexion();
-            String query = "SELECT count(distinct(IdProducto)) FROM ordenventa where idNota > ?idNotaI && idNota < ?idNotaF;";
+            String query = excepto;
             try
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("?idNotaI", idInicio);
-                cmd.Parameters.AddWithValue("?idNotaF", idFinal);
                 consulta = cmd.ExecuteReader();
                 cmd.Dispose();
                 if (consulta.Read())
@@ -72,18 +70,16 @@ namespace Cocarsa1.ConexionBD
             return cantidadRegistros;
         }
 
-        public OrdenNota[] consultaOrden(int idInicio, int idFinal, int cantidadProductos) {
+        public OrdenNota[] consultaOrden(String excepto, int cantidadProductos) {
             OrdenNota[] ordenNota = new OrdenNota[cantidadProductos];
             MySqlConnection conn;
             Conexion conexion = new Conexion();
             conn = conexion.abrirConexion();
             int i = 0;
-            String query = "SELECT IdProducto,sum(cantidad),sum(importe) FROM ordenventa where idNota > ?idNotaI && idNota < ?idNotaF group by IdProducto;";
+            String query = excepto;
             try
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("?idNotaI", idInicio);
-                cmd.Parameters.AddWithValue("?idNotaF", idFinal);
                 consulta = cmd.ExecuteReader();
                 cmd.Dispose();
                 while (consulta.Read())
