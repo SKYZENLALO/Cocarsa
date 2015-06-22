@@ -48,7 +48,7 @@
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.clave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.importeProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -219,7 +219,7 @@
             this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clave,
+            this.id,
             this.nombre,
             this.cantidad,
             this.importeProducto});
@@ -234,26 +234,26 @@
             this.dataGridView2.Size = new System.Drawing.Size(360, 254);
             this.dataGridView2.TabIndex = 17;
             // 
-            // clave
+            // id
             // 
-            this.clave.HeaderText = "Clave";
-            this.clave.Name = "clave";
-            this.clave.ReadOnly = true;
-            this.clave.Width = 60;
+            this.id.HeaderText = "ID";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 35;
             // 
             // nombre
             // 
             this.nombre.HeaderText = "Nombre";
             this.nombre.Name = "nombre";
             this.nombre.ReadOnly = true;
-            this.nombre.Width = 130;
+            this.nombre.Width = 165;
             // 
             // cantidad
             // 
-            this.cantidad.HeaderText = "Cantidad";
+            this.cantidad.HeaderText = "Kilos";
             this.cantidad.Name = "cantidad";
             this.cantidad.ReadOnly = true;
-            this.cantidad.Width = 80;
+            this.cantidad.Width = 65;
             // 
             // importeProducto
             // 
@@ -263,6 +263,7 @@
             this.importeProducto.HeaderText = "Importe";
             this.importeProducto.Name = "importeProducto";
             this.importeProducto.ReadOnly = true;
+            this.importeProducto.Width = 92;
             // 
             // textBox7
             // 
@@ -430,50 +431,62 @@
             // 
             // folio
             // 
+            this.folio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.folio.HeaderText = "Folio";
             this.folio.Name = "folio";
             this.folio.ReadOnly = true;
-            this.folio.Width = 55;
+            this.folio.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.folio.Width = 63;
             // 
             // cliente
             // 
+            this.cliente.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.cliente.HeaderText = "Cliente";
             this.cliente.Name = "cliente";
             this.cliente.ReadOnly = true;
-            this.cliente.Width = 70;
+            this.cliente.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.cliente.Width = 80;
             // 
             // subtotal
             // 
+            this.subtotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle7.Format = "C2";
             dataGridViewCellStyle7.NullValue = "0";
             this.subtotal.DefaultCellStyle = dataGridViewCellStyle7;
             this.subtotal.HeaderText = "Subtotal";
             this.subtotal.Name = "subtotal";
             this.subtotal.ReadOnly = true;
+            this.subtotal.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.subtotal.Width = 130;
             // 
             // iva
             // 
+            this.iva.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.iva.HeaderText = "IVA";
             this.iva.Name = "iva";
             this.iva.ReadOnly = true;
+            this.iva.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.iva.Width = 40;
             // 
             // importe
             // 
+            this.importe.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             dataGridViewCellStyle8.Format = "C2";
             dataGridViewCellStyle8.NullValue = "0";
             this.importe.DefaultCellStyle = dataGridViewCellStyle8;
             this.importe.HeaderText = "Importe";
             this.importe.Name = "importe";
             this.importe.ReadOnly = true;
+            this.importe.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.importe.Width = 130;
             // 
             // estadoNota
             // 
+            this.estadoNota.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.estadoNota.HeaderText = "Estado";
             this.estadoNota.Name = "estadoNota";
             this.estadoNota.ReadOnly = true;
+            this.estadoNota.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.estadoNota.Width = 95;
             // 
             // dateTimePicker1
@@ -531,6 +544,7 @@
             this.comboBox1.Size = new System.Drawing.Size(305, 30);
             this.comboBox1.TabIndex = 5;
             this.comboBox1.ValueMember = "1";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label13
             // 
@@ -562,6 +576,8 @@
             this.dateTimePicker2.Size = new System.Drawing.Size(305, 29);
             this.dateTimePicker2.TabIndex = 2;
             this.dateTimePicker2.Value = new System.DateTime(2015, 4, 21, 0, 0, 0, 0);
+            this.dateTimePicker2.CloseUp += new System.EventHandler(this.dateTimePicker2_CloseUp);
+            this.dateTimePicker2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dateTimePicker2_KeyDown);
             // 
             // label11
             // 
@@ -576,6 +592,9 @@
             // 
             // dataGridView3
             // 
+            this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.AllowUserToResizeColumns = false;
+            this.dataGridView3.AllowUserToResizeRows = false;
             dataGridViewCellStyle9.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dataGridView3.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -603,21 +622,24 @@
             // 
             // claveExistencia
             // 
-            this.claveExistencia.HeaderText = "Clave";
+            this.claveExistencia.HeaderText = "ID";
             this.claveExistencia.Name = "claveExistencia";
             this.claveExistencia.ReadOnly = true;
+            this.claveExistencia.Width = 35;
             // 
             // nombreExistencia
             // 
             this.nombreExistencia.HeaderText = "Nombre";
             this.nombreExistencia.Name = "nombreExistencia";
             this.nombreExistencia.ReadOnly = true;
+            this.nombreExistencia.Width = 195;
             // 
             // cantidadExistencia
             // 
-            this.cantidadExistencia.HeaderText = "Cantidad";
+            this.cantidadExistencia.HeaderText = "Kilos";
             this.cantidadExistencia.Name = "cantidadExistencia";
             this.cantidadExistencia.ReadOnly = true;
+            this.cantidadExistencia.Width = 72;
             // 
             // Reportes
             // 
@@ -672,21 +694,21 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn claveExistencia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombreExistencia;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadExistencia;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn importeProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn claveExistencia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombreExistencia;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cantidadExistencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn folio;
         private System.Windows.Forms.DataGridViewTextBoxColumn cliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn subtotal;
         private System.Windows.Forms.DataGridViewTextBoxColumn iva;
         private System.Windows.Forms.DataGridViewTextBoxColumn importe;
         private System.Windows.Forms.DataGridViewTextBoxColumn estadoNota;
-        private System.Windows.Forms.DataGridViewTextBoxColumn clave;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn importeProducto;
     }
 }

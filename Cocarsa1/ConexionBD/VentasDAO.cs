@@ -319,9 +319,6 @@ namespace Cocarsa1.ConexionBD
                 {
                     ans = consulta.GetInt32(0);
                 }
-                else {
-                    Console.Write("----------ERROR-----------");
-                }
             }
             finally
             {

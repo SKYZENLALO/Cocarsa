@@ -158,5 +158,87 @@ namespace Cocarsa1.ConexionBD
             }
             return cantidadRegistros;
         }
+
+        public int numeroConsulta(String fecha, int opc)
+        {
+            int cantidadRegistros = 0;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+            String query = ""; 
+            switch (opc) { 
+                case 0:
+                    query= "SELECT count(*) FROM frio WHERE fecha=?fecha;";
+                    break;
+                case 1:
+                    query = "SELECT count(*) FROM fresco WHERE fecha=?fecha;";
+                    break;
+                case 2:
+                    query = "SELECT count(*) FROM existencia WHERE fecha=?fecha;";
+                    break;
+                    
+            }
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?fecha", fecha);
+                consulta = cmd.ExecuteReader();
+                cmd.Dispose();
+                if (consulta.Read())
+                {
+                    cantidadRegistros = consulta.GetInt32(0);
+                }
+                else
+                {
+                    cantidadRegistros = 0;
+                }
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return cantidadRegistros;
+        }
+
+        public Existencia[] consultaExistencia(String fecha, int numReg, int opc) {
+            Existencia[] consultasExistencia = new Existencia[numReg];
+            String query = "";
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+            int i = 0;
+            switch (opc) { 
+                case 0:
+                    query = "SELECT * FROM frio WHERE fecha=?fecha;";
+                    break;
+                case  1:
+                    query = "SELECT * FROM fresco WHERE fecha=?fecha;";
+                    break;
+                case 2:
+                    query = "SELECT * FROM existencia WHERE fecha=?fecha;";
+                    break;
+            }
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?fecha", fecha);
+                consulta = cmd.ExecuteReader();
+                cmd.Dispose();
+                while (consulta.Read())
+                {
+                    consultasExistencia[i] = new Existencia();
+                    consultasExistencia[i].IdRegistro = consulta.GetInt32(0);
+                    consultasExistencia[i].IdProducto = consulta.GetInt32(1);
+                    consultasExistencia[i].Fecha = consulta.GetDateTime(2);
+                    consultasExistencia[i].Cantidad = consulta.GetDouble(3);
+                    i++;
+                }
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return consultasExistencia;
+        }
     }
 }

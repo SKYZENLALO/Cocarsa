@@ -22,6 +22,11 @@ namespace Cocarsa1.ControlUsuario
         {
             InitializeComponent();
             dateTimePicker1.MaxDate = DateTime.Today;
+            dateTimePicker2.MaxDate = DateTime.Today;
+            dateTimePicker1.Value = DateTime.Today;
+            dateTimePicker2.Value = DateTime.Today;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.SelectedIndex = 0;
         }
 
         private void dateTimePicker1_CloseUp(object sender, EventArgs e)
@@ -29,7 +34,6 @@ namespace Cocarsa1.ControlUsuario
             dataGridView1.Rows.Clear();
             consultar();
         }
-
         private void dateTimePicker1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -39,10 +43,16 @@ namespace Cocarsa1.ControlUsuario
                 consultar();
             }
             if (e.KeyCode == Keys.F6) {
-                imprimirPDF();
+                int filas = dataGridView1.Rows.Count - 1;
+                if (filas < 1) {
+                    MessageBox.Show("No existe Registro");
+                }
+                else
+                {
+                    imprimirPDF();
+                }
             }
         }
-
         private void consultar() {
             String estado = "";
             String canceladas = "";
@@ -119,7 +129,6 @@ namespace Cocarsa1.ControlUsuario
             textBox4.Text = numPen.ToString();
             textBox6.Text = totSub.ToString();
             textBox7.Text = totImp.ToString();
-            //MessageBox.Show("Inicio: " + idIni + " Fin: " + idFin);
             dataGridView2.Rows.Clear();
             if (idIni != 0) {
                 i = 0;
@@ -146,10 +155,16 @@ namespace Cocarsa1.ControlUsuario
             textBox8.Text = kilos.ToString();
             textBox9.Text = importe.ToString();
         }
-
         private void imprimirPDF() {
             Document document = new Document(PageSize.LETTER);
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(@"D:\Archivos\Eduardo\Desktop\Reporte "+dateTimePicker1.Value.ToLongDateString()+".pdf", FileMode.Create));
+            PdfWriter writer;
+            try
+            {
+                writer = PdfWriter.GetInstance(document, new FileStream(@"D:\Archivos\Eduardo\Desktop\Reporte " + dateTimePicker1.Value.ToLongDateString() + ".pdf", FileMode.Create));
+            }catch(Exception errorDoc){
+                MessageBox.Show("No se puede crear archivo, esta siendo usado por otro programa");
+                return;
+            }
             document.AddTitle("Reportes Cocarsa");
             document.AddCreator("Cocarsa Tecamac");
             document.Open();
@@ -160,7 +175,7 @@ namespace Cocarsa1.ControlUsuario
 
             // Creamos una tabla que contendrá el nombre, apellido y país
             // de nuestros visitante.
-            PdfPTable tablaVentas = new PdfPTable(5);
+            PdfPTable tablaVentas = new PdfPTable(6);
             tablaVentas.WidthPercentage = 100;
 
             // Configuramos el título de las columnas de la tabla
@@ -184,12 +199,17 @@ namespace Cocarsa1.ControlUsuario
             clImporte.BorderWidth = 0;
             clImporte.BorderWidthBottom = 0.75f;
 
+            PdfPCell clImpresa = new PdfPCell(new Phrase("Impresa", _standardFont));
+            clImpresa.BorderWidth = 0;
+            clImpresa.BorderWidthBottom = 0.75f;
+            
             // Añadimos las celdas a la tabla
             tablaVentas.AddCell(clFolio);
             tablaVentas.AddCell(clCliente);
             tablaVentas.AddCell(clSubtotal);
             tablaVentas.AddCell(clIva);
             tablaVentas.AddCell(clImporte);
+            tablaVentas.AddCell(clImpresa);
 
             int filas = dataGridView1.Rows.Count - 1;
 
@@ -210,6 +230,16 @@ namespace Cocarsa1.ControlUsuario
 
                 clImporte = new PdfPCell(new Phrase(dataGridView1[4, i].Value.ToString(), _standardFont));
                 clImporte.BorderWidth = 0;
+                String estadoImpresa = "";
+                if (dataGridView1[5, i].Value.ToString().Equals("Pendiente"))
+                {
+                    estadoImpresa = "No";
+                }
+                else {
+                    estadoImpresa = "Si";
+                }
+                clImpresa = new PdfPCell(new Phrase(estadoImpresa, _standardFont));
+                clImpresa.BorderWidth = 0;
 
                 // Añadimos las celdas a la tabla
                 tablaVentas.AddCell(clFolio);
@@ -217,6 +247,7 @@ namespace Cocarsa1.ControlUsuario
                 tablaVentas.AddCell(clSubtotal);
                 tablaVentas.AddCell(clIva);
                 tablaVentas.AddCell(clImporte);
+                tablaVentas.AddCell(clImpresa);
             }
             // Finalmente, añadimos la tabla al documento PDF y cerramos el documento
             document.Add(tablaVentas);
@@ -282,6 +313,123 @@ namespace Cocarsa1.ControlUsuario
 
             document.Close();
             writer.Close();
+            MessageBox.Show("Reporte Generado !!!");
+        }
+        private void dateTimePicker2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                dataGridView3.Rows.Clear();
+                consultarExistencia();
+            }
+            if (e.KeyCode == Keys.F7)
+            {
+                int filas = dataGridView3.Rows.Count - 1;
+                if (filas < 1)
+                {
+                    MessageBox.Show("No existe Registro");
+                }
+                else
+                {
+                    imprimirExistencia();
+                }
+            }
+        }
+        private void consultarExistencia() {
+            ReportesDAO reportesDAO = new ReportesDAO();
+            Existencia[] existencia = null;
+            int i = 0;
+            dateTimePicker2.Format = DateTimePickerFormat.Custom;
+            dateTimePicker2.CustomFormat = "yyyy-MM-dd";
+            String fechaSel = dateTimePicker2.Text;
+            dateTimePicker2.Format = DateTimePickerFormat.Long;
+            int numeroReg = 0;
+            numeroReg = reportesDAO.numeroConsulta(fechaSel,comboBox1.SelectedIndex);
+            existencia = reportesDAO.consultaExistencia(fechaSel, numeroReg, comboBox1.SelectedIndex);
+            while (i < numeroReg) {
+                DataGridViewRow row = (DataGridViewRow)dataGridView3.Rows[0].Clone();
+                row.Cells[0].Value = existencia[i].IdProducto;
+                row.Cells[1].Value = reportesDAO.nombreProducto(existencia[i].IdProducto);
+                row.Cells[2].Value = existencia[i].Cantidad;
+                dataGridView3.Rows.Add(row);
+                i++;
+            }
+        }
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView3.Rows.Clear();
+        }
+        private void dateTimePicker2_CloseUp(object sender, EventArgs e)
+        {
+            dataGridView3.Rows.Clear();
+            consultarExistencia();
+        }
+        private void imprimirExistencia()
+        {
+            Document document = new Document(PageSize.LETTER);
+            PdfWriter writer;
+            try { 
+                writer = PdfWriter.GetInstance(document, new FileStream(@"D:\Archivos\Eduardo\Desktop\Registro "+comboBox1.SelectedItem.ToString()+" " + dateTimePicker2.Value.ToLongDateString() + ".pdf", FileMode.Create));
+            }catch(Exception errorDoc){
+                MessageBox.Show("No se puede crear documento, esta siendo utilizado por otro programa");
+                return;
+            }
+            document.AddTitle("Reportes Cocarsa");
+            document.AddCreator("Cocarsa Tecamac");
+            document.Open();
+            iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            // Escribimos el encabezamiento en el documento
+            document.Add(new Paragraph("Registro de "+comboBox1.SelectedItem.ToString()+" de " + dateTimePicker2.Value.ToLongDateString()));
+            document.Add(Chunk.NEWLINE);
+
+            // Creamos una tabla que contendrá el nombre, apellido y país
+            // de nuestros visitante.
+            PdfPTable tablaExistencia = new PdfPTable(3);
+            tablaExistencia.WidthPercentage = 100;
+
+            // Configuramos el título de las columnas de la tabla
+            PdfPCell clClave = new PdfPCell(new Phrase("Clave", _standardFont));
+            clClave.BorderWidth = 0;
+            clClave.BorderWidthBottom = 0.75f;
+
+            PdfPCell clNombre = new PdfPCell(new Phrase("Nombre", _standardFont));
+            clNombre.BorderWidth = 0;
+            clNombre.BorderWidthBottom = 0.75f;
+
+            PdfPCell clCantidad = new PdfPCell(new Phrase("Cantidad", _standardFont));
+            clCantidad.BorderWidth = 0;
+            clCantidad.BorderWidthBottom = 0.75f;
+
+            // Añadimos las celdas a la tabla
+            tablaExistencia.AddCell(clClave);
+            tablaExistencia.AddCell(clNombre);
+            tablaExistencia.AddCell(clCantidad);
+
+            int filas = dataGridView3.Rows.Count - 1;
+
+            for (int i = 0; i < filas; i++)
+            {
+                // Llenamos la tabla con información
+                clClave = new PdfPCell(new Phrase(dataGridView3[0, i].Value.ToString(), _standardFont));
+                clClave.BorderWidth = 0;
+
+                clNombre = new PdfPCell(new Phrase(dataGridView3[1, i].Value.ToString(), _standardFont));
+                clNombre.BorderWidth = 0;
+
+                clCantidad = new PdfPCell(new Phrase(dataGridView3[2, i].Value.ToString(), _standardFont));
+                clCantidad.BorderWidth = 0;
+
+                // Añadimos las celdas a la tabla
+                tablaExistencia.AddCell(clClave);
+                tablaExistencia.AddCell(clNombre);
+                tablaExistencia.AddCell(clCantidad);
+            }
+            // Finalmente, añadimos la tabla al documento PDF y cerramos el documento
+            document.Add(tablaExistencia);
+            document.Close();
+            writer.Close();
+            MessageBox.Show("Registro Generado !!!");
         }
     }
 }

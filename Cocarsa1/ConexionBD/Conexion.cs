@@ -23,7 +23,6 @@ namespace Cocarsa1.ConexionBD
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al abrir la conexion en MySql.\n");
                 return null;
             }
         }
@@ -40,7 +39,6 @@ namespace Cocarsa1.ConexionBD
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al realizar la consulta MySql.\n");
             }
             return null;
         }
@@ -54,7 +52,6 @@ namespace Cocarsa1.ConexionBD
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al cerrar la conexion en MySql.\n");
                 return false;
             }
         }
