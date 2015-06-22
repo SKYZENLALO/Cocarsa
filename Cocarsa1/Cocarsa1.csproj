@@ -116,6 +116,7 @@
     <Compile Include="Entidades\Abono.cs" />
     <Compile Include="Entidades\Cajera.cs" />
     <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\Existencia.cs" />
     <Compile Include="Entidades\Fajilla.cs" />
     <Compile Include="Entidades\HistorialPrecio.cs" />
     <Compile Include="Entidades\OrdenLarguillo.cs" />

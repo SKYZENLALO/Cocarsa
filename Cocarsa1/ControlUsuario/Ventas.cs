@@ -195,7 +195,6 @@ namespace Cocarsa1.ControlUsuario
 
             columna = dataGridView1.CurrentCell.ColumnIndex;
             fila = dataGridView1.CurrentCell.RowIndex;
-            Console.Write("Fila: " + fila+"\n");
             if (fila > 10)
             {
                 MessageBox.Show("NO SE PUEDEN MÁS DE 11 PRODUCTOS");
@@ -562,8 +561,6 @@ namespace Cocarsa1.ControlUsuario
         private void checkBox1_MouseDown(object sender, MouseEventArgs e)
         {
             Boolean estadoCheckBox1 = checkBox1.Checked;
-
-            Console.Write("Si entra la evento\n");
             Entidades.Cliente cliente = null;
 
             if (Convert.ToDouble(textBox6.Text) == 0)
