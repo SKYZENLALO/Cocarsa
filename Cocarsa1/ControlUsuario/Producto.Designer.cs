@@ -236,35 +236,35 @@
             // 
             // idProducto
             // 
-            this.idProducto.HeaderText = "FOLIO";
+            this.idProducto.HeaderText = "Folio";
             this.idProducto.Name = "idProducto";
             this.idProducto.ReadOnly = true;
             this.idProducto.Width = 120;
             // 
             // Product
             // 
-            this.Product.HeaderText = "PRODUCTO";
+            this.Product.HeaderText = "Producto";
             this.Product.Name = "Product";
             this.Product.ReadOnly = true;
             this.Product.Width = 370;
             // 
             // fechaCambio
             // 
-            this.fechaCambio.HeaderText = "FECHA DE CAMBIO";
+            this.fechaCambio.HeaderText = "Fecha de Cambio";
             this.fechaCambio.Name = "fechaCambio";
             this.fechaCambio.ReadOnly = true;
             this.fechaCambio.Width = 260;
             // 
             // precio
             // 
-            this.precio.HeaderText = "PRECIO ANTERIOR";
+            this.precio.HeaderText = "Precio      Anterior";
             this.precio.Name = "precio";
             this.precio.ReadOnly = true;
             this.precio.Width = 150;
             // 
             // precioActual
             // 
-            this.precioActual.HeaderText = "PRECIO ACTUAL";
+            this.precioActual.HeaderText = "Precio      Actual";
             this.precioActual.Name = "precioActual";
             this.precioActual.Width = 150;
             // 
