@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Cocarsa1.Entidades;
 using Cocarsa1.ConexionBD;
-
+using MySql.Data.MySqlClient;
 namespace Cocarsa1.ControlUsuario
 {
     public partial class Fajillas : UserControl
@@ -24,7 +24,9 @@ namespace Cocarsa1.ControlUsuario
             dateTimePicker1.MaxDate = DateTime.Today;
             dateTimePicker2.MaxDate = DateTime.Today;
             cargaCajeras();
-            cargaFajillas();
+            FajillasDelDia();
+            FajillasEnCaja();
+            FajillasPorDia();
         }
         void cargaCajeras() {
             FajillasDAO fajillasDAO = new FajillasDAO();
@@ -40,7 +42,8 @@ namespace Cocarsa1.ControlUsuario
             }
             comboBox1.SelectedIndex = 0;
         }
-        void cargaFajillas() {
+        void FajillasDelDia() {
+            dataGridView2.Rows.Clear();
             FajillasDAO fajillasDAO=new FajillasDAO();
             Fajilla[] fajilla = null;
             int i = 0;
@@ -58,8 +61,109 @@ namespace Cocarsa1.ControlUsuario
                 i++;
             }
             textBox2.Text = montoTotal.ToString();
-            //dataGridView2.Rows.Remove(dataGridView2.Rows[dataGridView2.Rows.Count-1]);
+           
         }
+
+        void FajillasPorDia()
+        {
+            dataGridView5.Rows.Clear();
+            FajillasDAO fajillasDAO = new FajillasDAO();
+            Fajilla[] fajilla = null;
+            int i = 0;
+            Double montoTotal = 0;
+            string fecha = dateTimePicker1.Value.ToString("yyyy-MM-dd");
+            Console.Write(fecha);            
+
+            int numeroFajillas = fajillasDAO.numeroFajillas(fecha);
+            fajilla = fajillasDAO.fajillas(numeroFajillas, fecha);
+            while (i < numeroFajillas)
+            {
+                DataGridViewRow row = (DataGridViewRow)dataGridView5.Rows[0].Clone();
+                row.Cells[0].Value = fajillasDAO.nombreCajera(fajilla[i].IdCajera);
+                row.Cells[1].Value = fajilla[i].Monto;
+                montoTotal += fajilla[i].Monto;
+                dataGridView5.Rows.Add(row);
+                i++;
+            }
+            textBox4.Text = montoTotal.ToString();
+            
+        }
+
+        void FajillasPorCorte()
+        {
+            dataGridView1.Rows.Clear();
+            FajillasDAO fajillasDAO = new FajillasDAO();
+            Fajilla[] fajilla = null;
+            int i = 0;
+            Double montoTotal = 0;
+            string fecha = dateTimePicker2.Value.ToString("yyyy-MM-dd");
+            Console.Write(fecha);
+
+            int numeroFajillas = fajillasDAO.numeroFajillasFechaCorte(fecha);
+            fajilla = fajillasDAO.fajillasFechaCorte(numeroFajillas, fecha);
+            while (i < numeroFajillas)
+            {
+                DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+                row.Cells[0].Value = fajillasDAO.nombreCajera(fajilla[i].IdCajera);
+                row.Cells[1].Value = fajilla[i].Monto;
+                row.Cells[2].Value = fajilla[i].FechaCorte;
+                montoTotal += fajilla[i].Monto;
+                dataGridView1.Rows.Add(row);
+                i++;
+            }
+            textBox5.Text = montoTotal.ToString();
+
+        }
+
+
+
+        void FajillasEnCaja()
+        {
+            dataGridView3.Rows.Clear();
+            FajillasDAO fajillasDAO = new FajillasDAO();
+            Fajilla[] fajilla = null;
+            int i = 0;
+            Double montoTotal = 0;
+            int numeroFajillas = fajillasDAO.numeroFajillasCaja();
+            fajilla = fajillasDAO.fajillasCaja(numeroFajillas);
+            while (i < numeroFajillas)
+            {
+                DataGridViewRow row = (DataGridViewRow)dataGridView3.Rows[0].Clone();
+                row.Cells[0].Value = fajillasDAO.nombreCajera(fajilla[i].IdCajera);
+                row.Cells[1].Value = fajilla[i].Monto;
+                row.Cells[2].Value = fajilla[i].FechaRegistro;
+                montoTotal += fajilla[i].Monto;
+                dataGridView3.Rows.Add(row);
+                i++;
+            }
+            textBox3.Text = montoTotal.ToString();
+            
+        }
+
+        void corteDeCaja()
+        {
+
+            if (MessageBox.Show("Desea realizar el corte de caja?", "AVISO", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+
+                MySqlConnection conn;
+                Conexion conexion = new Conexion();
+                conn = conexion.abrirConexion();
+                try
+                {
+                    MySqlCommand cmdDataBase = new MySqlCommand("UPDATE `cocarsa`.`fajilla` SET enCaja = '0',fechaCorte=current_date() WHERE enCaja = '1';", conn);
+                    cmdDataBase.ExecuteNonQuery();
+                    MessageBox.Show("Corte de caja realizado exitosamente");
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+        }      
+       
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -80,8 +184,37 @@ namespace Cocarsa1.ControlUsuario
                     }
                     else {
                         //Agregar Box de confirmacion 
-                        MessageBox.Show("se Ingresa: " + monto+" Con la Cajera: "+idCajera);
+                        string selected = this.comboBox1.GetItemText(this.comboBox1.SelectedItem);
+                        if (MessageBox.Show("Desea registrar la fajilla con un Monto de: " + monto + " Con la Cajera: " + selected + "?", "AVISO", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            string fechaRegistro = dateTimePicker3.Value.ToString("yyyy-MM-dd");
+                            MySqlConnection conn;
+                            Conexion conexion = new Conexion();
+                            conn = conexion.abrirConexion();
+                            try
+                            {
+                                MySqlCommand cmdDataBase = new MySqlCommand("INSERT INTO `cocarsa`.`fajilla` (idCajera,monto,fecha,enCaja) values ('" + idCajera + "','" + monto + "','" + fechaRegistro + "','1'); ;", conn);
+                                cmdDataBase.ExecuteNonQuery();
+                                MessageBox.Show("Fajilla Registrada");
+                                textBox1.Clear();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Ingrese cantidades validas");
+                                //textBox1.Clear();         
+                                MessageBox.Show(ex.Message);
+                            }
+
+                            //MessageBox.Show("se Ingresa: " + monto + " Con la Cajera: " + idCajera);
+ 
+                        }
+
                     }
+                    //Actualizar Datos
+                    FajillasDelDia();
+                    FajillasEnCaja();
+
                 }
                 catch (Exception error) {
                     MessageBox.Show("Solo Cifras validas");
@@ -89,6 +222,25 @@ namespace Cocarsa1.ControlUsuario
                     return;
                 }
             }
+
+            if (e.KeyCode == Keys.F11)
+            {
+                corteDeCaja();
+                FajillasEnCaja();
+
+            }
+        }
+
+
+
+        private void dateTimePicker1Press(object sender, EventArgs e)
+        {
+            FajillasPorDia();
+        }
+
+        private void dateTimePicker2Press(object sender, EventArgs e)
+        {
+            FajillasPorCorte();
         }
     }
 }
