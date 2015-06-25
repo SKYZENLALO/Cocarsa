@@ -43,6 +43,8 @@ namespace Cocarsa1.ControlUsuario
         {
             InitializeComponent();
             printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+
+            label6.Text = DateTime.Today.ToLongDateString();
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
