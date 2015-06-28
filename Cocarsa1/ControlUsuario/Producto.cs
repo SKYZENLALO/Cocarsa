@@ -114,21 +114,28 @@ namespace Cocarsa1.ControlUsuario
                     return;
                 }
 
+                double precioVenta = 0;
+
                 try
                 {
-                    if (Convert.ToDouble(textBox2.Text) == 0)
+                    precioVenta = Convert.ToDouble(textBox2.Text);
+                    
+                    if (precioVenta <= 0)
                     {
-                        MessageBox.Show("Falta precio de venta");
+                        MessageBox.Show("El precio de venta debe ser mayor a cero.");
+                        textBox2.Text = "";
                         return;
                     }
                 } catch(Exception ex) {
                     MessageBox.Show("El precio debe ser un valor numérico");
+                    textBox2.Text = "";
+                    return;
                 }
                 
                 ProductoE prod = new ProductoE();
                 prod.IdProducto = Convert.ToInt32(textBox1.Text);
                 prod.Nombre = textBox3.Text;
-                prod.PrecioVenta = Convert.ToDouble(textBox2.Text);
+                prod.PrecioVenta = precioVenta;
 
                 ProductoDao dao = new ProductoDao();
 

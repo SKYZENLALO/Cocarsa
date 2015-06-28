@@ -43,6 +43,8 @@ namespace Cocarsa1.ControlUsuario
         {
             InitializeComponent();
             printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
+
+            label6.Text = DateTime.Today.ToLongDateString();
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -94,12 +96,13 @@ namespace Cocarsa1.ControlUsuario
             textBox5.Text = "";
             textBox6.Text = "";
             textBox8.Text = "GENERAL";
+            textBox9.Enabled = false;
+            comboBox1.Enabled = false;
             
             deudaNota = 0;
             deudaLarguillo = 0;
             deudaTotal = 0;
 
-            groupBox2.Enabled = false;
             dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
             filaSeleccionada = 0;
@@ -128,7 +131,9 @@ namespace Cocarsa1.ControlUsuario
             deudaTotal = Math.Round((deudaNota + deudaLarguillo),2);
 
             if (deudaTotal == 0)
-                groupBox2.Enabled = false;
+                textBox9.Enabled = false;
+            else
+                textBox9.Enabled = true;
 
             textBox4.Text = deudaTotal.ToString("N2");
             textBox2.Text = deudaNota.ToString("N2");
@@ -150,14 +155,14 @@ namespace Cocarsa1.ControlUsuario
 
             if (deudaCliente.Count == 0)
             {
-                limpiarPantalla();
+                limpiarPantalla();                
                 MessageBox.Show("El cliente no tiene adeudos.", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
                 return;
             }
             else
             {
-                groupBox2.Enabled = true;
+                comboBox1.Enabled = true;
+                textBox9.Enabled = true;
                 textBox9.Focus();
                 textBox9.Select(0, textBox9.Text.Length);
             }
@@ -202,9 +207,19 @@ namespace Cocarsa1.ControlUsuario
         {
             if (e.KeyCode == Keys.Down) 
             {
-                dataGridView2.Focus();
-                dataGridView2.Rows[0].Selected = true;
-                return;
+                if (dataGridView2.Rows.Count > 0) 
+                {                 
+                    dataGridView2.Focus();
+                    dataGridView2.Rows[0].Selected = true;
+                    return;
+                }
+
+                if (dataGridView1.Rows.Count > 0)
+                {
+                    dataGridView1.Focus();
+                    dataGridView1.Rows[0].Selected = true;
+                    return;
+                }
             }            
             
             if (e.KeyCode == Keys.Escape) 
@@ -573,6 +588,7 @@ namespace Cocarsa1.ControlUsuario
                         
         }
 
+       
         
     }
 }
