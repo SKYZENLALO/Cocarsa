@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Cocarsa1.ConexionBD;
 using Cocarsa1.Entidades;
+using System.Drawing.Printing;
 
 namespace Cocarsa1.ControlUsuario
 {
@@ -24,9 +25,10 @@ namespace Cocarsa1.ControlUsuario
         Font fuente8 = new Font("Arial Narrow", 10, FontStyle.Bold);
         Font fuente9 = new Font("Arial Narrow", 8, FontStyle.Regular);
 
-        private long idAbono = -1; 
-        private String folioCadena = "", concepto = "";
-        private Double montoImpresion = 0;
+        private long ticket_id = -1;
+        private String ticket_folio = "";
+        private String ticket_concepto = "";
+        private Double ticket_pago = 0;
 
         private Double deudaNota = 0;
         private Double deudaLarguillo = 0;
@@ -38,13 +40,15 @@ namespace Cocarsa1.ControlUsuario
 
         private List<Venta> deudaCliente = null;
         private Cocarsa1.Entidades.Cliente cliente = null;
+        private List<PrintDocument> ticketsPorImprimir;
         
         public PagoAbonos()
         {
             InitializeComponent();
-            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";
-
             label6.Text = DateTime.Today.ToLongDateString();
+
+            ticketsPorImprimir = new List<PrintDocument>();            
+            printDocument1.PrinterSettings.PrinterName = "EPSON TM-T20II Receipt";            
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -135,9 +139,9 @@ namespace Cocarsa1.ControlUsuario
             else
                 textBox9.Enabled = true;
 
-            textBox4.Text = deudaTotal.ToString("N2");
             textBox2.Text = deudaNota.ToString("N2");
             textBox3.Text = deudaLarguillo.ToString("N2");
+            textBox4.Text = deudaTotal.ToString("N2");
         }
 
         public void cargaDeudaCliente()
@@ -176,8 +180,8 @@ namespace Cocarsa1.ControlUsuario
 
                     dataGridView2.Rows.Add(deuda.FolioNota, 
                                            deuda.FechaVenta.ToString("dd-MMMM-yyyy"),
-                                           deuda.Adeudo,
-                                           deuda.Total,
+                                           deuda.Adeudo.ToString("N2"),
+                                           deuda.Total.ToString("N2"),
                                            liquidada);
                   
                 }
@@ -188,8 +192,8 @@ namespace Cocarsa1.ControlUsuario
 
                     dataGridView1.Rows.Add(deuda.FolioNota,
                                            deuda.FechaVenta.ToString("dd-MMMM-yyyy"),
-                                           deuda.Adeudo,
-                                           deuda.Total,
+                                           deuda.Adeudo.ToString("N2"),
+                                           deuda.Total.ToString("N2"),
                                            liquidada);
                 }
             }
@@ -237,215 +241,286 @@ namespace Cocarsa1.ControlUsuario
             if (e.KeyCode == Keys.F10) 
             {
                 e.SuppressKeyPress = true;
-                Double monto = 0;
+                Double montoPagado = 0;
 
                 try
                 {
-                    monto = Convert.ToDouble(textBox9.Text);
+                    montoPagado = Math.Round( Convert.ToDouble(textBox9.Text), 2 );
+                    textBox9.Text = montoPagado.ToString("N2");
                 }
                 catch (Exception exception)
                 {
-                    monto = 0;
+                    montoPagado = 0;
                     textBox9.Text = "0.0";
                     MessageBox.Show("Ingresa una cantidad correcta.", "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                if (monto <= 0)
+                if (montoPagado <= 0)
                 {
-                    MessageBox.Show("El monto debe ser mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El pago debe ser mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     textBox9.Select(0, textBox9.Text.Length);
                     return;
                 }
 
                 if (seleccionNota || seleccionLarguillo)
                 {
-                    if (monto > Convert.ToDouble(textBox7.Text))
+                    if (montoPagado > Convert.ToDouble(textBox7.Text))
                     {
                         String texto = seleccionLarguillo ? "del larguillo." : "de la nota.";
 
-                        MessageBox.Show("El monto es mayor a la deuda " + texto, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("El pago es mayor a la deuda " + texto, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         textBox9.Select(0, textBox9.Text.Length);
                         return;
                     }
                 }
                 else 
                 {
-                    if (monto > Convert.ToDouble(textBox4.Text))
+                    if (montoPagado > Convert.ToDouble(textBox4.Text))
                     {
-                        MessageBox.Show("El monto es mayor a la deuda total del cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("El pago es mayor a la deuda total del cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         textBox9.Select(0, textBox9.Text.Length);
                         return;
                     }
                 }
 
-                DialogResult result = MessageBox.Show("¿Confirmas el pago por $" + monto.ToString("N2") +"?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("¿Confirmas el pago por $" + montoPagado.ToString("N2") +"?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.No)
                 {
                     return;
-                }                
+                }
 
-                Abono abono = new Abono();
-                abono.IdCajera = 1;
-                abono.IdCliente = cliente.IdCliente;
-                abono.MontoAbono = Math.Round(monto,2);
-                abono.FechaAbono = DateTime.Now;
+                Abono datosPago = new Abono();
+                datosPago.IdCajera = 1;
+                datosPago.IdCliente = cliente.IdCliente;
+                datosPago.MontoAbono = montoPagado;
+                datosPago.FechaAbono = DateTime.Now;
 
-                montoImpresion = abono.MontoAbono;
-                
-                AbonoDao dao = new AbonoDao();
+                AbonoDao dao = new AbonoDao();                
                 if (seleccionNota || seleccionLarguillo)
                 {
                     Double deudaFila = Convert.ToDouble(textBox7.Text);
-                    deudaFila = Math.Round(deudaFila, 2) - Math.Round(monto,2);
+                    deudaFila -= montoPagado;
+                    deudaFila = Math.Round(deudaFila, 2);
 
                     if (seleccionNota)
                     {
-                        abono.IdGeneral = deudaCliente[filaSeleccionada].IdGeneral;
-                        folioCadena = abono.IdGeneral.ToString();
-                        concepto = "NOTA";                        
-
-                        if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila,2), "nota")) != -1)
+                        datosPago.IdConcepto = deudaCliente[filaSeleccionada].IdGeneral;
+                        
+                        if (!impresoraConectada())
                         {
-                            dataGridView2.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
-                            if (deudaFila == 0)
-                                dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";                           
+                            dao.agregaPagoTransaccion(datosPago, deudaFila, "nota");
+                            List<long> id_abono = dao.registraPago();
                             
-                            printDocument1.Print();
+                            if (id_abono[0] != -1)
+                            {
+                                dataGridView2.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
+                                if (deudaFila == 0)
+                                    dataGridView2.Rows[filaSeleccionada].Cells[4].Value = "SI";
+
+                                ticket_id = id_abono[0];
+                                ticket_folio = datosPago.IdConcepto.ToString();
+                                ticket_concepto = "NOTA";
+                                ticket_pago = montoPagado;
+
+                                //printDocument1.Print();
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se pudo registrar pago a nota.", "Error de MySQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                         else {
-                            MessageBox.Show("No se pudo registrar abono a nota.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);   
-                        }                        
+                            MessageBox.Show("Verifique que la impresora este conectada.", "Error de Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            textBox9.Focus();
+                            return;
+                        }
                     }
                     else if (seleccionLarguillo)
                     {
-                        abono.IdGeneral = deudaCliente[filaSeleccionada+dataGridView2.Rows.Count].IdGeneral;
-                        folioCadena = abono.IdGeneral.ToString();
-                        concepto = "LARGUILLO";
-
-                        if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila, 2), "larguillo")) != -1)
+                        datosPago.IdConcepto = deudaCliente[filaSeleccionada+dataGridView2.Rows.Count].IdGeneral;
+                        
+                        if (!impresoraConectada())
                         {
-                            dataGridView1.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
-                            if (deudaFila == 0)
-                                dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
+                            dao.agregaPagoTransaccion(datosPago, deudaFila, "larguillo");
+                            List<long> id_abono = dao.registraPago();
 
-                            printDocument1.Print();
+                            if (id_abono[0] != -1)
+                            {
+                                dataGridView1.Rows[filaSeleccionada].Cells[2].Value = deudaFila;
+                                if (deudaFila == 0)
+                                    dataGridView1.Rows[filaSeleccionada].Cells[4].Value = "SI";
+
+                                ticket_id = id_abono[0];
+                                ticket_folio = datosPago.IdConcepto.ToString();
+                                ticket_concepto = "LARGUILLO";
+                                ticket_pago = montoPagado;
+
+                                //printDocument1.Print();
+                            }
+                            else
+                            {
+                                MessageBox.Show("No se pudo registrar pago a larguillo.", "Error de MySQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
-                        else {
-                            MessageBox.Show("No se pudo registrar abono a larguillo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }                        
+                        else
+                        {
+                            MessageBox.Show("Verifique que la impresora este conectada.", "Error de Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            textBox9.Focus();
+                            return;
+                        }
                     }                    
                 }
                 else
                 {
                     int filaLarguillo = 0;
                     int filaNotas = 0;
-                    int contadorError = 0;
+                    double pagoAux = montoPagado;
 
-                    while (monto > 0)
+                    // Agrega en lista el pago de nota o de larguillo
+                    while (montoPagado > 0)
                     {
+                        Console.WriteLine("Monto Pagado : " + montoPagado);
                         if (filaLarguillo < dataGridView1.Rows.Count)
                         {
-                            concepto = "LARGUILLO";
-                            Double deudaFila = Convert.ToDouble(dataGridView1.Rows[filaLarguillo].Cells[2].Value);
+                            Double deudaFila = Convert.ToDouble(dataGridView1.Rows[filaLarguillo].Cells[2].Value);                            
 
                             if (deudaFila > 0)
                             {
-                                abono.IdGeneral = deudaCliente[filaLarguillo + dataGridView2.Rows.Count].IdGeneral;
-                                folioCadena = abono.IdGeneral.ToString();
-
-                                if (Math.Round(monto, 2) < Math.Round(deudaFila, 2))
+                                datosPago.IdConcepto = deudaCliente[filaLarguillo + dataGridView2.Rows.Count].IdGeneral;
+                                
+                                if ( montoPagado < deudaFila )
                                 {
-                                    abono.MontoAbono = Math.Round(monto, 2);
-                                    montoImpresion = abono.MontoAbono;
-                                    
-                                    if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila - monto, 2), "larguillo")) != -1)
-                                    {
-                                        dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila - monto;
-                                        monto = 0;
+                                    datosPago.MontoAbono = Math.Round(montoPagado, 2);
+                                    deudaFila -= montoPagado;                                    
+                                    deudaFila = Math.Round(deudaFila, 2);
+                                    montoPagado = 0;
 
-                                        printDocument1.Print();
-                                    }
-                                    else {
-                                        contadorError++;
-                                    }
+                                    dao.agregaPagoTransaccion(datosPago, deudaFila, "larguillo"); 
                                 }
                                 else
                                 {
-                                    abono.MontoAbono = Math.Round(deudaFila, 2);
-                                    montoImpresion = abono.MontoAbono;
+                                    datosPago.MontoAbono = Math.Round(deudaFila, 2);
+                                    montoPagado -= deudaFila;
+                                    montoPagado = Math.Round(montoPagado);
 
-                                    if ((idAbono = dao.registrarPago(abono, 0, "larguillo")) != -1)
-                                    {
-                                        monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
-                                        dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;                                        
-                                        dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
-
-                                        printDocument1.Print();
-                                    }
-                                    else
-                                    {
-                                        contadorError++;
-                                    }
+                                    dao.agregaPagoTransaccion(datosPago, 0, "larguillo");
                                 }
                             }
                             filaLarguillo++;
                         }
                         else if (filaNotas < dataGridView2.Rows.Count)
                         {
-                            concepto = "NOTA";
-                            Double deudaFila = Convert.ToDouble(dataGridView2.Rows[filaNotas].Cells[2].Value);
+                            Double deudaFila = Convert.ToDouble(dataGridView2.Rows[filaNotas].Cells[2].Value);                            
 
                             if (filaNotas < dataGridView2.Rows.Count)
                             {
                                 if (deudaFila > 0)
                                 {
-                                    abono.IdGeneral = deudaCliente[filaNotas].IdGeneral;
-                                    folioCadena = abono.IdGeneral.ToString();
+                                    datosPago.IdConcepto = deudaCliente[filaNotas].IdGeneral;                                    
 
-                                    if (Math.Round(monto,2) < Math.Round(deudaFila,2))
+                                    if (montoPagado < deudaFila)
                                     {
-                                        abono.MontoAbono = Math.Round(monto, 2);
-                                        montoImpresion = abono.MontoAbono;
+                                        datosPago.MontoAbono = Math.Round(montoPagado, 2);
+                                        deudaFila -= montoPagado;
+                                        deudaFila = Math.Round(deudaFila, 2);
+                                        montoPagado = 0;
 
-                                        if ((idAbono = dao.registrarPago(abono, Math.Round(deudaFila-monto,2), "nota")) != -1)
-                                        {
-                                            dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila - monto;
-                                            monto = 0;
-
-                                            printDocument1.Print();
-                                        }
-                                        else
-                                        {
-                                            contadorError++;
-                                        } 
+                                        dao.agregaPagoTransaccion(datosPago, deudaFila, "nota");
                                     }
                                     else
                                     {
-                                        abono.MontoAbono = Math.Round(deudaFila,2);
-                                        montoImpresion = abono.MontoAbono;
+                                        datosPago.MontoAbono = Math.Round(deudaFila,2);
+                                        montoPagado -= deudaFila;
+                                        montoPagado = Math.Round(montoPagado, 2);
 
-                                        if ((idAbono = dao.registrarPago(abono, 0, "nota")) != -1)
-                                        {
-                                            dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
-                                            monto = Math.Round(monto, 2) - Math.Round(deudaFila, 2);
-                                            dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
-
-                                            printDocument1.Print();
-                                        }
-                                        else
-                                        {
-                                            contadorError++;
-                                        }
+                                        dao.agregaPagoTransaccion(datosPago, 0, "nota");                                        
                                     }
                                 }
                             }
                             filaNotas++;
                         }
                     }
-                    if (contadorError > 0) {
-                        MessageBox.Show("No se pudo registrar abono general.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+
+                    //List<long> lista_id = dao.registraPago();
+                    //if (impresoraConectada())
+                    //{
+                        List<long> lista_id = dao.registraPago();
+                        if (lista_id != null)
+                        {
+                            filaLarguillo = 0;
+                            filaNotas = 0;
+                            montoPagado = pagoAux;
+
+                            while (montoPagado > 0)
+                            {
+                                if (filaLarguillo < dataGridView1.Rows.Count)
+                                {
+                                    Double deudaFila = Convert.ToDouble(dataGridView1.Rows[filaLarguillo].Cells[2].Value);
+
+                                    if (deudaFila > 0)
+                                    {
+                                        if (montoPagado < deudaFila)
+                                        {
+                                            deudaFila -= montoPagado;
+                                            deudaFila = Math.Round(deudaFila, 2);
+
+                                            dataGridView1.Rows[filaLarguillo].Cells[2].Value = deudaFila;
+                                            montoPagado = 0;
+                                            
+                                        }
+                                        else
+                                        {
+                                            montoPagado -= deudaFila;
+                                            montoPagado = Math.Round(montoPagado);
+
+                                            dataGridView1.Rows[filaLarguillo].Cells[2].Value = 0;
+                                            dataGridView1.Rows[filaLarguillo].Cells[4].Value = "SI";
+                                        }
+                                    }
+                                    filaLarguillo++;
+                                }
+                                else if (filaNotas < dataGridView2.Rows.Count)
+                                {
+                                    Double deudaFila = Convert.ToDouble(dataGridView2.Rows[filaNotas].Cells[2].Value);
+
+                                    if (filaNotas < dataGridView2.Rows.Count)
+                                    {
+                                        if (deudaFila > 0)
+                                        {
+                                            if (montoPagado < deudaFila)
+                                            {
+                                                deudaFila -= montoPagado;
+                                                deudaFila = Math.Round(deudaFila, 2);
+
+                                                dataGridView2.Rows[filaNotas].Cells[2].Value = deudaFila;
+                                                montoPagado = 0;
+                                            }
+                                            else
+                                            {
+                                                montoPagado -= deudaFila;
+                                                montoPagado = Math.Round(montoPagado, 2);
+
+                                                dataGridView2.Rows[filaNotas].Cells[2].Value = 0;
+                                                dataGridView2.Rows[filaNotas].Cells[4].Value = "SI";
+                                            }
+                                        }
+                                    }
+                                    filaNotas++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Hubo un error al registrar pago general.", "Error de MySQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    /*}
+                    else
+                    {
+                        MessageBox.Show("Verifique que la impresora este conectada.", "Error de Impresión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        textBox9.Focus();
+                        return;
+                    }*/
                 }
                 calcularTotales();
                 reiniciaPago();
@@ -570,11 +645,11 @@ namespace Cocarsa1.ControlUsuario
             e.Graphics.DrawString("ESTADO DE  MEXICO TELS : 5934-7171  Y  5934-7172", fuente9, Brushes.Black, 22, 152);
 
             e.Graphics.DrawString("Abono ID : ", fuente2, Brushes.Black, 10, 200);
-            e.Graphics.DrawString(idAbono.ToString(), fuente3, Brushes.Black, 80, 200);
+            e.Graphics.DrawString(ticket_id.ToString(), fuente3, Brushes.Black, 80, 200);
             e.Graphics.DrawString("Folio : ", fuente2, Brushes.Black, 160, 200);
-            e.Graphics.DrawString(folioCadena, fuente3, Brushes.Black, 205, 200);
+            e.Graphics.DrawString(ticket_folio, fuente3, Brushes.Black, 205, 200);
             e.Graphics.DrawString("Concepto : ", fuente2, Brushes.Black, 10, 220);
-            e.Graphics.DrawString(concepto, fuente3, Brushes.Black, 80, 220);
+            e.Graphics.DrawString(ticket_concepto, fuente3, Brushes.Black, 80, 220);
             e.Graphics.DrawString("Cajera : ", fuente2, Brushes.Black, 10, 240);
             e.Graphics.DrawString(comboBox1.Text, fuente3, Brushes.Black, 70, 240);
             e.Graphics.DrawString("Cliente ID: ", fuente2, Brushes.Black, 10, 280);
@@ -582,13 +657,25 @@ namespace Cocarsa1.ControlUsuario
             e.Graphics.DrawString("Cliente : ", fuente2, Brushes.Black, 10, 300);
             e.Graphics.DrawString(textBox1.Text, fuente3, Brushes.Black, 70, 300);
             e.Graphics.DrawString("Monto de Pago : ", fuente2, Brushes.Black, 10, 320);
-            e.Graphics.DrawString("$ " + montoImpresion.ToString("N2"), fuente6, Brushes.Black, 180, 320);
+            e.Graphics.DrawString("$ " + ticket_pago.ToString("N2"), fuente6, Brushes.Black, 180, 320);
             e.Graphics.DrawString(String.Format("{0:dd - MMMM - yyyy HH:mm tt}", DateTime.Now), fuente4, Brushes.Black, 60, 410);
             e.Graphics.DrawString(".", fuente4, Brushes.Black, 10, 440);
                         
         }
 
-       
+        private bool impresoraConectada()
+        {
+            bool online = false;
+            try
+            {
+                online = printDocument1.PrinterSettings.IsValid;
+            }
+            catch
+            {
+                online = false;
+            }
+            return online;
+        }
         
     }
 }

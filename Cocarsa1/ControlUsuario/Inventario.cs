@@ -42,6 +42,11 @@ namespace Cocarsa1.ControlUsuario
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             fila = dataGridView1.CurrentCell.RowIndex;
+            if (dataGridView1.CurrentCell.Value == null)
+            {
+                return;
+            }
+
             switch (dataGridView1.SelectedCells[0].ColumnIndex)
             {
                 case 0:
@@ -144,6 +149,24 @@ namespace Cocarsa1.ControlUsuario
                     return;
                 }                
             }
+        }
+
+        private void dataGridView1_Enter(object sender, EventArgs e)
+        {
+            dataGridView2.ClearSelection();
+            dataGridView3.ClearSelection();
+        }
+
+        private void dataGridView2_Enter(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
+            dataGridView3.ClearSelection();
+        }
+
+        private void dataGridView3_Enter(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
+            dataGridView2.ClearSelection();
         }
 
     }
