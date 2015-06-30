@@ -17,15 +17,15 @@ namespace Cocarsa1.ControlUsuario
         public Producto()
         {
             InitializeComponent();
-            cargaHistorial();
+            cargaHistorial(DateTime.Now.Month, DateTime.Now.Year);
         }
 
-        public void cargaHistorial() {
+        public void cargaHistorial(int mes, int annio) {
 
             dataGridView1.Rows.Clear();
             ProductoDao dao = new ProductoDao();
-            List<HistorialPrecio> historial = dao.historialCambioPrecios("06", "2015");
-
+            List<HistorialPrecio> historial = dao.historialCambioPrecios(mes, annio);
+            
             foreach (HistorialPrecio registro in historial)
             {
                 dataGridView1.Rows.Add(registro.IdProducto,
@@ -156,13 +156,18 @@ namespace Cocarsa1.ControlUsuario
                     {
                         MessageBox.Show(prod.Nombre + " guardado correctamente.");
                         limpiarCampos();
-                        cargaHistorial();
+                        cargaHistorial(DateTime.Now.Month, DateTime.Now.Year);
                     }
                     else {
                         MessageBox.Show("Error al guardar los cambios.");
                     }
                 }
             }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            cargaHistorial(dateTimePicker1.Value.Month, dateTimePicker1.Value.Year);
         }
 
         
