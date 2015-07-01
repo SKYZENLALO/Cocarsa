@@ -12,40 +12,18 @@ namespace Cocarsa1.ConexionBD
     {
         private String tipoPago;
         private Abono pagoAbono;
-        private Double deuda;
+        private Double deudaFila;
 
-        public long registrarPago(Abono pagoAbono, Double deuda, String tipoPago) {
-            
-            this.tipoPago = tipoPago;
-            this.pagoAbono = pagoAbono;
-            this.deuda = deuda;
+        private List<Abono> lista_abonos = null;
+        private List<Double> lista_deudas = null;
+        private List<String> lista_conceptos = null;
 
-            long ans = -1;
-
-            Conexion conexion = new Conexion();
-            MySqlConnection conn = conexion.abrirConexion();            
-            MySqlTransaction tx = null;
-
-            try 
-            {
-                tx = conn.BeginTransaction();
-
-                actualizarDeuda(conn);
-                ans = registrarAbono(conn);                
-
-                tx.Commit();                
-            } 
-            catch(Exception e) 
-            {
-                Console.WriteLine(e.ToString());
-                tx.Rollback();
-                ans = -1;
-            }
-
-            conexion.cerrarConexion();
-            return ans;
+        public AbonoDao() {                        
+            lista_abonos = new List<Abono>();
+            lista_deudas = new List<Double>();
+            lista_conceptos = new List<String>();
         }
-        
+
         public long registrarAbono(MySqlConnection conexion) 
         {
             String query = "";
@@ -58,9 +36,9 @@ namespace Cocarsa1.ConexionBD
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             
             if(tipoPago.Equals("nota"))
-                cmd.Parameters.AddWithValue("?idNota",pagoAbono.IdGeneral);
+                cmd.Parameters.AddWithValue("?idNota",pagoAbono.IdConcepto);
             else if (tipoPago.Equals("larguillo"))
-                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdGeneral);
+                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdConcepto);
 
             cmd.Parameters.AddWithValue("?idCliente", pagoAbono.IdCliente);
             cmd.Parameters.AddWithValue("?idCajera", pagoAbono.IdCajera);
@@ -80,17 +58,72 @@ namespace Cocarsa1.ConexionBD
             else if (tipoPago.Equals("larguillo"))
                 query = "UPDATE larguillo SET adeudo = ?adeudo, liquidada = ?liquidada WHERE idLarguillo=?idLarguillo";
 
-            Boolean liquidada = deuda == 0 ? true : false; 
+            Boolean liquidada = deudaFila == 0 ? true : false; 
 
             MySqlCommand cmd = new MySqlCommand(query, conexion);
             if (tipoPago == "nota")
-                cmd.Parameters.AddWithValue("?idNota", pagoAbono.IdGeneral);
+                cmd.Parameters.AddWithValue("?idNota", pagoAbono.IdConcepto);
             else
-                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdGeneral);
-            cmd.Parameters.AddWithValue("?adeudo", deuda);
+                cmd.Parameters.AddWithValue("?idLarguillo", pagoAbono.IdConcepto);
+            cmd.Parameters.AddWithValue("?adeudo", deudaFila);
             cmd.Parameters.AddWithValue("?liquidada", liquidada);
 
             cmd.ExecuteNonQuery();
+        }
+
+        public void agregaPagoTransaccion(Abono datosPago, Double adeudo, String concepto)
+        {
+            Abono abono = new Abono();
+            abono.IdConcepto = datosPago.IdConcepto;
+            abono.IdCliente = datosPago.IdCliente;
+            abono.IdCajera = datosPago.IdCajera;
+            abono.FechaAbono = datosPago.FechaAbono;
+            abono.MontoAbono = datosPago.MontoAbono;
+
+            Double deuda = adeudo;
+            String tipo = concepto;
+
+            lista_abonos.Add(abono);
+            lista_deudas.Add(deuda);
+            lista_conceptos.Add(tipo);            
+        }
+
+        public List<long> registraPago() 
+        {
+            List<long> id_abono = new List<long>();
+
+            Conexion conexion = new Conexion();
+            MySqlConnection conn = conexion.abrirConexion();
+            MySqlTransaction tx = null;
+
+            try
+            {
+                tx = conn.BeginTransaction();
+
+                for (int i = 0; i < lista_abonos.Count; i++ )
+                {
+                    pagoAbono = lista_abonos[i];
+                    tipoPago = lista_conceptos[i];
+                    deudaFila = lista_deudas[i];
+
+                    actualizarDeuda(conn);
+                    long id = registrarAbono(conn);                    
+
+                    id_abono.Add(id);
+                }
+
+                tx.Commit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                tx.Rollback();
+                id_abono = null;
+            }
+
+            conexion.cerrarConexion();
+
+            return id_abono;
         }
     }
 }

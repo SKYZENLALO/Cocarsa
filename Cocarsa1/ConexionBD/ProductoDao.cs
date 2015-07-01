@@ -82,7 +82,7 @@ namespace Cocarsa1.ConexionBD
             return ans;
         }
 
-        public List<HistorialPrecio> historialCambioPrecios(String mes, String annio) {
+        public List<HistorialPrecio> historialCambioPrecios(int mes, int annio) {
 
             List<HistorialPrecio> historial = new List<HistorialPrecio>();
 
