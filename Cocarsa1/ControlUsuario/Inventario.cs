@@ -91,7 +91,7 @@ namespace Cocarsa1.ControlUsuario
                     
                     if (dataGridView1.CurrentCell.Value == null)
                     {
-                        MessageBox.Show("Ingresa la cantidad de kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         columna1 = 2;
                         flag1 = true; 
                         return;
@@ -148,11 +148,20 @@ namespace Cocarsa1.ControlUsuario
                 e.Handled = true;
                 if (dataGridView1.CurrentRow.Cells[0].Value != null && dataGridView1.CurrentRow.Cells[2].Value == null)
                 {
-                    MessageBox.Show("Ingresa la cantidad de kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     columna1 = 2;
                     flag1 = true;
                     return;
-                }                
+                }
+            }
+            else if (e.KeyCode == Keys.F10) {
+                DialogResult ans = MessageBox.Show("¿Guardar registros en Frio?.", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (ans == DialogResult.No)
+                    return;
+                else {
+
+                    List<Existencia> frio = new List<Existencia>();
+                }
             }
         }
 
@@ -223,7 +232,7 @@ namespace Cocarsa1.ControlUsuario
 
                     if (dataGridView2.CurrentCell.Value == null)
                     {
-                        MessageBox.Show("Ingresa la cantidad de kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         columna2 = 2;
                         flag2 = true;
                         return;
@@ -286,7 +295,7 @@ namespace Cocarsa1.ControlUsuario
                 e.Handled = true;
                 if (dataGridView2.CurrentRow.Cells[0].Value != null && dataGridView2.CurrentRow.Cells[2].Value == null)
                 {
-                    MessageBox.Show("Ingresa la cantidad de kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     columna2 = 2;
                     flag2 = true;
                     return;
