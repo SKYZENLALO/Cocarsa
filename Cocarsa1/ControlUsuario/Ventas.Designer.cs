@@ -49,11 +49,6 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Clave = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Importe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -68,6 +63,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.Clave = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Importe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -280,50 +280,6 @@
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
-            // Clave
-            // 
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Clave.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Clave.HeaderText = "CLAVE";
-            this.Clave.Name = "Clave";
-            this.Clave.Width = 160;
-            // 
-            // Descripcion
-            // 
-            this.Descripcion.HeaderText = "DESCRIPCION";
-            this.Descripcion.Name = "Descripcion";
-            this.Descripcion.ReadOnly = true;
-            this.Descripcion.Width = 550;
-            // 
-            // Cantidad
-            // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Cantidad.HeaderText = "CANTIDAD";
-            this.Cantidad.Name = "Cantidad";
-            this.Cantidad.Width = 160;
-            // 
-            // Precio
-            // 
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.Precio.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Precio.HeaderText = "PRECIO";
-            this.Precio.Name = "Precio";
-            this.Precio.Width = 160;
-            // 
-            // Importe
-            // 
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.Importe.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Importe.HeaderText = "IMPORTE";
-            this.Importe.Name = "Importe";
-            this.Importe.ReadOnly = true;
-            this.Importe.Width = 200;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -484,6 +440,50 @@
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
+            // Clave
+            // 
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Clave.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Clave.HeaderText = "CLAVE";
+            this.Clave.Name = "Clave";
+            this.Clave.Width = 160;
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.HeaderText = "DESCRIPCION";
+            this.Descripcion.Name = "Descripcion";
+            this.Descripcion.ReadOnly = true;
+            this.Descripcion.Width = 550;
+            // 
+            // Cantidad
+            // 
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Cantidad.HeaderText = "CANTIDAD";
+            this.Cantidad.Name = "Cantidad";
+            this.Cantidad.Width = 160;
+            // 
+            // Precio
+            // 
+            dataGridViewCellStyle4.Format = "N2";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Precio.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Precio.HeaderText = "PRECIO";
+            this.Precio.Name = "Precio";
+            this.Precio.Width = 160;
+            // 
+            // Importe
+            // 
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.Importe.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Importe.HeaderText = "IMPORTE";
+            this.Importe.Name = "Importe";
+            this.Importe.ReadOnly = true;
+            this.Importe.Width = 200;
+            // 
             // Ventas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 22F);
@@ -543,11 +543,11 @@
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Clave;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
         private System.Windows.Forms.DataGridViewTextBoxColumn Importe;
-        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }
