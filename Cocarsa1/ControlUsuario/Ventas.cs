@@ -185,9 +185,9 @@ namespace Cocarsa1.ControlUsuario
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             VentasDAO ventasDao = new VentasDAO();
-            Double cantidadTemp;
-            Double precioTemp;
-            Double importeTemp;
+            Double cantidadTemp=0;
+            Double precioTemp=0;
+            Double importeTemp=0;
             if (dataGridView1.CurrentCell.Value == null)
             {
                 return;
@@ -233,6 +233,7 @@ namespace Cocarsa1.ControlUsuario
                             else
                             {
                                 dataGridView1.CurrentRow.Cells[1].Value = productoNuevo.Nombre;
+                                dataGridView1.CurrentRow.Cells[2].Value = 0;
                                 dataGridView1.CurrentRow.Cells[3].Value = productoNuevo.PrecioVenta;
                                 columna = 2;
                                 flag = true;
@@ -262,7 +263,7 @@ namespace Cocarsa1.ControlUsuario
                             try
                             {
                                 cantidadTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[2].Value.ToString());
-                                if (cantidadTemp < 0) {
+                                if (cantidadTemp <= 0 ) {
                                     MessageBox.Show("Solo cifras positivas");
                                     dataGridView1.CurrentRow.Cells[2].Value = 0;
                                     dataGridView1.CurrentRow.Cells[4].Value = 0;
@@ -303,7 +304,7 @@ namespace Cocarsa1.ControlUsuario
                             try
                             {
                                 precioTemp = Convert.ToDouble(dataGridView1.CurrentRow.Cells[3].Value.ToString());
-                                if (precioTemp < 0) {
+                                if (precioTemp <= 0) {
                                     MessageBox.Show("Solo cifras positivas");
                                     dataGridView1.CurrentRow.Cells[3].Value = 0;
                                     dataGridView1.CurrentRow.Cells[4].Value = 0;
@@ -551,6 +552,7 @@ namespace Cocarsa1.ControlUsuario
                     checkBox1.Enabled = true;
                     checkBox1.Checked = true;
                     checkBox2.Visible = true;
+                    dataGridView1.Enabled = true;
                     dataGridView1.Focus();
                     dataGridView1.CurrentCell.Selected = true;
                 }
@@ -581,6 +583,7 @@ namespace Cocarsa1.ControlUsuario
                     textBox3.Text = cliente.Nombre + " " + cliente.APaterno + " " + cliente.AMaterno;
                     checkBox2.Visible = false;
                     textBox4.Enabled = true;
+                    dataGridView1.Enabled = false;
                     textBox4.Focus();
                 }
                 else
@@ -595,6 +598,7 @@ namespace Cocarsa1.ControlUsuario
                     checkBox1.Enabled = true;
                     checkBox1.Checked = true;
                     checkBox2.Visible = true;
+                    dataGridView1.Enabled = true;
                     dataGridView1.Focus();
                     dataGridView1.CurrentCell.Selected = true;
                 }
