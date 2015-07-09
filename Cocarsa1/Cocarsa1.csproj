@@ -55,6 +55,7 @@
     <Compile Include="ConexionBD\ClienteDAO.cs" />
     <Compile Include="ConexionBD\Conexion.cs" />
     <Compile Include="ConexionBD\FajillasDAO.cs" />
+    <Compile Include="ConexionBD\InventarioDao.cs" />
     <Compile Include="ConexionBD\LarguilloDao.cs" />
     <Compile Include="ConexionBD\ProductoDao.cs" />
     <Compile Include="ConexionBD\ReportesDAO.cs" />
