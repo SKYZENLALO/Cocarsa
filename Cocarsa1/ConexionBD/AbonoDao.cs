@@ -95,11 +95,10 @@ namespace Cocarsa1.ConexionBD
             Conexion conexion = new Conexion();
             MySqlConnection conn = conexion.abrirConexion();
             MySqlTransaction tx = null;
+            tx = conn.BeginTransaction();
 
             try
             {
-                tx = conn.BeginTransaction();
-
                 for (int i = 0; i < lista_abonos.Count; i++ )
                 {
                     pagoAbono = lista_abonos[i];

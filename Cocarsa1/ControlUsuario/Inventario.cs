@@ -23,9 +23,17 @@ namespace Cocarsa1.ControlUsuario
         private Boolean flag1 = false;
         private Boolean flag2 = false;
 
+        private InventarioDao inv_dao = null;
+        private ProductoDao prod_dao = null;
+
         public Inventario()
         {
             InitializeComponent();
+
+            inv_dao = new InventarioDao();
+            prod_dao = new ProductoDao();
+
+            inv_dao.copiaRegistroExistencia();
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -46,7 +54,10 @@ namespace Cocarsa1.ControlUsuario
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             int id = 0;
+            
             fila1 = dataGridView1.CurrentCell.RowIndex;
+            dataGridView1.Rows[fila1].DefaultCellStyle.BackColor = Color.White;
+
             if (dataGridView1.CurrentCell.Value == null)
             {
                 return;
@@ -62,13 +73,13 @@ namespace Cocarsa1.ControlUsuario
                     catch (Exception error)
                     {
                         id = 0;
-                        MessageBox.Show("Ingresa un valor numérico.","Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+
+                        MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        dataGridView1.Rows.RemoveAt(fila1);                        
                         return;
                     }
-                    
-                    ProductoDao dao = new ProductoDao();
-                    ProductoE prod = dao.obtenerProducto(id);
+
+                    ProductoE prod = prod_dao.obtenerProducto(id);
 
                     if (prod != null)
                     {
@@ -76,9 +87,10 @@ namespace Cocarsa1.ControlUsuario
                         columna1 = 2;
                         flag1 = true;
                     }
-                    else {
+                    else
+                    {
                         MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+                        dataGridView1.Rows.RemoveAt(fila1);
                         columna1 = 0;
                         flag1 = true;
                         return;
@@ -88,27 +100,32 @@ namespace Cocarsa1.ControlUsuario
                     break;
                 case 2:
                     double kilogramos = 0;
-                    
+
                     if (dataGridView1.CurrentCell.Value == null)
                     {
                         MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         columna1 = 2;
-                        flag1 = true; 
+                        flag1 = true;
                         return;
                     }
-                    else {
-                        if (dataGridView1.CurrentRow.Cells[1].Value == null) {
+                    else
+                    {
+                        if (dataGridView1.CurrentRow.Cells[1].Value == null)
+                        {
                             MessageBox.Show("Ingresa la clave del producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             dataGridView1.CurrentCell.Value = "";
                             columna1 = 0;
-                            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+                            dataGridView1.Rows.RemoveAt(fila1);
+
                             flag1 = true;
-                            return;   
+                            return;
                         }
-                        
-                        try { 
+
+                        try
+                        {
                             kilogramos = Convert.ToDouble(dataGridView1.CurrentCell.Value);
-                            if (kilogramos <= 0) {
+                            if (kilogramos <= 0)
+                            {
                                 MessageBox.Show("Ingresa una cantidad mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 dataGridView1.CurrentCell.Value = "";
                                 columna1 = 2;
@@ -116,17 +133,19 @@ namespace Cocarsa1.ControlUsuario
                                 return;
                             }
 
-                        } catch(Exception ex) {
+                        }
+                        catch (Exception ex)
+                        {
                             MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             dataGridView1.CurrentCell.Value = "";
                             columna1 = 2;
-                            flag1 = true; 
+                            flag1 = true;
                             return;
                         }
 
                         fila1 = fila1 + 1;
                         columna1 = 0;
-                        flag1 = true;                        
+                        flag1 = true;
                     }
                     break;
             }
@@ -137,7 +156,7 @@ namespace Cocarsa1.ControlUsuario
             if (flag1)
             {
                 dataGridView1.CurrentCell = dataGridView1[columna1, fila1];
-                flag1 = false;
+                flag1 = false;                
             }
         }
 
@@ -154,13 +173,58 @@ namespace Cocarsa1.ControlUsuario
                     return;
                 }
             }
-            else if (e.KeyCode == Keys.F10) {
+            else if (e.KeyCode == Keys.F10)
+            {
+                if (dataGridView1.Rows.Count == 1)
+                {
+                    MessageBox.Show("Al menos debes agregar un registro para guardar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (row.Cells[2].Value == null && row.Cells[0].Value != null)
+                    {
+                        MessageBox.Show("Hay registros sin completar en la tabla.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
                 DialogResult ans = MessageBox.Show("¿Guardar registros en Frio?.", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (ans == DialogResult.No)
                     return;
-                else {
+                else
+                {
+                    bool err = false;
+                    int indicador = 0;
 
-                    List<Existencia> frio = new List<Existencia>();
+                    for (int x = 0; x < dataGridView1.Rows.Count - 1; x++)
+                    {
+                        DataGridViewRow row = dataGridView1.Rows[x];
+
+                        Existencia registro = new Existencia();
+                        registro.IdProducto = Convert.ToInt32(row.Cells[0].Value);
+                        registro.Cantidad = Convert.ToDouble(row.Cells[2].Value);
+                        registro.Fecha = DateTime.Now;
+
+                        if ((indicador = inv_dao.guardaRegistroFrio(registro)) == 2)
+                        {
+                            dataGridView1.Rows.RemoveAt(x);
+                        }
+                        else if (indicador == 1)
+                        {
+                            dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.FromArgb(255, 246, 223);
+                        }
+                        else if (indicador == 0)
+                        {
+                            dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.FromArgb(255, 228, 228);
+                        }
+                        else if (indicador == -1)
+                            err = true;
+                    }
+                    if (err) {
+                        MessageBox.Show("Error de conexion con la base de datos.", "MySQL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
@@ -207,8 +271,7 @@ namespace Cocarsa1.ControlUsuario
                         return;
                     }
 
-                    ProductoDao dao = new ProductoDao();
-                    ProductoE prod = dao.obtenerProducto(id);
+                    ProductoE prod = prod_dao.obtenerProducto(id);
 
                     if (prod != null)
                     {
@@ -302,6 +365,16 @@ namespace Cocarsa1.ControlUsuario
                 }
             }
         }
+
+        private void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.EndEdit();            
+        }
+
+        private void dataGridView2_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView2.EndEdit();            
+        }             
 
     }
 }
