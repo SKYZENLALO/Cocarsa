@@ -15,16 +15,8 @@ namespace Cocarsa1.ControlUsuario
         public Gastos()
         {
             InitializeComponent();
+            dateTimePicker1.Value = DateTime.Today;
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
-        }
     }
 }

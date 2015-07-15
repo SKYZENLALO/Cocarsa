@@ -102,18 +102,30 @@ namespace Cocarsa1.ConexionBD
             return cajera;
         }
 
-        public int numeroFajillas(String fecha)
+        public int numeroFajillas(String fecha, int opc)
         {
             int totalFajillas = 0;
+            String query="";
             MySqlConnection conn;
             Conexion conexion = new Conexion();
             conn = conexion.abrirConexion();
-
-            String query = "SELECT count(*) FROM cocarsa.fajilla WHERE fecha = ?fecha;";
+            switch(opc){
+                case 1:             //Busqueda Fajillas por dia 
+                    query = "SELECT count(*) FROM cocarsa.fajilla WHERE fecha = ?fecha;";
+                    break;
+                case 2:             //Busqueda Fajillas en Caja
+                    query = "SELECT count(*) FROM cocarsa.fajilla WHERE enCaja = TRUE;";
+                    break;
+                case  3:
+                    query = "SELECT count(*) FROM cocarsa.fajilla WHERE fechaCorte = ?fecha;";
+                    break;
+            }
             try
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("?fecha", fecha);
+                if (opc != 2){
+                    cmd.Parameters.AddWithValue("?fecha", fecha);
+                }
                 consulta = cmd.ExecuteReader();
                 cmd.Dispose();
 
@@ -128,19 +140,33 @@ namespace Cocarsa1.ConexionBD
             }
             return totalFajillas;
         }
-        
-        public Fajilla[] fajillas(int numFajillas, String fecha) {
+
+        public Fajilla[] fajillas(int numFajillas, String fecha, int opc) {
             Fajilla[] fajilla = new Fajilla[numFajillas];
             int i = 0;
+            String query = "";
             MySqlConnection conn;
             Conexion conexion = new Conexion();
             conn = conexion.abrirConexion();
-
-            String query = "SELECT * FROM cocarsa.fajilla WHERE fecha = ?fecha;";
+            switch (opc) { 
+                case 1:
+                    query = "SELECT * FROM cocarsa.fajilla WHERE fecha = ?fecha;";
+                    break;
+                case 2:
+                    query = "SELECT * FROM cocarsa.fajilla WHERE enCaja = TRUE;";
+                    break;
+                case 3:
+                    query = "SELECT * FROM cocarsa.fajilla WHERE fechaCorte = ?fecha;";
+                    break;
+            }
+            
             try
             {
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("?fecha", fecha);
+                if (opc != 2)
+                {
+                    cmd.Parameters.AddWithValue("?fecha", fecha);
+                }
                 consulta = cmd.ExecuteReader();
                 cmd.Dispose();
 
@@ -157,7 +183,7 @@ namespace Cocarsa1.ConexionBD
                         fajilla[i].FechaCorte = consulta.GetDateTime(5);
                     }
                     catch (Exception error) {
-                        //fajilla[i].FechaCorte = null;
+                        fajilla[i].FechaCorte = Convert.ToDateTime("21-sep-1992");
                     }
                     i++;
                 }
@@ -167,6 +193,51 @@ namespace Cocarsa1.ConexionBD
                 conexion.cerrarConexion();
             }
             return fajilla;
+        }
+
+        public Boolean insertarFajillas(Fajilla fajilla)
+        {
+            Boolean resp = false;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+
+            String query = "INSERT INTO fajilla (idCajera, monto, fecha, enCaja) VALUES (?idCajera, ?monto, current_date(), TRUE);";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("?idCajera", fajilla.IdCajera);
+                cmd.Parameters.AddWithValue("?monto", fajilla.Monto);
+                cmd.ExecuteNonQuery();
+                resp = true;
+                //cmd.Dispose();
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return resp;
+        }
+
+        public Boolean corteCaja() {
+            Boolean resp = false;
+            MySqlConnection conn;
+            Conexion conexion = new Conexion();
+            conn = conexion.abrirConexion();
+
+            String query = "UPDATE fajilla SET enCaja = false, fechaCorte = current_date() WHERE enCaja = true;";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+                resp = true;
+            }
+            finally
+            {
+                conexion.cerrarConexion();
+            }
+            return resp;
         }
     }
 }
