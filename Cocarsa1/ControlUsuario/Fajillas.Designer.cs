@@ -37,6 +37,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
             this.label21 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -78,7 +79,6 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -105,7 +105,19 @@
             this.groupBox1.Size = new System.Drawing.Size(363, 228);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Registrar Fajillas";
+            this.groupBox1.Text = "Registrar Parciales";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label7.Location = new System.Drawing.Point(20, 183);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(119, 29);
+            this.label7.TabIndex = 41;
+            this.label7.Text = "F11 Corte";
             // 
             // dateTimePicker3
             // 
@@ -196,9 +208,9 @@
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
             this.label1.Location = new System.Drawing.Point(15, 286);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 29);
+            this.label1.Size = new System.Drawing.Size(195, 29);
             this.label1.TabIndex = 22;
-            this.label1.Text = "Fajillas del Día";
+            this.label1.Text = "Parciales del Día";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -228,9 +240,9 @@
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
             this.label2.Location = new System.Drawing.Point(400, 24);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(178, 29);
+            this.label2.Size = new System.Drawing.Size(201, 29);
             this.label2.TabIndex = 25;
-            this.label2.Text = "Fajillas en Caja";
+            this.label2.Text = "Parciales en Caja";
             // 
             // label3
             // 
@@ -239,9 +251,9 @@
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(78)))), ((int)(((byte)(121)))));
             this.label3.Location = new System.Drawing.Point(761, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(190, 29);
+            this.label3.Size = new System.Drawing.Size(213, 29);
             this.label3.TabIndex = 26;
-            this.label3.Text = "Consulta Fajillas";
+            this.label3.Text = "Consulta Parciales";
             // 
             // label20
             // 
@@ -565,18 +577,6 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 26);
             this.textBox5.TabIndex = 48;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label7.Location = new System.Drawing.Point(20, 183);
-            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(119, 29);
-            this.label7.TabIndex = 41;
-            this.label7.Text = "F11 Corte";
             // 
             // Fajillas
             // 

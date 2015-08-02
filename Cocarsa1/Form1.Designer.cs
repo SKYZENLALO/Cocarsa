@@ -170,7 +170,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(1340, 694);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = " Fajillas ";
+            this.tabPage3.Text = " Parciales ";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // fajillas1
