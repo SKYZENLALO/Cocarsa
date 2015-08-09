@@ -31,8 +31,8 @@ namespace Cocarsa1.ControlUsuario
                 dataGridView1.Rows.Add(registro.IdProducto,
                                         registro.Producto,
                                         registro.Fecha.ToString("dd-MMMM-yyyy"),
-                                        Math.Round(registro.PrecioAnterior, 2),
-                                        Math.Round(registro.PrecioActual, 2));
+                                        Math.Round(registro.PrecioAnterior, 2).ToString("N2"),
+                                        Math.Round(registro.PrecioActual, 2).ToString("N2"));
             }
         }
 
@@ -51,11 +51,17 @@ namespace Cocarsa1.ControlUsuario
                         textBox1.Text = idProducto.ToString();
                         textBox4.Text = "NUEVO";
                         textBox1.Enabled = false;
+                        textBox2.Enabled = true;
+                        textBox3.Enabled = true;
+                        textBox3.Focus();
+                        textBox3.Select(0, textBox3.Text.Length);
                     }
                     else {
                         MessageBox.Show("Error de conexion con la base de datos.");
                         textBox1.Text = "";
                         textBox1.Enabled = true;
+                        textBox2.Enabled = false;
+                        textBox3.Enabled = false;
                     }
                 }
                 else {                    
@@ -74,13 +80,21 @@ namespace Cocarsa1.ControlUsuario
                     if ((producto = dao.obtenerProducto(idProducto)) != null)
                     {
                         textBox1.Enabled = false;
-                        textBox2.Text = producto.PrecioVenta.ToString();
+                        textBox2.Enabled = true;
+                        textBox3.Enabled = true;
+                        textBox2.Text = producto.PrecioVenta.ToString("N2");
                         textBox3.Text = producto.Nombre.ToString();
                         textBox4.Text = "EDITABLE";
+                        textBox3.Focus();
+                        textBox3.Select(0, textBox3.Text.Length);
                     }
                     else {
                         textBox1.Enabled = false;
+                        textBox2.Enabled = true;
+                        textBox3.Enabled = true;
                         textBox4.Text = "NUEVO";
+                        textBox3.Focus();
+                        textBox3.Select(0, textBox3.Text.Length);
                     }
                 }
             }
@@ -103,6 +117,8 @@ namespace Cocarsa1.ControlUsuario
             textBox1.Enabled = true;
             textBox1.Focus();
             textBox1.Select(0, 0);
+            textBox2.Enabled = false;
+            textBox3.Enabled = false;
         }
 
         private void guardar_cambios(object sender, KeyEventArgs e)

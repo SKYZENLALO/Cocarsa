@@ -33,7 +33,7 @@ namespace Cocarsa1.ControlUsuario
             inv_dao = new InventarioDao();
             prod_dao = new ProductoDao();
 
-            inv_dao.copiaRegistroExistencia();
+            inv_dao.copiaRegistroExistencia();            
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
@@ -45,110 +45,7 @@ namespace Cocarsa1.ControlUsuario
                 row.Height = 32;
             }
 
-            foreach (DataGridViewRow row in dataGridView3.Rows)
-            {
-                row.Height = 32;
-            }
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            int id = 0;
             
-            fila1 = dataGridView1.CurrentCell.RowIndex;
-            dataGridView1.Rows[fila1].DefaultCellStyle.BackColor = Color.White;
-
-            if (dataGridView1.CurrentCell.Value == null)
-            {
-                return;
-            }
-
-            switch (dataGridView1.SelectedCells[0].ColumnIndex)
-            {
-                case 0:
-                    try
-                    {
-                        id = Convert.ToInt32(dataGridView1.CurrentCell.Value);
-                    }
-                    catch (Exception error)
-                    {
-                        id = 0;
-
-                        MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView1.Rows.RemoveAt(fila1);                        
-                        return;
-                    }
-
-                    ProductoE prod = prod_dao.obtenerProducto(id);
-
-                    if (prod != null)
-                    {
-                        dataGridView1.CurrentRow.Cells[1].Value = prod.Nombre;
-                        columna1 = 2;
-                        flag1 = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView1.Rows.RemoveAt(fila1);
-                        columna1 = 0;
-                        flag1 = true;
-                        return;
-                    }
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    double kilogramos = 0;
-
-                    if (dataGridView1.CurrentCell.Value == null)
-                    {
-                        MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        columna1 = 2;
-                        flag1 = true;
-                        return;
-                    }
-                    else
-                    {
-                        if (dataGridView1.CurrentRow.Cells[1].Value == null)
-                        {
-                            MessageBox.Show("Ingresa la clave del producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            dataGridView1.CurrentCell.Value = "";
-                            columna1 = 0;
-                            dataGridView1.Rows.RemoveAt(fila1);
-
-                            flag1 = true;
-                            return;
-                        }
-
-                        try
-                        {
-                            kilogramos = Convert.ToDouble(dataGridView1.CurrentCell.Value);
-                            if (kilogramos <= 0)
-                            {
-                                MessageBox.Show("Ingresa una cantidad mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                dataGridView1.CurrentCell.Value = "";
-                                columna1 = 2;
-                                flag1 = true;
-                                return;
-                            }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            dataGridView1.CurrentCell.Value = "";
-                            columna1 = 2;
-                            flag1 = true;
-                            return;
-                        }
-
-                        fila1 = fila1 + 1;
-                        columna1 = 0;
-                        flag1 = true;
-                    }
-                    break;
-            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -160,6 +57,102 @@ namespace Cocarsa1.ControlUsuario
             }
         }
 
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = 0;
+
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "frio_col1")
+            {
+                if (dataGridView1.CurrentCell.Value == null)
+                {
+                    return;
+                }
+                
+                fila1 = dataGridView1.CurrentCell.RowIndex;
+                dataGridView1.Rows[fila1].DefaultCellStyle.BackColor = Color.White;
+
+                try
+                {
+                    id = Convert.ToInt32(dataGridView1.CurrentCell.Value);
+                }
+                catch (Exception error)
+                {
+                    id = 0;
+                    error.ToString();
+
+                    MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dataGridView1.Rows.RemoveAt(fila1);
+                    flag1 = true;
+                    return;
+                }
+
+                ProductoE prod = prod_dao.obtenerProducto(id);
+
+                if (prod != null)
+                {
+                    dataGridView1.CurrentRow.Cells[1].Value = prod.Nombre;
+                    columna1 = 2;
+                    flag1 = true;
+                }
+                else
+                {
+                    MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dataGridView1.Rows.RemoveAt(fila1);                    
+                    columna1 = 0;
+                    flag1 = true;
+                    return;
+                }
+            }
+            else if (dataGridView1.Columns[e.ColumnIndex].Name == "frio_col3")
+            {
+                double kilogramos = 0;
+                fila1 = dataGridView1.CurrentCell.RowIndex;
+                columna1 = dataGridView1.CurrentCell.ColumnIndex;
+
+                dataGridView1.Rows[fila1].DefaultCellStyle.BackColor = Color.White;
+
+                if (dataGridView1.CurrentCell.Value == null)
+                {
+                    return;
+                }
+                else
+                {
+                    if (dataGridView1.CurrentRow.Cells[0].Value == null)
+                    {
+                        MessageBox.Show("Ingresa la clave del producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        dataGridView1.Rows.RemoveAt(fila1);
+                        columna1 = 0;
+                        flag1 = true;
+                        return;
+                    }
+
+                    try
+                    {
+                        kilogramos = Convert.ToDouble(dataGridView1.CurrentCell.Value);
+                        if (kilogramos <= 0)
+                        {
+                            MessageBox.Show("Ingresa una cantidad mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            dataGridView1.CurrentCell.Value = null;
+                            flag1 = true;
+                            return;
+                        }
+
+                    }
+                    catch (Exception error)
+                    {
+                        MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        dataGridView1.CurrentCell.Value = null;
+                        error.ToString();
+                        flag1 = true;
+                        return;
+                    }
+                }
+                columna1 = 0;
+                fila1 += 1;
+                flag1 = true;
+            }
+        } 
+
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -167,7 +160,7 @@ namespace Cocarsa1.ControlUsuario
                 e.Handled = true;
                 if (dataGridView1.CurrentRow.Cells[0].Value != null && dataGridView1.CurrentRow.Cells[2].Value == null)
                 {
-                    MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ingresa la cantidad de kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     columna1 = 2;
                     flag1 = true;
                     return;
@@ -190,7 +183,7 @@ namespace Cocarsa1.ControlUsuario
                     }
                 }
 
-                DialogResult ans = MessageBox.Show("¿Guardar registros en Frio?.", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult ans = MessageBox.Show("¿Desea guardar los cambios?", "Guardar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (ans == DialogResult.No)
                     return;
                 else
@@ -232,149 +225,20 @@ namespace Cocarsa1.ControlUsuario
         private void dataGridView1_Enter(object sender, EventArgs e)
         {
             dataGridView2.ClearSelection();
-            dataGridView3.ClearSelection();
+            //dataGridView3.ClearSelection();
         }
 
         private void dataGridView2_Enter(object sender, EventArgs e)
         {
             dataGridView1.ClearSelection();
-            dataGridView3.ClearSelection();
+            //dataGridView3.ClearSelection();
         }
 
         private void dataGridView3_Enter(object sender, EventArgs e)
         {
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
-        }
-
-        private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            int id = 0;
-            fila2 = dataGridView2.CurrentCell.RowIndex;
-            if (dataGridView2.CurrentCell.Value == null)
-            {
-                return;
-            }
-
-            switch (dataGridView2.SelectedCells[0].ColumnIndex)
-            {
-                case 0:
-                    try
-                    {
-                        id = Convert.ToInt32(dataGridView2.CurrentCell.Value);
-                    }
-                    catch (Exception error)
-                    {
-                        id = 0;
-                        MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView2.Rows.RemoveAt(dataGridView2.CurrentCell.RowIndex);
-                        return;
-                    }
-
-                    ProductoE prod = prod_dao.obtenerProducto(id);
-
-                    if (prod != null)
-                    {
-                        dataGridView2.CurrentRow.Cells[1].Value = prod.Nombre;
-                        columna2 = 2;
-                        flag2 = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        dataGridView2.Rows.RemoveAt(dataGridView2.CurrentCell.RowIndex);
-                        columna2 = 0;
-                        flag2 = true;
-                        return;
-                    }
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    double kilogramos = 0;
-
-                    if (dataGridView2.CurrentCell.Value == null)
-                    {
-                        MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        columna2 = 2;
-                        flag2 = true;
-                        return;
-                    }
-                    else
-                    {
-                        if (dataGridView2.CurrentRow.Cells[1].Value == null)
-                        {
-                            MessageBox.Show("Ingresa la clave del producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            dataGridView2.CurrentCell.Value = "";
-                            columna2 = 0;
-                            dataGridView2.Rows.RemoveAt(dataGridView2.CurrentCell.RowIndex);
-                            flag2 = true;
-                            return;
-                        }
-
-                        try
-                        {
-                            kilogramos = Convert.ToDouble(dataGridView2.CurrentCell.Value);
-                            if (kilogramos <= 0)
-                            {
-                                MessageBox.Show("Ingresa una cantidad mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                dataGridView2.CurrentCell.Value = "";
-                                columna2 = 2;
-                                flag2 = true;
-                                return;
-                            }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Ingresa un valor numérico.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            dataGridView2.CurrentCell.Value = "";
-                            columna2 = 2;
-                            flag2 = true;
-                            return;
-                        }
-
-                        fila2 = fila2 + 1;
-                        columna2 = 0;
-                        flag2 = true;
-                    }
-                    break;
-            }
-        }
-
-        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
-        {
-            if (flag2)
-            {
-                dataGridView2.CurrentCell = dataGridView2[columna2, fila2];
-                flag2 = false;
-            }
-        }
-
-        private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                if (dataGridView2.CurrentRow.Cells[0].Value != null && dataGridView2.CurrentRow.Cells[2].Value == null)
-                {
-                    MessageBox.Show("Ingresa la cantidad en kilos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    columna2 = 2;
-                    flag2 = true;
-                    return;
-                }
-            }
-        }
-
-        private void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView1.EndEdit();            
-        }
-
-        private void dataGridView2_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-            dataGridView2.EndEdit();            
-        }             
+        }                   
 
     }
 }

@@ -132,6 +132,7 @@ namespace Cocarsa1.ConexionBD
         {
             try
             {
+                DateTime fecha = DateTime.Now;
                 List<Existencia> existencia = new List<Existencia>();
 
                 using (var conexion = new MySqlConnection(datasource))
@@ -153,11 +154,28 @@ namespace Cocarsa1.ConexionBD
                 using (var conexion = new MySqlConnection(datasource))
                 {
                     conexion.Open();
+                    query = "SELECT fecha FROM existencia order by idRegistro limit 1;";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                fecha = reader.GetDateTime("fecha");
+                            }
+                        }
+                    }
+                }
+
+                using (var conexion = new MySqlConnection(datasource))
+                {
+                    conexion.Open();
                     query = "SELECT idProducto, cantidad FROM existencia WHERE fecha = ?fecha;";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conexion))
                     {
-                        cmd.Parameters.AddWithValue("?fecha", DateTime.Now.Date.AddDays(-1));
+                        cmd.Parameters.AddWithValue("?fecha", fecha);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
