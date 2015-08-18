@@ -99,14 +99,59 @@ namespace Cocarsa1.ConexionBD
             return ans;
         }
 
-        public Boolean guardaRegistroFresco(Existencia entrada)
+        public int guardaRegistroFresco(Existencia entrada)
         {
-            Boolean ans = false;
+            int ans = -1;
+            Boolean existe_registro = false;
+
             try
             {
                 using (var conexion = new MySqlConnection(datasource))
                 {
                     conexion.Open();
+
+                    query = "SELECT idRegistro FROM existencia WHERE idProducto = ? idProducto";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("?idProducto", entrada.IdProducto);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                existe_registro = true;
+                            }                            
+                        }
+                    }
+
+                    if (existe_registro)
+                    {
+                        query = "UPDATE existencia SET cantidad = ? cantidad WHERE idProducto = ?idProducto;";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                        {
+                            cmd.Parameters.AddWithValue("?idProducto", entrada.IdProducto);
+                            cmd.Parameters.AddWithValue("?cantidad", entrada.Cantidad);
+
+                            cmd.ExecuteNonQuery();
+                            ans = 1;
+                        }
+                    }
+                    else {
+                        query = "INSERT INTO existencia(idProducto,fecha,cantidad) VALUES(?idProducto,?fecha,?cantidad);";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                        {
+                            cmd.Parameters.AddWithValue("?idProducto", entrada.IdProducto);
+                            cmd.Parameters.AddWithValue("?fecha", entrada.Fecha);
+                            cmd.Parameters.AddWithValue("?cantidad", entrada.Cantidad);
+
+                            cmd.ExecuteNonQuery();
+                            ans = 1;
+                        }
+                    }
+
                     query = "INSERT INTO fresco(idProducto,fecha,cantidad) VALUES(?idProducto,?fecha,?cantidad);";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conexion))
@@ -116,14 +161,14 @@ namespace Cocarsa1.ConexionBD
                         cmd.Parameters.AddWithValue("?cantidad", entrada.Cantidad);
 
                         cmd.ExecuteNonQuery();
-                        ans = true;
+                        ans = 1;
                     }
                 }
             }
             catch (MySqlException e)
             {
                 e.ToString();
-                ans = false;
+                ans = -1;
             }
             return ans;
         }
